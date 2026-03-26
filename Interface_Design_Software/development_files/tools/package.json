@@ -1,0 +1,9 @@
+{
+  "name": "@lacerta-hmi/tools",
+  "version": "0.1.0",
+  "description": "RISC-V toolchain dependencies for Lacerta HMI",
+  "xpack": {},
+  "devDependencies": {
+    "@xpack-dev-tools/riscv-none-elf-gcc": "15.2.0-1.1"
+  }
+}

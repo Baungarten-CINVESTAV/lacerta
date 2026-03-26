@@ -270,3 +270,14 @@ Another major stage in the development was the creation of the **serialization a
 The software was further extended with a **deployment path to hardware** through serial communication. The `SerialLoader` class implements memory-oriented UART transactions that allow the application to send masks, background images, and compiled interface-related data directly to the target platform. The upload process is executed asynchronously through `UploadWorker`, preventing the graphical interface from blocking during long transfers. In this way, the software does not stop at design-time preview: it acts as the operational bridge between the interface editor and the real Lacerta system running on hardware.
 
 Finally, the development of the Lacerta Interface Design Software incorporated supporting features that improve usability and reproducibility, such as persistent settings, toolchain-path checking, scene management, canvas background handling, and multi-depth export support. Together, these elements make the application a key part of the Lacerta ecosystem: it is the environment where interfaces are conceived, visually assembled, converted into deployable assets, and finally transferred to the embedded graphics hardware for execution.
+
+### Lacerta Interface Design Software — GUI Notes
+
+Important:
+- The prebuilt GUI in this repository is currently distributed as a Windows executable package and can only be run on **Windows**.
+- Before running the GUI, you must extract the files located in `Interface_Design_Software/exe_file_GUI` (the RAR parts). Ensure all parts are in the same directory and extract them with a tool such as 7-Zip or WinRAR.
+
+Quick steps
+1. Copy the folder [Interface_Design_Software/exe_file_GUI](Interface_Design_Software/exe_file_GUI) to a Windows machine (or access it from Windows).
+2. Extract/unpack all archive parts (e.g. LacertaHMIDesigner.part1.rar, part2, part3) into a single directory.
+3. Run the extracted installer or executable on Windows.
