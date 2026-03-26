@@ -1,0 +1,782 @@
+
+===========================================================================
+report_checks -unconstrained
+===========================================================================
+======================= max_ss_100C_1v60 Corner ===================================
+
+Startpoint: _3015_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _3486_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock clk (rise edge)
+                                  0.000000    0.000000   clock source latency
+     2    0.052466    0.000000    0.000000    0.000000 ^ clk (in)
+                                                         clk (net)
+                      0.009287    0.004643    0.004643 ^ clkbuf_0_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    17    0.162363    0.265895    0.349884    0.354528 ^ clkbuf_0_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_0_clk (net)
+                      0.266712    0.012068    0.366595 ^ clkbuf_3_5__f_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    23    0.127627    0.216365    0.429993    0.796589 ^ clkbuf_3_5__f_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_3_5__leaf_clk (net)
+                      0.216558    0.005904    0.802492 ^ clkbuf_leaf_62_clk/A (sky130_fd_sc_hd__clkbuf_8)
+     7    0.026600    0.099431    0.317642    1.120134 ^ clkbuf_leaf_62_clk/X (sky130_fd_sc_hd__clkbuf_8)
+                                                         clknet_leaf_62_clk (net)
+                      0.099443    0.001161    1.121296 ^ _3015_/CLK (sky130_fd_sc_hd__dfrtp_4)
+    11    0.049476    0.218512    1.144004    2.265300 v _3015_/Q (sky130_fd_sc_hd__dfrtp_4)
+                                                         net81 (net)
+                      0.218525    0.002146    2.267446 v _1542_/A_N (sky130_fd_sc_hd__nand2b_2)
+     5    0.023894    0.219919    0.553580    2.821026 v _1542_/Y (sky130_fd_sc_hd__nand2b_2)
+                                                         _0653_ (net)
+                      0.219919    0.000875    2.821901 v _1543_/B (sky130_fd_sc_hd__or2_2)
+     3    0.021465    0.199861    0.814643    3.636544 v _1543_/X (sky130_fd_sc_hd__or2_2)
+                                                         _0654_ (net)
+                      0.199862    0.000912    3.637456 v _1598_/B (sky130_fd_sc_hd__or2_2)
+     5    0.024399    0.210959    0.819463    4.456919 v _1598_/X (sky130_fd_sc_hd__or2_2)
+                                                         _0709_ (net)
+                      0.210986    0.002365    4.459284 v _1854_/A (sky130_fd_sc_hd__nand2_1)
+     5    0.028641    0.428137    0.411755    4.871039 ^ _1854_/Y (sky130_fd_sc_hd__nand2_1)
+                                                         _0893_ (net)
+                      0.428148    0.001798    4.872837 ^ _1855_/B (sky130_fd_sc_hd__and2_4)
+    29    0.176639    0.796861    0.941507    5.814343 ^ _1855_/X (sky130_fd_sc_hd__and2_4)
+                                                         _0894_ (net)
+                      0.796950    0.007231    5.821575 ^ max_cap142/A (sky130_fd_sc_hd__buf_12)
+   109    0.364072    0.638122    0.778105    6.599679 ^ max_cap142/X (sky130_fd_sc_hd__buf_12)
+                                                         net142 (net)
+                      0.640090    0.030377    6.630057 ^ max_cap137/A (sky130_fd_sc_hd__buf_12)
+   121    0.404404    0.705216    0.775924    7.405982 ^ max_cap137/X (sky130_fd_sc_hd__buf_12)
+                                                         net137 (net)
+                      0.719138    0.079960    7.485941 ^ max_cap136/A (sky130_fd_sc_hd__buf_12)
+   109    0.363545    0.634523    0.732302    8.218244 ^ max_cap136/X (sky130_fd_sc_hd__buf_12)
+                                                         net136 (net)
+                      0.637698    0.039292    8.257535 ^ max_cap134/A (sky130_fd_sc_hd__buf_12)
+    89    0.286675    0.505585    0.620333    8.877869 ^ max_cap134/X (sky130_fd_sc_hd__buf_12)
+                                                         net134 (net)
+                      0.568307    0.136113    9.013982 ^ _2748_/S (sky130_fd_sc_hd__mux2_1)
+     1    0.003409    0.116270    0.857820    9.871801 v _2748_/X (sky130_fd_sc_hd__mux2_1)
+                                                         _0519_ (net)
+                      0.116270    0.000215    9.872016 v hold635/A (sky130_fd_sc_hd__dlygate4sd3_1)
+     1    0.002659    0.104515    1.142960   11.014976 v hold635/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                                                         net792 (net)
+                      0.104515    0.000170   11.015145 v _3486_/D (sky130_fd_sc_hd__dfrtp_1)
+                                             11.015145   data arrival time
+
+                                 10.000000   10.000000   clock clk (rise edge)
+                                  0.000000   10.000000   clock source latency
+     2    0.052466    0.000000    0.000000   10.000000 ^ clk (in)
+                                                         clk (net)
+                      0.009287    0.004643   10.004643 ^ clkbuf_0_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    17    0.162363    0.265895    0.349885   10.354528 ^ clkbuf_0_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_0_clk (net)
+                      0.266738    0.012255   10.366783 ^ clkbuf_3_3__f_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    27    0.128598    0.217933    0.429375   10.796158 ^ clkbuf_3_3__f_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_3_3__leaf_clk (net)
+                      0.218481    0.007880   10.804038 ^ clkbuf_leaf_29_clk/A (sky130_fd_sc_hd__clkbuf_8)
+     8    0.031767    0.110107    0.330141   11.134179 ^ clkbuf_leaf_29_clk/X (sky130_fd_sc_hd__clkbuf_8)
+                                                         clknet_leaf_29_clk (net)
+                      0.110125    0.001405   11.135584 ^ _3486_/CLK (sky130_fd_sc_hd__dfrtp_1)
+                                 -0.200000   10.935584   clock uncertainty
+                                  0.000000   10.935584   clock reconvergence pessimism
+                                 -0.280255   10.655330   library setup time
+                                             10.655330   data required time
+---------------------------------------------------------------------------------------------
+                                             10.655330   data required time
+                                            -11.015145   data arrival time
+---------------------------------------------------------------------------------------------
+                                             -0.359816   slack (VIOLATED)
+
+
+
+
+===========================================================================
+report_checks --slack_max -0.01
+============================================================================
+======================= max_ss_100C_1v60 Corner ===================================
+
+Startpoint: _3015_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _3486_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock clk (rise edge)
+                                  0.000000    0.000000   clock source latency
+     2    0.052466    0.000000    0.000000    0.000000 ^ clk (in)
+                                                         clk (net)
+                      0.009287    0.004643    0.004643 ^ clkbuf_0_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    17    0.162363    0.265895    0.349884    0.354528 ^ clkbuf_0_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_0_clk (net)
+                      0.266712    0.012068    0.366595 ^ clkbuf_3_5__f_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    23    0.127627    0.216365    0.429993    0.796589 ^ clkbuf_3_5__f_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_3_5__leaf_clk (net)
+                      0.216558    0.005904    0.802492 ^ clkbuf_leaf_62_clk/A (sky130_fd_sc_hd__clkbuf_8)
+     7    0.026600    0.099431    0.317642    1.120134 ^ clkbuf_leaf_62_clk/X (sky130_fd_sc_hd__clkbuf_8)
+                                                         clknet_leaf_62_clk (net)
+                      0.099443    0.001161    1.121296 ^ _3015_/CLK (sky130_fd_sc_hd__dfrtp_4)
+    11    0.049476    0.218512    1.144004    2.265300 v _3015_/Q (sky130_fd_sc_hd__dfrtp_4)
+                                                         net81 (net)
+                      0.218525    0.002146    2.267446 v _1542_/A_N (sky130_fd_sc_hd__nand2b_2)
+     5    0.023894    0.219919    0.553580    2.821026 v _1542_/Y (sky130_fd_sc_hd__nand2b_2)
+                                                         _0653_ (net)
+                      0.219919    0.000875    2.821901 v _1543_/B (sky130_fd_sc_hd__or2_2)
+     3    0.021465    0.199861    0.814643    3.636544 v _1543_/X (sky130_fd_sc_hd__or2_2)
+                                                         _0654_ (net)
+                      0.199862    0.000912    3.637456 v _1598_/B (sky130_fd_sc_hd__or2_2)
+     5    0.024399    0.210959    0.819463    4.456919 v _1598_/X (sky130_fd_sc_hd__or2_2)
+                                                         _0709_ (net)
+                      0.210986    0.002365    4.459284 v _1854_/A (sky130_fd_sc_hd__nand2_1)
+     5    0.028641    0.428137    0.411755    4.871039 ^ _1854_/Y (sky130_fd_sc_hd__nand2_1)
+                                                         _0893_ (net)
+                      0.428148    0.001798    4.872837 ^ _1855_/B (sky130_fd_sc_hd__and2_4)
+    29    0.176639    0.796861    0.941507    5.814343 ^ _1855_/X (sky130_fd_sc_hd__and2_4)
+                                                         _0894_ (net)
+                      0.796950    0.007231    5.821575 ^ max_cap142/A (sky130_fd_sc_hd__buf_12)
+   109    0.364072    0.638122    0.778105    6.599679 ^ max_cap142/X (sky130_fd_sc_hd__buf_12)
+                                                         net142 (net)
+                      0.640090    0.030377    6.630057 ^ max_cap137/A (sky130_fd_sc_hd__buf_12)
+   121    0.404404    0.705216    0.775924    7.405982 ^ max_cap137/X (sky130_fd_sc_hd__buf_12)
+                                                         net137 (net)
+                      0.719138    0.079960    7.485941 ^ max_cap136/A (sky130_fd_sc_hd__buf_12)
+   109    0.363545    0.634523    0.732302    8.218244 ^ max_cap136/X (sky130_fd_sc_hd__buf_12)
+                                                         net136 (net)
+                      0.637698    0.039292    8.257535 ^ max_cap134/A (sky130_fd_sc_hd__buf_12)
+    89    0.286675    0.505585    0.620333    8.877869 ^ max_cap134/X (sky130_fd_sc_hd__buf_12)
+                                                         net134 (net)
+                      0.568307    0.136113    9.013982 ^ _2748_/S (sky130_fd_sc_hd__mux2_1)
+     1    0.003409    0.116270    0.857820    9.871801 v _2748_/X (sky130_fd_sc_hd__mux2_1)
+                                                         _0519_ (net)
+                      0.116270    0.000215    9.872016 v hold635/A (sky130_fd_sc_hd__dlygate4sd3_1)
+     1    0.002659    0.104515    1.142960   11.014976 v hold635/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                                                         net792 (net)
+                      0.104515    0.000170   11.015145 v _3486_/D (sky130_fd_sc_hd__dfrtp_1)
+                                             11.015145   data arrival time
+
+                                 10.000000   10.000000   clock clk (rise edge)
+                                  0.000000   10.000000   clock source latency
+     2    0.052466    0.000000    0.000000   10.000000 ^ clk (in)
+                                                         clk (net)
+                      0.009287    0.004643   10.004643 ^ clkbuf_0_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    17    0.162363    0.265895    0.349885   10.354528 ^ clkbuf_0_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_0_clk (net)
+                      0.266738    0.012255   10.366783 ^ clkbuf_3_3__f_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    27    0.128598    0.217933    0.429375   10.796158 ^ clkbuf_3_3__f_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_3_3__leaf_clk (net)
+                      0.218481    0.007880   10.804038 ^ clkbuf_leaf_29_clk/A (sky130_fd_sc_hd__clkbuf_8)
+     8    0.031767    0.110107    0.330141   11.134179 ^ clkbuf_leaf_29_clk/X (sky130_fd_sc_hd__clkbuf_8)
+                                                         clknet_leaf_29_clk (net)
+                      0.110125    0.001405   11.135584 ^ _3486_/CLK (sky130_fd_sc_hd__dfrtp_1)
+                                 -0.200000   10.935584   clock uncertainty
+                                  0.000000   10.935584   clock reconvergence pessimism
+                                 -0.280255   10.655330   library setup time
+                                             10.655330   data required time
+---------------------------------------------------------------------------------------------
+                                             10.655330   data required time
+                                            -11.015145   data arrival time
+---------------------------------------------------------------------------------------------
+                                             -0.359816   slack (VIOLATED)
+
+
+
+
+===========================================================================
+ report_check_types -max_slew -max_cap -max_fanout -violators
+============================================================================
+======================= max_ss_100C_1v60 Corner ===================================
+
+max slew
+
+Pin                                        Limit        Slew       Slack
+------------------------------------------------------------------------
+ANTENNA__2991__RESET_B/DIODE            1.500000    1.786339   -0.286339 (VIOLATED)
+ANTENNA__3010__RESET_B/DIODE            1.500000    1.786278   -0.286278 (VIOLATED)
+_3010_/RESET_B                          1.500000    1.786249   -0.286249 (VIOLATED)
+_2991_/RESET_B                          1.500000    1.785930   -0.285930 (VIOLATED)
+_3011_/RESET_B                          1.500000    1.785830   -0.285830 (VIOLATED)
+ANTENNA__3031__RESET_B/DIODE            1.500000    1.785727   -0.285727 (VIOLATED)
+ANTENNA__3030__RESET_B/DIODE            1.500000    1.785617   -0.285617 (VIOLATED)
+_3031_/RESET_B                          1.500000    1.784827   -0.284827 (VIOLATED)
+_3030_/RESET_B                          1.500000    1.784673   -0.284673 (VIOLATED)
+ANTENNA__3029__RESET_B/DIODE            1.500000    1.783701   -0.283701 (VIOLATED)
+_3029_/RESET_B                          1.500000    1.783696   -0.283696 (VIOLATED)
+_3028_/RESET_B                          1.500000    1.783569   -0.283569 (VIOLATED)
+ANTENNA__3028__RESET_B/DIODE            1.500000    1.783554   -0.283554 (VIOLATED)
+ANTENNA__3011__RESET_B/DIODE            1.500000    1.782868   -0.282868 (VIOLATED)
+ANTENNA__3027__RESET_B/DIODE            1.500000    1.782235   -0.282235 (VIOLATED)
+_3027_/RESET_B                          1.500000    1.781951   -0.281951 (VIOLATED)
+ANTENNA__3413__RESET_B/DIODE            1.500000    1.779919   -0.279919 (VIOLATED)
+ANTENNA__3412__RESET_B/DIODE            1.500000    1.779875   -0.279875 (VIOLATED)
+_3412_/RESET_B                          1.500000    1.779761   -0.279761 (VIOLATED)
+_3413_/RESET_B                          1.500000    1.779690   -0.279690 (VIOLATED)
+_3414_/RESET_B                          1.500000    1.779250   -0.279250 (VIOLATED)
+_3024_/RESET_B                          1.500000    1.779187   -0.279187 (VIOLATED)
+_3025_/RESET_B                          1.500000    1.779010   -0.279010 (VIOLATED)
+ANTENNA__3414__RESET_B/DIODE            1.500000    1.778993   -0.278993 (VIOLATED)
+ANTENNA__3415__RESET_B/DIODE            1.500000    1.778988   -0.278988 (VIOLATED)
+_3415_/RESET_B                          1.500000    1.778436   -0.278436 (VIOLATED)
+_3417_/RESET_B                          1.500000    1.777816   -0.277816 (VIOLATED)
+ANTENNA__3417__RESET_B/DIODE            1.500000    1.777815   -0.277815 (VIOLATED)
+_3008_/RESET_B                          1.500000    1.777279   -0.277279 (VIOLATED)
+_3416_/RESET_B                          1.500000    1.777232   -0.277232 (VIOLATED)
+ANTENNA__3005__RESET_B/DIODE            1.500000    1.777194   -0.277194 (VIOLATED)
+_3005_/RESET_B                          1.500000    1.777114   -0.277114 (VIOLATED)
+ANTENNA__3006__RESET_B/DIODE            1.500000    1.777094   -0.277095 (VIOLATED)
+_3020_/RESET_B                          1.500000    1.777061   -0.277061 (VIOLATED)
+_3021_/RESET_B                          1.500000    1.777058   -0.277058 (VIOLATED)
+ANTENNA__3021__RESET_B/DIODE            1.500000    1.777038   -0.277038 (VIOLATED)
+_3017_/RESET_B                          1.500000    1.776960   -0.276960 (VIOLATED)
+_3003_/RESET_B                          1.500000    1.776695   -0.276695 (VIOLATED)
+ANTENNA__3024__RESET_B/DIODE            1.500000    1.776656   -0.276656 (VIOLATED)
+ANTENNA__3020__RESET_B/DIODE            1.500000    1.776588   -0.276588 (VIOLATED)
+ANTENNA__3003__RESET_B/DIODE            1.500000    1.776551   -0.276551 (VIOLATED)
+ANTENNA__3025__RESET_B/DIODE            1.500000    1.776509   -0.276509 (VIOLATED)
+ANTENNA__3018__RESET_B/DIODE            1.500000    1.776362   -0.276362 (VIOLATED)
+ANTENNA__3416__RESET_B/DIODE            1.500000    1.776315   -0.276315 (VIOLATED)
+_3006_/RESET_B                          1.500000    1.776289   -0.276289 (VIOLATED)
+ANTENNA__3418__RESET_B/DIODE            1.500000    1.776237   -0.276237 (VIOLATED)
+_3004_/RESET_B                          1.500000    1.776229   -0.276229 (VIOLATED)
+_3007_/RESET_B                          1.500000    1.776077   -0.276077 (VIOLATED)
+ANTENNA__3017__RESET_B/DIODE            1.500000    1.775941   -0.275941 (VIOLATED)
+_3018_/RESET_B                          1.500000    1.775893   -0.275893 (VIOLATED)
+_3410_/RESET_B                          1.500000    1.775802   -0.275802 (VIOLATED)
+ANTENNA__3004__RESET_B/DIODE            1.500000    1.775707   -0.275707 (VIOLATED)
+_3411_/RESET_B                          1.500000    1.775676   -0.275676 (VIOLATED)
+ANTENNA__3411__RESET_B/DIODE            1.500000    1.775549   -0.275549 (VIOLATED)
+_3409_/RESET_B                          1.500000    1.775507   -0.275507 (VIOLATED)
+ANTENNA__3007__RESET_B/DIODE            1.500000    1.775505   -0.275505 (VIOLATED)
+_3418_/RESET_B                          1.500000    1.775381   -0.275381 (VIOLATED)
+ANTENNA__3409__RESET_B/DIODE            1.500000    1.775164   -0.275164 (VIOLATED)
+ANTENNA__3410__RESET_B/DIODE            1.500000    1.775135   -0.275135 (VIOLATED)
+ANTENNA__3008__RESET_B/DIODE            1.500000    1.775110   -0.275110 (VIOLATED)
+_3019_/RESET_B                          1.500000    1.775064   -0.275064 (VIOLATED)
+ANTENNA__3002__RESET_B/DIODE            1.500000    1.775029   -0.275029 (VIOLATED)
+_3009_/RESET_B                          1.500000    1.775010   -0.275010 (VIOLATED)
+_3002_/RESET_B                          1.500000    1.774779   -0.274779 (VIOLATED)
+ANTENNA__3019__RESET_B/DIODE            1.500000    1.774762   -0.274762 (VIOLATED)
+ANTENNA__3022__RESET_B/DIODE            1.500000    1.774727   -0.274727 (VIOLATED)
+_3022_/RESET_B                          1.500000    1.774720   -0.274720 (VIOLATED)
+ANTENNA__3407__RESET_B/DIODE            1.500000    1.774675   -0.274676 (VIOLATED)
+_3407_/RESET_B                          1.500000    1.774655   -0.274655 (VIOLATED)
+_3016_/RESET_B                          1.500000    1.774654   -0.274654 (VIOLATED)
+ANTENNA__3009__RESET_B/DIODE            1.500000    1.774503   -0.274503 (VIOLATED)
+ANTENNA__3016__RESET_B/DIODE            1.500000    1.774440   -0.274440 (VIOLATED)
+_3033_/RESET_B                          1.500000    1.774402   -0.274402 (VIOLATED)
+ANTENNA__3033__RESET_B/DIODE            1.500000    1.774390   -0.274390 (VIOLATED)
+ANTENNA__3034__RESET_B/DIODE            1.500000    1.774331   -0.274331 (VIOLATED)
+_3034_/RESET_B                          1.500000    1.774275   -0.274275 (VIOLATED)
+ANTENNA__3037__RESET_B/DIODE            1.500000    1.774251   -0.274251 (VIOLATED)
+ANTENNA__3420__RESET_B/DIODE            1.500000    1.774244   -0.274244 (VIOLATED)
+ANTENNA__3419__RESET_B/DIODE            1.500000    1.774240   -0.274240 (VIOLATED)
+_3419_/RESET_B                          1.500000    1.774231   -0.274231 (VIOLATED)
+_3037_/RESET_B                          1.500000    1.774209   -0.274209 (VIOLATED)
+_3408_/RESET_B                          1.500000    1.774186   -0.274186 (VIOLATED)
+ANTENNA__3035__RESET_B/DIODE            1.500000    1.774182   -0.274182 (VIOLATED)
+_3035_/RESET_B                          1.500000    1.774140   -0.274140 (VIOLATED)
+ANTENNA__3408__RESET_B/DIODE            1.500000    1.774107   -0.274107 (VIOLATED)
+_3042_/RESET_B                          1.500000    1.773924   -0.273924 (VIOLATED)
+_3403_/RESET_B                          1.500000    1.773910   -0.273910 (VIOLATED)
+_3406_/RESET_B                          1.500000    1.773904   -0.273904 (VIOLATED)
+_3404_/RESET_B                          1.500000    1.773892   -0.273892 (VIOLATED)
+_3402_/RESET_B                          1.500000    1.773889   -0.273889 (VIOLATED)
+ANTENNA__3404__RESET_B/DIODE            1.500000    1.773811   -0.273811 (VIOLATED)
+ANTENNA__3405__RESET_B/DIODE            1.500000    1.773733   -0.273733 (VIOLATED)
+_3405_/RESET_B                          1.500000    1.773726   -0.273726 (VIOLATED)
+ANTENNA__3406__RESET_B/DIODE            1.500000    1.773597   -0.273597 (VIOLATED)
+ANTENNA__3036__RESET_B/DIODE            1.500000    1.773417   -0.273417 (VIOLATED)
+_3420_/RESET_B                          1.500000    1.773059   -0.273059 (VIOLATED)
+ANTENNA__3399__RESET_B/DIODE            1.500000    1.773051   -0.273051 (VIOLATED)
+ANTENNA__3400__RESET_B/DIODE            1.500000    1.772998   -0.272998 (VIOLATED)
+ANTENNA__3403__RESET_B/DIODE            1.500000    1.772891   -0.272891 (VIOLATED)
+ANTENNA__3402__RESET_B/DIODE            1.500000    1.772886   -0.272886 (VIOLATED)
+ANTENNA__3401__RESET_B/DIODE            1.500000    1.772864   -0.272864 (VIOLATED)
+ANTENNA__3047__RESET_B/DIODE            1.500000    1.772841   -0.272841 (VIOLATED)
+_3044_/RESET_B                          1.500000    1.772818   -0.272818 (VIOLATED)
+ANTENNA__3045__RESET_B/DIODE            1.500000    1.772798   -0.272798 (VIOLATED)
+_3036_/RESET_B                          1.500000    1.772768   -0.272768 (VIOLATED)
+ANTENNA__3046__RESET_B/DIODE            1.500000    1.772741   -0.272741 (VIOLATED)
+_3040_/RESET_B                          1.500000    1.772741   -0.272741 (VIOLATED)
+ANTENNA__3040__RESET_B/DIODE            1.500000    1.772731   -0.272731 (VIOLATED)
+_3400_/RESET_B                          1.500000    1.772677   -0.272677 (VIOLATED)
+ANTENNA__3041__RESET_B/DIODE            1.500000    1.772662   -0.272662 (VIOLATED)
+ANTENNA__3042__RESET_B/DIODE            1.500000    1.772650   -0.272650 (VIOLATED)
+_3401_/RESET_B                          1.500000    1.772628   -0.272628 (VIOLATED)
+_3041_/RESET_B                          1.500000    1.772580   -0.272580 (VIOLATED)
+_3399_/RESET_B                          1.500000    1.772560   -0.272560 (VIOLATED)
+ANTENNA__3044__RESET_B/DIODE            1.500000    1.772457   -0.272457 (VIOLATED)
+_3023_/RESET_B                          1.500000    1.772303   -0.272303 (VIOLATED)
+ANTENNA__3397__RESET_B/DIODE            1.500000    1.772213   -0.272213 (VIOLATED)
+_3421_/RESET_B                          1.500000    1.771923   -0.271923 (VIOLATED)
+_3422_/RESET_B                          1.500000    1.771804   -0.271804 (VIOLATED)
+ANTENNA__3422__RESET_B/DIODE            1.500000    1.771743   -0.271743 (VIOLATED)
+ANTENNA__3398__RESET_B/DIODE            1.500000    1.771721   -0.271721 (VIOLATED)
+ANTENNA__3561__RESET_B/DIODE            1.500000    1.771582   -0.271583 (VIOLATED)
+ANTENNA__3395__RESET_B/DIODE            1.500000    1.771297   -0.271297 (VIOLATED)
+_3396_/RESET_B                          1.500000    1.771246   -0.271246 (VIOLATED)
+_3398_/RESET_B                          1.500000    1.771219   -0.271219 (VIOLATED)
+ANTENNA__3023__RESET_B/DIODE            1.500000    1.771119   -0.271119 (VIOLATED)
+_3397_/RESET_B                          1.500000    1.771113   -0.271113 (VIOLATED)
+ANTENNA__3393__RESET_B/DIODE            1.500000    1.770794   -0.270794 (VIOLATED)
+ANTENNA__3056__RESET_B/DIODE            1.500000    1.770690   -0.270690 (VIOLATED)
+ANTENNA__3057__RESET_B/DIODE            1.500000    1.770685   -0.270685 (VIOLATED)
+_3057_/RESET_B                          1.500000    1.770673   -0.270673 (VIOLATED)
+_3056_/RESET_B                          1.500000    1.770558   -0.270558 (VIOLATED)
+_3055_/RESET_B                          1.500000    1.770495   -0.270495 (VIOLATED)
+ANTENNA__3055__RESET_B/DIODE            1.500000    1.770138   -0.270138 (VIOLATED)
+ANTENNA__3421__RESET_B/DIODE            1.500000    1.770051   -0.270051 (VIOLATED)
+ANTENNA__3396__RESET_B/DIODE            1.500000    1.770028   -0.270028 (VIOLATED)
+_3053_/RESET_B                          1.500000    1.769828   -0.269828 (VIOLATED)
+_3054_/RESET_B                          1.500000    1.769794   -0.269795 (VIOLATED)
+ANTENNA__3391__RESET_B/DIODE            1.500000    1.769488   -0.269488 (VIOLATED)
+_3393_/RESET_B                          1.500000    1.769451   -0.269451 (VIOLATED)
+ANTENNA__3060__RESET_B/DIODE            1.500000    1.769348   -0.269348 (VIOLATED)
+ANTENNA__3058__RESET_B/DIODE            1.500000    1.769346   -0.269346 (VIOLATED)
+_3061_/RESET_B                          1.500000    1.769312   -0.269312 (VIOLATED)
+ANTENNA__3026__RESET_B/DIODE            1.500000    1.769288   -0.269288 (VIOLATED)
+_3058_/RESET_B                          1.500000    1.769214   -0.269214 (VIOLATED)
+_3395_/RESET_B                          1.500000    1.769213   -0.269213 (VIOLATED)
+_3043_/RESET_B                          1.500000    1.769164   -0.269164 (VIOLATED)
+_3026_/RESET_B                          1.500000    1.769157   -0.269157 (VIOLATED)
+ANTENNA__3054__RESET_B/DIODE            1.500000    1.769155   -0.269155 (VIOLATED)
+_3394_/RESET_B                          1.500000    1.769151   -0.269151 (VIOLATED)
+_3060_/RESET_B                          1.500000    1.769137   -0.269137 (VIOLATED)
+_3059_/RESET_B                          1.500000    1.769116   -0.269116 (VIOLATED)
+ANTENNA__3059__RESET_B/DIODE            1.500000    1.769089   -0.269089 (VIOLATED)
+ANTENNA__3061__RESET_B/DIODE            1.500000    1.768711   -0.268711 (VIOLATED)
+ANTENNA__3560__RESET_B/DIODE            1.500000    1.768425   -0.268425 (VIOLATED)
+ANTENNA__3315__RESET_B/DIODE            1.500000    1.768238   -0.268238 (VIOLATED)
+ANTENNA__3316__RESET_B/DIODE            1.500000    1.768229   -0.268229 (VIOLATED)
+_3316_/RESET_B                          1.500000    1.768193   -0.268194 (VIOLATED)
+_3315_/RESET_B                          1.500000    1.768130   -0.268130 (VIOLATED)
+_3560_/RESET_B                          1.500000    1.768089   -0.268089 (VIOLATED)
+ANTENNA__3064__RESET_B/DIODE            1.500000    1.767941   -0.267941 (VIOLATED)
+_3314_/RESET_B                          1.500000    1.767919   -0.267919 (VIOLATED)
+ANTENNA__3063__RESET_B/DIODE            1.500000    1.767899   -0.267899 (VIOLATED)
+ANTENNA__3062__RESET_B/DIODE            1.500000    1.767821   -0.267821 (VIOLATED)
+_3062_/RESET_B                          1.500000    1.767788   -0.267788 (VIOLATED)
+ANTENNA__3314__RESET_B/DIODE            1.500000    1.767734   -0.267734 (VIOLATED)
+_3561_/RESET_B                          1.500000    1.767532   -0.267532 (VIOLATED)
+ANTENNA__3290__RESET_B/DIODE            1.500000    1.767474   -0.267474 (VIOLATED)
+ANTENNA__3288__RESET_B/DIODE            1.500000    1.767465   -0.267466 (VIOLATED)
+_3288_/RESET_B                          1.500000    1.767454   -0.267454 (VIOLATED)
+_3392_/RESET_B                          1.500000    1.767442   -0.267443 (VIOLATED)
+_3317_/RESET_B                          1.500000    1.767425   -0.267425 (VIOLATED)
+ANTENNA__3317__RESET_B/DIODE            1.500000    1.767382   -0.267382 (VIOLATED)
+ANTENNA__3390__RESET_B/DIODE            1.500000    1.767307   -0.267307 (VIOLATED)
+_3287_/RESET_B                          1.500000    1.767271   -0.267271 (VIOLATED)
+ANTENNA__3289__RESET_B/DIODE            1.500000    1.767252   -0.267252 (VIOLATED)
+ANTENNA__3394__RESET_B/DIODE            1.500000    1.767242   -0.267242 (VIOLATED)
+ANTENNA__3318__RESET_B/DIODE            1.500000    1.767173   -0.267173 (VIOLATED)
+ANTENNA__3291__RESET_B/DIODE            1.500000    1.767131   -0.267131 (VIOLATED)
+_3318_/RESET_B                          1.500000    1.767056   -0.267056 (VIOLATED)
+_3313_/RESET_B                          1.500000    1.766841   -0.266841 (VIOLATED)
+_3312_/RESET_B                          1.500000    1.766839   -0.266839 (VIOLATED)
+ANTENNA__3319__RESET_B/DIODE            1.500000    1.766834   -0.266834 (VIOLATED)
+_3429_/RESET_B                          1.500000    1.766812   -0.266812 (VIOLATED)
+_3426_/RESET_B                          1.500000    1.766790   -0.266790 (VIOLATED)
+ANTENNA__3429__RESET_B/DIODE            1.500000    1.766761   -0.266761 (VIOLATED)
+_3428_/RESET_B                          1.500000    1.766758   -0.266759 (VIOLATED)
+ANTENNA__3427__RESET_B/DIODE            1.500000    1.766703   -0.266703 (VIOLATED)
+_3427_/RESET_B                          1.500000    1.766695   -0.266695 (VIOLATED)
+_3425_/RESET_B                          1.500000    1.766671   -0.266671 (VIOLATED)
+ANTENNA__3426__RESET_B/DIODE            1.500000    1.766645   -0.266645 (VIOLATED)
+_3289_/RESET_B                          1.500000    1.766553   -0.266553 (VIOLATED)
+ANTENNA__3424__RESET_B/DIODE            1.500000    1.766547   -0.266547 (VIOLATED)
+_3290_/RESET_B                          1.500000    1.766525   -0.266525 (VIOLATED)
+_3319_/RESET_B                          1.500000    1.766443   -0.266443 (VIOLATED)
+_3321_/RESET_B                          1.500000    1.766385   -0.266385 (VIOLATED)
+_3320_/RESET_B                          1.500000    1.766364   -0.266364 (VIOLATED)
+ANTENNA__3043__RESET_B/DIODE            1.500000    1.766363   -0.266363 (VIOLATED)
+ANTENNA__3293__RESET_B/DIODE            1.500000    1.766270   -0.266270 (VIOLATED)
+ANTENNA__3292__RESET_B/DIODE            1.500000    1.766069   -0.266069 (VIOLATED)
+_3322_/RESET_B                          1.500000    1.765975   -0.265975 (VIOLATED)
+_3424_/RESET_B                          1.500000    1.765875   -0.265875 (VIOLATED)
+ANTENNA__3562__RESET_B/DIODE            1.500000    1.765769   -0.265769 (VIOLATED)
+_3063_/RESET_B                          1.500000    1.765754   -0.265754 (VIOLATED)
+ANTENNA__3312__RESET_B/DIODE            1.500000    1.765598   -0.265598 (VIOLATED)
+ANTENNA__3313__RESET_B/DIODE            1.500000    1.765588   -0.265588 (VIOLATED)
+ANTENNA__3563__RESET_B/DIODE            1.500000    1.765421   -0.265421 (VIOLATED)
+_3391_/RESET_B                          1.500000    1.765326   -0.265326 (VIOLATED)
+ANTENNA__3066__RESET_B/DIODE            1.500000    1.765285   -0.265285 (VIOLATED)
+ANTENNA__3065__RESET_B/DIODE            1.500000    1.765237   -0.265237 (VIOLATED)
+_3064_/RESET_B                          1.500000    1.765215   -0.265215 (VIOLATED)
+ANTENNA__3322__RESET_B/DIODE            1.500000    1.764849   -0.264849 (VIOLATED)
+ANTENNA__3425__RESET_B/DIODE            1.500000    1.764616   -0.264616 (VIOLATED)
+_3423_/RESET_B                          1.500000    1.764531   -0.264531 (VIOLATED)
+_3065_/RESET_B                          1.500000    1.764292   -0.264292 (VIOLATED)
+_3390_/RESET_B                          1.500000    1.763801   -0.263801 (VIOLATED)
+ANTENNA__3392__RESET_B/DIODE            1.500000    1.763793   -0.263793 (VIOLATED)
+ANTENNA__3389__RESET_B/DIODE            1.500000    1.763736   -0.263736 (VIOLATED)
+_3291_/RESET_B                          1.500000    1.763705   -0.263705 (VIOLATED)
+ANTENNA__3323__RESET_B/DIODE            1.500000    1.763334   -0.263334 (VIOLATED)
+ANTENNA__3048__RESET_B/DIODE            1.500000    1.763328   -0.263328 (VIOLATED)
+_3045_/RESET_B                          1.500000    1.763318   -0.263318 (VIOLATED)
+_3048_/RESET_B                          1.500000    1.763318   -0.263318 (VIOLATED)
+_3046_/RESET_B                          1.500000    1.763262   -0.263262 (VIOLATED)
+_3323_/RESET_B                          1.500000    1.763261   -0.263261 (VIOLATED)
+_3047_/RESET_B                          1.500000    1.763239   -0.263239 (VIOLATED)
+ANTENNA__3423__RESET_B/DIODE            1.500000    1.762827   -0.262827 (VIOLATED)
+ANTENNA__3049__RESET_B/DIODE            1.500000    1.762786   -0.262786 (VIOLATED)
+_3049_/RESET_B                          1.500000    1.762734   -0.262734 (VIOLATED)
+_3310_/RESET_B                          1.500000    1.762670   -0.262670 (VIOLATED)
+_3563_/RESET_B                          1.500000    1.762636   -0.262636 (VIOLATED)
+_3562_/RESET_B                          1.500000    1.762358   -0.262358 (VIOLATED)
+_3050_/RESET_B                          1.500000    1.762225   -0.262225 (VIOLATED)
+ANTENNA__3053__RESET_B/DIODE            1.500000    1.762146   -0.262146 (VIOLATED)
+_3051_/RESET_B                          1.500000    1.762041   -0.262041 (VIOLATED)
+_3389_/RESET_B                          1.500000    1.761622   -0.261623 (VIOLATED)
+_3052_/RESET_B                          1.500000    1.761411   -0.261411 (VIOLATED)
+ANTENNA__3310__RESET_B/DIODE            1.500000    1.761227   -0.261227 (VIOLATED)
+ANTENNA__3311__RESET_B/DIODE            1.500000    1.761225   -0.261225 (VIOLATED)
+ANTENNA__3052__RESET_B/DIODE            1.500000    1.760509   -0.260510 (VIOLATED)
+_3388_/RESET_B                          1.500000    1.760413   -0.260413 (VIOLATED)
+_3292_/RESET_B                          1.500000    1.760110   -0.260110 (VIOLATED)
+ANTENNA__3051__RESET_B/DIODE            1.500000    1.760046   -0.260047 (VIOLATED)
+ANTENNA__3430__RESET_B/DIODE            1.500000    1.759977   -0.259977 (VIOLATED)
+ANTENNA__3431__RESET_B/DIODE            1.500000    1.759969   -0.259969 (VIOLATED)
+_3430_/RESET_B                          1.500000    1.759946   -0.259946 (VIOLATED)
+_3431_/RESET_B                          1.500000    1.759894   -0.259894 (VIOLATED)
+_3432_/RESET_B                          1.500000    1.759591   -0.259591 (VIOLATED)
+_3433_/RESET_B                          1.500000    1.759578   -0.259578 (VIOLATED)
+ANTENNA__3432__RESET_B/DIODE            1.500000    1.758799   -0.258799 (VIOLATED)
+ANTENNA__3067__RESET_B/DIODE            1.500000    1.758519   -0.258519 (VIOLATED)
+_3435_/RESET_B                          1.500000    1.758492   -0.258492 (VIOLATED)
+ANTENNA__3433__RESET_B/DIODE            1.500000    1.758146   -0.258146 (VIOLATED)
+ANTENNA__3434__RESET_B/DIODE            1.500000    1.757980   -0.257980 (VIOLATED)
+_3067_/RESET_B                          1.500000    1.757663   -0.257663 (VIOLATED)
+ANTENNA__3050__RESET_B/DIODE            1.500000    1.757529   -0.257529 (VIOLATED)
+_3434_/RESET_B                          1.500000    1.757317   -0.257317 (VIOLATED)
+ANTENNA__3287__RESET_B/DIODE            1.500000    1.757303   -0.257303 (VIOLATED)
+_3382_/RESET_B                          1.500000    1.757089   -0.257089 (VIOLATED)
+ANTENNA__3435__RESET_B/DIODE            1.500000    1.757087   -0.257087 (VIOLATED)
+_3293_/RESET_B                          1.500000    1.756426   -0.256426 (VIOLATED)
+ANTENNA__3438__RESET_B/DIODE            1.500000    1.756331   -0.256331 (VIOLATED)
+ANTENNA__3437__RESET_B/DIODE            1.500000    1.756319   -0.256319 (VIOLATED)
+_3438_/RESET_B                          1.500000    1.756296   -0.256296 (VIOLATED)
+_3437_/RESET_B                          1.500000    1.756281   -0.256281 (VIOLATED)
+_3436_/RESET_B                          1.500000    1.755163   -0.255163 (VIOLATED)
+ANTENNA__3388__RESET_B/DIODE            1.500000    1.754775   -0.254775 (VIOLATED)
+ANTENNA__3436__RESET_B/DIODE            1.500000    1.754648   -0.254648 (VIOLATED)
+ANTENNA__3380__RESET_B/DIODE            1.500000    1.754351   -0.254351 (VIOLATED)
+_3380_/RESET_B                          1.500000    1.753405   -0.253405 (VIOLATED)
+_3381_/RESET_B                          1.500000    1.753184   -0.253184 (VIOLATED)
+ANTENNA__3381__RESET_B/DIODE            1.500000    1.753006   -0.253007 (VIOLATED)
+ANTENNA__3286__RESET_B/DIODE            1.500000    1.752542   -0.252542 (VIOLATED)
+_3066_/RESET_B                          1.500000    1.752235   -0.252235 (VIOLATED)
+ANTENNA__3294__RESET_B/DIODE            1.500000    1.751674   -0.251674 (VIOLATED)
+_3068_/RESET_B                          1.500000    1.751667   -0.251667 (VIOLATED)
+_3294_/RESET_B                          1.500000    1.750959   -0.250959 (VIOLATED)
+_3076_/RESET_B                          1.500000    1.750937   -0.250937 (VIOLATED)
+_3295_/RESET_B                          1.500000    1.749570   -0.249570 (VIOLATED)
+ANTENNA__3382__RESET_B/DIODE            1.500000    1.749483   -0.249483 (VIOLATED)
+ANTENNA__3071__RESET_B/DIODE            1.500000    1.749459   -0.249459 (VIOLATED)
+_3071_/RESET_B                          1.500000    1.749399   -0.249400 (VIOLATED)
+_3286_/RESET_B                          1.500000    1.748767   -0.248768 (VIOLATED)
+ANTENNA__3383__RESET_B/DIODE            1.500000    1.747830   -0.247830 (VIOLATED)
+ANTENNA__3428__RESET_B/DIODE            1.500000    1.747045   -0.247045 (VIOLATED)
+ANTENNA__3386__RESET_B/DIODE            1.500000    1.746975   -0.246975 (VIOLATED)
+_3387_/RESET_B                          1.500000    1.746947   -0.246947 (VIOLATED)
+_3386_/RESET_B                          1.500000    1.746906   -0.246906 (VIOLATED)
+_3385_/RESET_B                          1.500000    1.746841   -0.246841 (VIOLATED)
+ANTENNA__3385__RESET_B/DIODE            1.500000    1.746827   -0.246828 (VIOLATED)
+_3383_/RESET_B                          1.500000    1.746389   -0.246389 (VIOLATED)
+_3384_/RESET_B                          1.500000    1.746383   -0.246383 (VIOLATED)
+ANTENNA__3384__RESET_B/DIODE            1.500000    1.745963   -0.245963 (VIOLATED)
+ANTENNA__3068__RESET_B/DIODE            1.500000    1.745632   -0.245633 (VIOLATED)
+ANTENNA__3387__RESET_B/DIODE            1.500000    1.745602   -0.245602 (VIOLATED)
+ANTENNA__3070__RESET_B/DIODE            1.500000    1.745574   -0.245574 (VIOLATED)
+ANTENNA__3069__RESET_B/DIODE            1.500000    1.744720   -0.244720 (VIOLATED)
+_3038_/RESET_B                          1.500000    1.744657   -0.244657 (VIOLATED)
+_3039_/RESET_B                          1.500000    1.744543   -0.244543 (VIOLATED)
+ANTENNA__3039__RESET_B/DIODE            1.500000    1.744285   -0.244285 (VIOLATED)
+ANTENNA__3038__RESET_B/DIODE            1.500000    1.744279   -0.244279 (VIOLATED)
+_3285_/RESET_B                          1.500000    1.744254   -0.244255 (VIOLATED)
+ANTENNA__3284__RESET_B/DIODE            1.500000    1.744126   -0.244126 (VIOLATED)
+ANTENNA__3285__RESET_B/DIODE            1.500000    1.744121   -0.244121 (VIOLATED)
+_3284_/RESET_B                          1.500000    1.743061   -0.243061 (VIOLATED)
+_3283_/RESET_B                          1.500000    1.742609   -0.242609 (VIOLATED)
+ANTENNA__3283__RESET_B/DIODE            1.500000    1.742010   -0.242010 (VIOLATED)
+ANTENNA__3295__RESET_B/DIODE            1.500000    1.741531   -0.241531 (VIOLATED)
+_3069_/RESET_B                          1.500000    1.740813   -0.240813 (VIOLATED)
+ANTENNA__3282__RESET_B/DIODE            1.500000    1.739881   -0.239881 (VIOLATED)
+_3282_/RESET_B                          1.500000    1.739863   -0.239863 (VIOLATED)
+_3070_/RESET_B                          1.500000    1.738619   -0.238619 (VIOLATED)
+_3072_/RESET_B                          1.500000    1.737844   -0.237844 (VIOLATED)
+_3296_/RESET_B                          1.500000    1.735286   -0.235286 (VIOLATED)
+ANTENNA__3032__RESET_B/DIODE            1.500000    1.735059   -0.235059 (VIOLATED)
+_3032_/RESET_B                          1.500000    1.735028   -0.235028 (VIOLATED)
+ANTENNA__3281__RESET_B/DIODE            1.500000    1.734828   -0.234828 (VIOLATED)
+ANTENNA__3308__RESET_B/DIODE            1.500000    1.733665   -0.233666 (VIOLATED)
+_3281_/RESET_B                          1.500000    1.730286   -0.230286 (VIOLATED)
+_3280_/RESET_B                          1.500000    1.729152   -0.229152 (VIOLATED)
+ANTENNA__3296__RESET_B/DIODE            1.500000    1.729152   -0.229152 (VIOLATED)
+_3299_/RESET_B                          1.500000    1.726375   -0.226375 (VIOLATED)
+_3279_/RESET_B                          1.500000    1.724089   -0.224089 (VIOLATED)
+ANTENNA__3279__RESET_B/DIODE            1.500000    1.722941   -0.222941 (VIOLATED)
+ANTENNA__3300__RESET_B/DIODE            1.500000    1.722646   -0.222646 (VIOLATED)
+ANTENNA__3298__RESET_B/DIODE            1.500000    1.722587   -0.222587 (VIOLATED)
+ANTENNA__3297__RESET_B/DIODE            1.500000    1.722457   -0.222457 (VIOLATED)
+ANTENNA__3299__RESET_B/DIODE            1.500000    1.722403   -0.222403 (VIOLATED)
+_3297_/RESET_B                          1.500000    1.722356   -0.222356 (VIOLATED)
+_3298_/RESET_B                          1.500000    1.722138   -0.222138 (VIOLATED)
+ANTENNA__3072__RESET_B/DIODE            1.500000    1.721998   -0.221998 (VIOLATED)
+_3300_/RESET_B                          1.500000    1.714634   -0.214634 (VIOLATED)
+_3278_/RESET_B                          1.500000    1.714100   -0.214100 (VIOLATED)
+ANTENNA__3278__RESET_B/DIODE            1.500000    1.712990   -0.212990 (VIOLATED)
+ANTENNA__3307__RESET_B/DIODE            1.500000    1.708846   -0.208846 (VIOLATED)
+ANTENNA__2966__RESET_B/DIODE            1.500000    1.707665   -0.207665 (VIOLATED)
+_2966_/RESET_B                          1.500000    1.707600   -0.207600 (VIOLATED)
+ANTENNA__3280__RESET_B/DIODE            1.500000    1.707592   -0.207593 (VIOLATED)
+_2984_/RESET_B                          1.500000    1.703866   -0.203866 (VIOLATED)
+ANTENNA__2984__RESET_B/DIODE            1.500000    1.703834   -0.203834 (VIOLATED)
+ANTENNA__3014__RESET_B/DIODE            1.500000    1.703340   -0.203340 (VIOLATED)
+ANTENNA__3012__RESET_B/DIODE            1.500000    1.703313   -0.203313 (VIOLATED)
+ANTENNA__3013__RESET_B/DIODE            1.500000    1.703046   -0.203046 (VIOLATED)
+_3014_/RESET_B                          1.500000    1.702696   -0.202696 (VIOLATED)
+ANTENNA__3306__RESET_B/DIODE            1.500000    1.702693   -0.202693 (VIOLATED)
+_3012_/RESET_B                          1.500000    1.702384   -0.202384 (VIOLATED)
+_3013_/RESET_B                          1.500000    1.701978   -0.201978 (VIOLATED)
+_3015_/RESET_B                          1.500000    1.701952   -0.201953 (VIOLATED)
+ANTENNA__3073__RESET_B/DIODE            1.500000    1.701588   -0.201588 (VIOLATED)
+ANTENNA__3074__RESET_B/DIODE            1.500000    1.699398   -0.199398 (VIOLATED)
+ANTENNA__3277__RESET_B/DIODE            1.500000    1.699335   -0.199335 (VIOLATED)
+_3073_/RESET_B                          1.500000    1.696407   -0.196407 (VIOLATED)
+_3301_/RESET_B                          1.500000    1.695749   -0.195749 (VIOLATED)
+_3302_/RESET_B                          1.500000    1.695146   -0.195146 (VIOLATED)
+_3311_/RESET_B                          1.500000    1.691750   -0.191750 (VIOLATED)
+_3309_/RESET_B                          1.500000    1.691556   -0.191556 (VIOLATED)
+_3308_/RESET_B                          1.500000    1.691403   -0.191403 (VIOLATED)
+ANTENNA__3309__RESET_B/DIODE            1.500000    1.691121   -0.191121 (VIOLATED)
+_3307_/RESET_B                          1.500000    1.690830   -0.190830 (VIOLATED)
+_3306_/RESET_B                          1.500000    1.690792   -0.190792 (VIOLATED)
+ANTENNA__3305__RESET_B/DIODE            1.500000    1.690746   -0.190746 (VIOLATED)
+_3305_/RESET_B                          1.500000    1.690685   -0.190685 (VIOLATED)
+_3304_/RESET_B                          1.500000    1.689951   -0.189951 (VIOLATED)
+ANTENNA__3304__RESET_B/DIODE            1.500000    1.689602   -0.189602 (VIOLATED)
+ANTENNA__3276__RESET_B/DIODE            1.500000    1.689552   -0.189552 (VIOLATED)
+_3303_/RESET_B                          1.500000    1.689399   -0.189399 (VIOLATED)
+_3277_/RESET_B                          1.500000    1.688030   -0.188030 (VIOLATED)
+ANTENNA__3076__RESET_B/DIODE            1.500000    1.686518   -0.186518 (VIOLATED)
+_3075_/RESET_B                          1.500000    1.686455   -0.186455 (VIOLATED)
+ANTENNA__3301__RESET_B/DIODE            1.500000    1.686240   -0.186240 (VIOLATED)
+ANTENNA__3302__RESET_B/DIODE            1.500000    1.686227   -0.186227 (VIOLATED)
+ANTENNA__3303__RESET_B/DIODE            1.500000    1.686158   -0.186158 (VIOLATED)
+_3276_/RESET_B                          1.500000    1.685720   -0.185721 (VIOLATED)
+_3074_/RESET_B                          1.500000    1.677035   -0.177035 (VIOLATED)
+ANTENNA__3075__RESET_B/DIODE            1.500000    1.675627   -0.175627 (VIOLATED)
+ANTENNA__3324__RESET_B/DIODE            1.500000    1.671768   -0.171768 (VIOLATED)
+_3273_/RESET_B                          1.500000    1.667173   -0.167173 (VIOLATED)
+_3271_/RESET_B                          1.500000    1.667170   -0.167170 (VIOLATED)
+_3272_/RESET_B                          1.500000    1.667125   -0.167125 (VIOLATED)
+_3324_/RESET_B                          1.500000    1.667016   -0.167016 (VIOLATED)
+ANTENNA__3271__RESET_B/DIODE            1.500000    1.666798   -0.166798 (VIOLATED)
+_3274_/RESET_B                          1.500000    1.666717   -0.166717 (VIOLATED)
+ANTENNA__3274__RESET_B/DIODE            1.500000    1.666033   -0.166033 (VIOLATED)
+_3325_/RESET_B                          1.500000    1.657062   -0.157062 (VIOLATED)
+ANTENNA__3273__RESET_B/DIODE            1.500000    1.643026   -0.143026 (VIOLATED)
+_3275_/RESET_B                          1.500000    1.640054   -0.140054 (VIOLATED)
+_3374_/RESET_B                          1.500000    1.626941   -0.126941 (VIOLATED)
+ANTENNA__3374__RESET_B/DIODE            1.500000    1.626919   -0.126919 (VIOLATED)
+ANTENNA__3325__RESET_B/DIODE            1.500000    1.626836   -0.126836 (VIOLATED)
+ANTENNA__3356__RESET_B/DIODE            1.500000    1.626776   -0.126776 (VIOLATED)
+_3356_/RESET_B                          1.500000    1.626667   -0.126667 (VIOLATED)
+_3355_/RESET_B                          1.500000    1.626262   -0.126262 (VIOLATED)
+ANTENNA__3275__RESET_B/DIODE            1.500000    1.626044   -0.126044 (VIOLATED)
+_3354_/RESET_B                          1.500000    1.625947   -0.125948 (VIOLATED)
+ANTENNA__3354__RESET_B/DIODE            1.500000    1.625945   -0.125945 (VIOLATED)
+ANTENNA__3355__RESET_B/DIODE            1.500000    1.625379   -0.125379 (VIOLATED)
+_3369_/RESET_B                          1.500000    1.625057   -0.125057 (VIOLATED)
+ANTENNA__3369__RESET_B/DIODE            1.500000    1.624960   -0.124960 (VIOLATED)
+_3371_/RESET_B                          1.500000    1.624912   -0.124912 (VIOLATED)
+ANTENNA__3370__RESET_B/DIODE            1.500000    1.624800   -0.124800 (VIOLATED)
+_3370_/RESET_B                          1.500000    1.624555   -0.124555 (VIOLATED)
+ANTENNA__3371__RESET_B/DIODE            1.500000    1.624510   -0.124510 (VIOLATED)
+ANTENNA__3375__RESET_B/DIODE            1.500000    1.624254   -0.124255 (VIOLATED)
+ANTENNA__3372__RESET_B/DIODE            1.500000    1.624189   -0.124189 (VIOLATED)
+_3372_/RESET_B                          1.500000    1.624155   -0.124155 (VIOLATED)
+_3373_/RESET_B                          1.500000    1.623454   -0.123454 (VIOLATED)
+ANTENNA__3373__RESET_B/DIODE            1.500000    1.623256   -0.123256 (VIOLATED)
+_3375_/RESET_B                          1.500000    1.622743   -0.122743 (VIOLATED)
+ANTENNA__3376__RESET_B/DIODE            1.500000    1.621379   -0.121379 (VIOLATED)
+ANTENNA__3377__RESET_B/DIODE            1.500000    1.621316   -0.121316 (VIOLATED)
+_3376_/RESET_B                          1.500000    1.619855   -0.119855 (VIOLATED)
+ANTENNA__3378__RESET_B/DIODE            1.500000    1.619810   -0.119810 (VIOLATED)
+_3379_/RESET_B                          1.500000    1.619792   -0.119792 (VIOLATED)
+_3377_/RESET_B                          1.500000    1.619753   -0.119753 (VIOLATED)
+_3378_/RESET_B                          1.500000    1.619619   -0.119619 (VIOLATED)
+ANTENNA__3379__RESET_B/DIODE            1.500000    1.617925   -0.117925 (VIOLATED)
+ANTENNA__3328__RESET_B/DIODE            1.500000    1.617157   -0.117157 (VIOLATED)
+_3328_/RESET_B                          1.500000    1.613936   -0.113937 (VIOLATED)
+ANTENNA__3272__RESET_B/DIODE            1.500000    1.612535   -0.112535 (VIOLATED)
+_3326_/RESET_B                          1.500000    1.611972   -0.111972 (VIOLATED)
+_3327_/RESET_B                          1.500000    1.611798   -0.111798 (VIOLATED)
+ANTENNA__3540__RESET_B/DIODE            1.500000    1.605720   -0.105720 (VIOLATED)
+ANTENNA__3539__RESET_B/DIODE            1.500000    1.605673   -0.105673 (VIOLATED)
+ANTENNA__3327__RESET_B/DIODE            1.500000    1.600880   -0.100880 (VIOLATED)
+ANTENNA__3326__RESET_B/DIODE            1.500000    1.595741   -0.095741 (VIOLATED)
+ANTENNA__3537__RESET_B/DIODE            1.500000    1.592654   -0.092655 (VIOLATED)
+_3540_/RESET_B                          1.500000    1.592647   -0.092647 (VIOLATED)
+_3539_/RESET_B                          1.500000    1.589783   -0.089783 (VIOLATED)
+ANTENNA__3536__RESET_B/DIODE            1.500000    1.588794   -0.088794 (VIOLATED)
+_3535_/RESET_B                          1.500000    1.579391   -0.079391 (VIOLATED)
+_3536_/RESET_B                          1.500000    1.579365   -0.079365 (VIOLATED)
+ANTENNA__3535__RESET_B/DIODE            1.500000    1.579219   -0.079219 (VIOLATED)
+_3537_/RESET_B                          1.500000    1.579130   -0.079130 (VIOLATED)
+_3538_/RESET_B                          1.500000    1.573332   -0.073332 (VIOLATED)
+ANTENNA__3329__RESET_B/DIODE            1.500000    1.572793   -0.072793 (VIOLATED)
+ANTENNA__3538__RESET_B/DIODE            1.500000    1.568951   -0.068951 (VIOLATED)
+ANTENNA__3331__RESET_B/DIODE            1.500000    1.564998   -0.064998 (VIOLATED)
+_3541_/RESET_B                          1.500000    1.564327   -0.064327 (VIOLATED)
+ANTENNA__3321__RESET_B/DIODE            1.500000    1.555416   -0.055416 (VIOLATED)
+_3331_/RESET_B                          1.500000    1.551936   -0.051936 (VIOLATED)
+_3542_/RESET_B                          1.500000    1.551081   -0.051081 (VIOLATED)
+_3330_/RESET_B                          1.500000    1.541515   -0.041515 (VIOLATED)
+_3329_/RESET_B                          1.500000    1.541435   -0.041435 (VIOLATED)
+ANTENNA__3330__RESET_B/DIODE            1.500000    1.541431   -0.041432 (VIOLATED)
+_3332_/RESET_B                          1.500000    1.540030   -0.040030 (VIOLATED)
+ANTENNA__3015__RESET_B/DIODE            1.500000    1.537172   -0.037172 (VIOLATED)
+_3564_/RESET_B                          1.500000    1.537061   -0.037061 (VIOLATED)
+ANTENNA__3564__RESET_B/DIODE            1.500000    1.536986   -0.036986 (VIOLATED)
+ANTENNA__3541__RESET_B/DIODE            1.500000    1.536965   -0.036965 (VIOLATED)
+ANTENNA__3542__RESET_B/DIODE            1.500000    1.535944   -0.035944 (VIOLATED)
+_3333_/RESET_B                          1.500000    1.532883   -0.032883 (VIOLATED)
+ANTENNA__3332__RESET_B/DIODE            1.500000    1.521558   -0.021558 (VIOLATED)
+_3334_/RESET_B                          1.500000    1.521503   -0.021503 (VIOLATED)
+_3543_/RESET_B                          1.500000    1.520587   -0.020587 (VIOLATED)
+ANTENNA__3543__RESET_B/DIODE            1.500000    1.520570   -0.020570 (VIOLATED)
+_3544_/RESET_B                          1.500000    1.520447   -0.020447 (VIOLATED)
+ANTENNA__3544__RESET_B/DIODE            1.500000    1.520436   -0.020436 (VIOLATED)
+ANTENNA__3333__RESET_B/DIODE            1.500000    1.510732   -0.010732 (VIOLATED)
+_3557_/RESET_B                          1.500000    1.501144   -0.001144 (VIOLATED)
+ANTENNA__2971__RESET_B/DIODE            1.500000    1.501042   -0.001042 (VIOLATED)
+ANTENNA__3557__RESET_B/DIODE            1.500000    1.501018   -0.001018 (VIOLATED)
+_2971_/RESET_B                          1.500000    1.500977   -0.000977 (VIOLATED)
+_2970_/RESET_B                          1.500000    1.500929   -0.000929 (VIOLATED)
+_2998_/RESET_B                          1.500000    1.500613   -0.000613 (VIOLATED)
+ANTENNA__2970__RESET_B/DIODE            1.500000    1.500572   -0.000572 (VIOLATED)
+
+
+
+===========================================================================
+report_parasitic_annotation -report_unannotated
+============================================================================
+Found 107 unannotated drivers.
+ obj_st_mask[10]
+ obj_st_mask[11]
+ obj_st_mask[12]
+ obj_st_mask[13]
+ obj_st_mask[14]
+ obj_st_mask[15]
+ obj_st_mask[16]
+ obj_st_mask[17]
+ obj_st_mask[18]
+ obj_st_mask[19]
+ obj_st_mask[20]
+ obj_st_mask[21]
+ obj_st_pix[10]
+ obj_st_pix[11]
+ obj_st_pix[12]
+ obj_st_pix[13]
+ obj_st_pix[14]
+ obj_st_pix[15]
+ obj_st_pix[16]
+ obj_st_pix[17]
+ obj_st_pix[18]
+ obj_st_pix[19]
+ obj_st_pix[20]
+ obj_st_pix[21]
+ clkload0/Y
+ clkload1/Y
+ clkload10/Y
+ clkload11/Y
+ clkload12/Y
+ clkload13/Y
+ clkload14/Y
+ clkload15/Y
+ clkload16/X
+ clkload17/X
+ clkload18/Y
+ clkload19/Y
+ clkload2/X
+ clkload20/X
+ clkload21/Y
+ clkload22/X
+ clkload23/Y
+ clkload24/X
+ clkload25/Y
+ clkload26/Y
+ clkload27/Y
+ clkload28/X
+ clkload29/Y
+ clkload3/Y
+ clkload30/Y
+ clkload31/Y
+ clkload32/Y
+ clkload33/X
+ clkload34/Y
+ clkload35/X
+ clkload36/Y
+ clkload37/Y
+ clkload38/Y
+ clkload39/Y
+ clkload4/Y
+ clkload40/Y
+ clkload41/Y
+ clkload42/Y
+ clkload43/Y
+ clkload44/Y
+ clkload45/Y
+ clkload46/Y
+ clkload47/Y
+ clkload48/X
+ clkload49/Y
+ clkload5/Y
+ clkload50/Y
+ clkload51/Y
+ clkload52/Y
+ clkload53/X
+ clkload54/Y
+ clkload55/Y
+ clkload56/X
+ clkload57/Y
+ clkload58/Y
+ clkload59/Y
+ clkload6/Y
+ clkload60/Y
+ clkload61/Y
+ clkload62/Y
+ clkload63/Y
+ clkload64/Y
+ clkload65/Y
+ clkload66/Y
+ clkload67/Y
+ clkload68/Y
+ clkload69/Y
+ clkload7/Y
+ clkload70/Y
+ clkload71/Y
+ clkload72/Y
+ clkload73/Y
+ clkload74/X
+ clkload75/Y
+ clkload76/X
+ clkload77/X
+ clkload78/Y
+ clkload79/Y
+ clkload8/Y
+ clkload80/X
+ clkload81/Y
+ clkload82/Y
+ clkload9/X
+Found 0 partially unannotated drivers.
+
+===========================================================================
+max slew violation count 465
+max fanout violation count 0
+max cap violation count 0
+============================================================================
+
+===========================================================================
+check_setup -verbose -unconstrained_endpoints -multiple_clock -no_clock -no_input_delay -loops -generated_clocks
+===========================================================================

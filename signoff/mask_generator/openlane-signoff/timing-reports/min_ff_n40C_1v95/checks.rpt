@@ -1,0 +1,182 @@
+
+===========================================================================
+report_checks -unconstrained
+===========================================================================
+======================= min_ff_n40C_1v95 Corner ===================================
+
+Startpoint: rd_buff_empty (input port clocked by clk)
+Endpoint: rd_buff_rden (output port clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock clk (rise edge)
+                                  0.000000    0.000000   clock network delay (propagated)
+                                  2.000000    2.000000 v input external delay
+     2    0.006358    0.000000    0.000000    2.000000 v rd_buff_empty (in)
+                                                         rd_buff_empty (net)
+                      0.000087    0.000044    2.000044 v input63/A (sky130_fd_sc_hd__buf_1)
+     3    0.010037    0.043838    0.067643    2.067687 v input63/X (sky130_fd_sc_hd__buf_1)
+                                                         net63 (net)
+                      0.043838    0.000097    2.067784 v _1515_/A_N (sky130_fd_sc_hd__and2b_4)
+     9    0.055735    0.145395    0.241166    2.308950 ^ _1515_/X (sky130_fd_sc_hd__and2b_4)
+                                                         net82 (net)
+                      0.145395    0.000159    2.309109 ^ output82/A (sky130_fd_sc_hd__buf_1)
+     1    0.001079    0.020979    0.050093    2.359202 ^ output82/X (sky130_fd_sc_hd__buf_1)
+                                                         rd_buff_rden (net)
+                      0.020979    0.000004    2.359206 ^ rd_buff_rden (out)
+                                              2.359206   data arrival time
+
+                                 10.000000   10.000000   clock clk (rise edge)
+                                  0.000000   10.000000   clock network delay (propagated)
+                                 -0.200000    9.800000   clock uncertainty
+                                  0.000000    9.800000   clock reconvergence pessimism
+                                 -2.000000    7.800000   output external delay
+                                              7.800000   data required time
+---------------------------------------------------------------------------------------------
+                                              7.800000   data required time
+                                             -2.359206   data arrival time
+---------------------------------------------------------------------------------------------
+                                              5.440794   slack (MET)
+
+
+
+
+===========================================================================
+report_checks --slack_max -0.01
+============================================================================
+======================= min_ff_n40C_1v95 Corner ===================================
+
+No paths found.
+
+
+===========================================================================
+ report_check_types -max_slew -max_cap -max_fanout -violators
+============================================================================
+======================= min_ff_n40C_1v95 Corner ===================================
+
+
+
+===========================================================================
+report_parasitic_annotation -report_unannotated
+============================================================================
+Found 107 unannotated drivers.
+ obj_st_mask[10]
+ obj_st_mask[11]
+ obj_st_mask[12]
+ obj_st_mask[13]
+ obj_st_mask[14]
+ obj_st_mask[15]
+ obj_st_mask[16]
+ obj_st_mask[17]
+ obj_st_mask[18]
+ obj_st_mask[19]
+ obj_st_mask[20]
+ obj_st_mask[21]
+ obj_st_pix[10]
+ obj_st_pix[11]
+ obj_st_pix[12]
+ obj_st_pix[13]
+ obj_st_pix[14]
+ obj_st_pix[15]
+ obj_st_pix[16]
+ obj_st_pix[17]
+ obj_st_pix[18]
+ obj_st_pix[19]
+ obj_st_pix[20]
+ obj_st_pix[21]
+ clkload0/Y
+ clkload1/Y
+ clkload10/Y
+ clkload11/Y
+ clkload12/Y
+ clkload13/Y
+ clkload14/Y
+ clkload15/Y
+ clkload16/X
+ clkload17/X
+ clkload18/Y
+ clkload19/Y
+ clkload2/X
+ clkload20/X
+ clkload21/Y
+ clkload22/X
+ clkload23/Y
+ clkload24/X
+ clkload25/Y
+ clkload26/Y
+ clkload27/Y
+ clkload28/X
+ clkload29/Y
+ clkload3/Y
+ clkload30/Y
+ clkload31/Y
+ clkload32/Y
+ clkload33/X
+ clkload34/Y
+ clkload35/X
+ clkload36/Y
+ clkload37/Y
+ clkload38/Y
+ clkload39/Y
+ clkload4/Y
+ clkload40/Y
+ clkload41/Y
+ clkload42/Y
+ clkload43/Y
+ clkload44/Y
+ clkload45/Y
+ clkload46/Y
+ clkload47/Y
+ clkload48/X
+ clkload49/Y
+ clkload5/Y
+ clkload50/Y
+ clkload51/Y
+ clkload52/Y
+ clkload53/X
+ clkload54/Y
+ clkload55/Y
+ clkload56/X
+ clkload57/Y
+ clkload58/Y
+ clkload59/Y
+ clkload6/Y
+ clkload60/Y
+ clkload61/Y
+ clkload62/Y
+ clkload63/Y
+ clkload64/Y
+ clkload65/Y
+ clkload66/Y
+ clkload67/Y
+ clkload68/Y
+ clkload69/Y
+ clkload7/Y
+ clkload70/Y
+ clkload71/Y
+ clkload72/Y
+ clkload73/Y
+ clkload74/X
+ clkload75/Y
+ clkload76/X
+ clkload77/X
+ clkload78/Y
+ clkload79/Y
+ clkload8/Y
+ clkload80/X
+ clkload81/Y
+ clkload82/Y
+ clkload9/X
+Found 0 partially unannotated drivers.
+
+===========================================================================
+max slew violation count 0
+max fanout violation count 0
+max cap violation count 0
+============================================================================
+
+===========================================================================
+check_setup -verbose -unconstrained_endpoints -multiple_clock -no_clock -no_input_delay -loops -generated_clocks
+===========================================================================

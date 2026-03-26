@@ -78,7 +78,15 @@ On the UART side, the module decodes writes using `uart_mem_waddr` and maps them
 
 On the processor side, the module also decodes writes and reads arriving through the `wb_slave_memory_mapped` interface. Writes to specific memory-mapped addresses update the same control registers and drawing-object parameters used by the UART path, while reads currently expose status information such as `drw_inc_busy`. The block asserts `wb_slave_mem_wr_data_ack` and `wb_slave_mem_rdy` to complete these MMIO transactions, making the same internal configuration state accessible from the embedded processor. In addition, the module manages `up_soft_reset_req` and only asserts `up_soft_reset` when it is safe to do so, specifically when there is no pending memory-system transaction and the drawing engine is idle. This coordination ensures that control commands, drawing requests, and processor-access management are all synchronized in a single RTL block.
 
-On the processor side, the module also decodes writes and reads arriving through the `wb_slave_memory_mapped` interface. Writes to specific memory-mapped addresses update the same control registers and drawing-object parameters used by the UART path, while reads currently expose status information such as `drw_inc_busy`. The block asserts `wb_slave_mem_wr_data_ack` and `wb_slave_mem_rdy` to complete these MMIO transactions, making the same internal configuration state accessible from the embedded processor. In addition, the module manages `up_soft_reset_req` and only asserts `up_soft_reset` when it is safe to do so, specifically when there is no pending memory-system transaction and the drawing engine is idle. This coordination ensures that control commands, drawing requests, and processor-access management are all synchronized in a single RTL block.
+On the processor side, the module decodes read and write transactions received through the `wb_slave_memory_mapped` interface, enabling direct memory-mapped access from the embedded processor. Write operations to specific addresses update the same control registers and drawing-object parameters used by the UART interface, ensuring a unified configuration path across both communication mechanisms.
+
+Read operations expose status signals, including `drw_inc_busy`, allowing the processor to monitor the state of the drawing engine. In particular, this signal enables the microprocessor to determine when the engine is idle and ready to accept a new drawing command, preventing command overlap and ensuring correct sequencing of operations.
+
+To complete MMIO transactions, the module asserts `wb_slave_mem_wr_data_ack` and `wb_slave_mem_rdy`, providing proper handshake signaling with the processor. Additionally, the module manages the `up_soft_reset_req` signal and only asserts `up_soft_reset` when it is safe to do so—specifically, when there are no pending memory-system transactions and the drawing engine is idle.
+
+This design ensures that processor control, drawing operations, and system-level management are cleanly synchronized within a single RTL block, improving robustness and simplifying integration.
+
+
 ### Mask Generator
 
 <p align="center">
@@ -93,12 +101,15 @@ The **Mask Generator** module implements the hardware drawing engine used to mod
 Internally, the block is implemented as a finite-state machine that performs a read-modify-write cycle on the framebuffer. When a new operation starts, it initializes the read pattern generator (`rpg_*`) and write pattern generator (`wpg_*`) addresses from the object start position and object dimensions, then processes the target region row by row. Depending on the selected `obj_type`, the module applies one of several drawing modes, including boolean objects, horizontal incremental objects, vertical incremental objects, graph objects, and mask-based objects. For mask-based objects, it first reads mask data from memory and stores it locally before applying it to the target pixels.
 
 As pixel data is returned through `rd_buff_rdata`, the module decides how to modify each bit based on the current row, column, object type, and mask contents. The updated pixel value is then written back through `wr_buff_wdata` and `wr_buff_wren`, while `rpg_busy` and `wpg_busy` remain active until the memory system acknowledges completion through `rpg_ack` and `wpg_ack`. In the top-level Lacerta integration, the block is instantiated as `mask_generator_i` and connected to dedicated read and write channels of the shared `mem_sys` module. This makes the mask generator the core hardware renderer of Lacerta, responsible for converting object-level commands into direct framebuffer updates.
+
 ### Memory System
 
 
-The **Memory System** module implements the shared data path that connects the different Lacerta clients to the main framebuffer memory. At a general level, `mem_sys.sv` coordinates read and write traffic between the host/UART path, the VGA stream, the mask generator, and the processor-side access path, while exposing a single read interface and a single write interface toward the main RAM. Instead of allowing each client to access memory directly, the subsystem organizes transfers through dedicated read and write channels that are buffered and scheduled internally.
+The **Memory System** module implements the shared data path that connects the different Lacerta clients to the main framebuffer memory. At a general level, `mem_sys.v` coordinates read and write traffic between the host/UART path, the VGA stream, the mask generator, and the processor-side access path, while exposing a single read interface and a single write interface toward the main RAM (which is an external flash memory). Instead of allowing each client to access memory directly, the subsystem organizes transfers through dedicated read and write channels that are buffered and scheduled internally.
 
 The main structural blocks of this subsystem are `buffers`, `buffers_filler`, and `buffers_discharger`. The `buffers` module instantiates the FIFO storage used to decouple the clients from the main memory timing, providing independent write buffers and read buffers for each channel. On the read side, `buffers_filler` monitors the active read pattern generator requests, issues memory reads through `main_mem_rden` and `main_mem_rd_addr`, and stores the returning data into the appropriate read buffer. On the write side, `buffers_discharger` monitors the active write pattern generator requests, removes data from the write buffers, and forwards it to memory through `main_mem_wren`, `main_mem_wr_addr`, and `main_mem_wr_data`.
+
+Since the VGA interface operates as a continuous streaming protocol, the memory system includes specialized control logic to guarantee that the read buffer serving the VGA controller is never empty. This is achieved by prioritizing VGA-related read requests and prefetching data in advance, ensuring uninterrupted pixel delivery and preventing visual artifacts such as underflows or frame glitches.
 
 From a functional point of view, the memory system acts as the arbitration and buffering backbone of Lacerta. Read clients provide starting addresses, burst lengths, and busy flags through the `rpg_*` signals, while write clients provide equivalent burst-control information through the `wpg_*` signals together with buffered write data. The memory system acknowledges each completed burst through `rpg_ack` and `wpg_ack`, and it uses the buffer full, empty, and half-empty signals to decide when data should be fetched from RAM or committed back to RAM. The underlying `ram` module then serves as the actual frame-storage element, while the memory system around it ensures that multiple producers and consumers can share that storage in an orderly and efficient way.
 
@@ -211,17 +222,220 @@ The verification plan for the **Mask Generator** block validates correct start/b
 
 
 ## Lacerta Layout
+The physical implementation of **Lacerta** has been actively exercised throughout the development process. Most RTL modules have already been synthesized, placed, and routed using the full RTL-to-GDSII flow, allowing early identification of integration, timing, and routing challenges.
 
+The resulting layout views and design metrics are documented in the following subsection. These results have been instrumental in iterating key physical design aspects such as:
+- Floorplanning strategies  
+- Buffer insertion and optimization  
+- Clock and reset distribution  
+
+This iterative approach has significantly improved timing closure and overall design robustness.
+
+To streamline integration and simplify timing closure, Lacerta adopts a **mixed physical implementation strategy**:
+
+- **Flattened (hardened) blocks** for smaller control and interface logic  
+- **Pre-verified macros** for larger, timing-critical datapath modules  
+
+
+These modules will be merged into the top-level during physical implementation:
+
+- `wb_slave_memory_mapped`  
+- `wb_slave_to_mem_sys_ports`  
+- `command_arbiter_decoder`  
+
+These modules will remain as standalone, pre-implemented blocks:
+
+- `mask_generator`  
+- **Memory subsystem** (`mem_sys`, buffers)  
+  - Preserves validated register and pattern generators  
+- **VGA controller and UART**  
+  - Reuse of validated timing and I/O logic  
 
 ### WB Slave to Memory Mapped
+
+<p align="center">
+  <img src="../img/layout_gds/wb_mem_map.png" width="49%" />
+  <img src="../img/layout_gds/wb_mem_map_wires.png" width="49%" />
+</p>
+
+<p align="center">
+  <em>Layout of the Wishbone (WB) Slave to Memory-Mapped. The left image shows the cell placement without metal layers, highlighting the underlying standard-cell structure, while the right image includes the metal routing, illustrating the interconnections and signal wiring across the design.</em>
+</p>
+
+| Metric                     | Value               | Notes |
+|---------------------------|---------------------:|-------|
+| Technology                | SKY130A              | Open PDK (config pdk::sky130*) |
+| Core Area                 | 0.131454 mm²         | design__core__area = 131454 µm² |
+| Die Area                  | 0.144400 mm²         | design__die__area = 144400 µm² |
+| Utilization               | 10.86%               | design__instance__utilization = 0.108612 |
+| Standard Cell Count       | 3,575                | design__instance__count__stdcell |
+| Sequential Cell Count    | 137               | Sequential elements            |
+| Routing Completion        | 100%                 | routing completed (no unrouted nets reported) |
+| Worst Negative Slack      | 0.00 ns              | timing__setup__wns = 0.0 |
+| Total Negative Slack      | 0.00 ns              | timing__setup__tns = 0.0 |
+| Max Frequency             | 100 MHz (target)     | CLOCK_PERIOD = 10 ns |
+| Total Power               | 1.531 mW             | reported power__total = 0.00153094 W |
+| DRC Violations            | 0                    | no DRC errors reported |
+| LVS                       | Passed               | layout vs netlist match reported |
+| Antenna Violations        | 2                    | antenna__violating__nets = 2 |
+| GDS Generated             | Yes                  | final |
+
 ### WB Slave to Read/Write Ports
+
+<p align="center">
+  <img src="../img/layout_gds/mem_port.png" width="49%" />
+  <img src="../img/layout_gds/mem_port_wire.png" width="49%" />
+</p>
+
+<p align="center">
+  <em>Layout of the Wishbone (WB) Slave to Read/Write Ports. The left image shows the cell placement without metal layers, highlighting the underlying standard-cell structure, while the right image includes the metal routing, illustrating the interconnections and signal wiring across the design.</em>
+</p>
+
+| Metric                     | Value            | Notes                          |
+|--------------------------|------------------|--------------------------------|
+| Technology               | SKY130A          | Open PDK (config pdk::sky130*) |
+| Core Area                | 0.131 mm²        | From 131,454 µm²               |
+| Die Area                 | 0.144 mm²        | From 144,400 µm²               |
+| Utilization              | 7.19%            | Standard cell density          |
+| Standard Cell Count      | 2,898            | Instance count                 |
+| Sequential Cell Count    | 71               | Sequential elements            |
+| Routing Completion       | 100%             | No unrouted nets               |
+| Worst Negative Slack     | 0.00 ns          | Timing met (no violations)     |
+| Total Negative Slack     | 0.00 ns          | No violations                  |
+| Max Frequency            | 100 MHz (target)  | CLOCK_PERIOD = 10 ns |
+| Total Power              | 0.934 mW         | Dynamic + leakage              |
+| DRC Violations           | 0                | Magic + KLayout clean          |
+| LVS                      | Passed           | No errors reported             |
+| Antenna Violations       | 3                | From routing report            |
+| GDS Generated            | Yes              | Implied by completed flow      |
+
+
 ### VGA Controller
+
+<p align="center">
+  <img src="../img/layout_gds/VGA.png" width="49%" />
+  <img src="../img/layout_gds/vga_wire.png" width="49%" />
+</p>
+
+<p align="center">
+  <em>Layout of the VGA Controller. The left image shows the cell placement without metal layers, highlighting the underlying standard-cell structure, while the right image includes the metal routing, illustrating the interconnections and signal wiring across the design.</em>
+</p>
+
+
+| Metric                     | Value            | Notes                          |
+|--------------------------|------------------|--------------------------------|
+| Technology               | SKY130A          | Open PDK (config pdk::sky130*) |
+| Core Area                | 0.0333 mm²       | From 33,344.5 µm²              |
+| Die Area                 | 0.0400 mm²       | From 40,000 µm²                |
+| Utilization              | 16.77%           | Standard cell utilization      |
+| Standard Cell Count      | 1,179            | Std cell instances             |
+| Sequential Cell Count    | 24               | Sequential elements            |
+| Routing Completion       | 100%             | No DRC routing errors          |
+| Worst Negative Slack     | -0.95 ns         | Timing violation (worst case) at corner:max_ss_100C_1v60 |
+| Total Negative Slack     | -2.61 ns         | Setup violations present in corner:max_ss_100C_1v60|
+| Max Frequency            | 100 MHz         | Estimated from ~2.2 ns slack   |
+| Total Power              | 0.486 mW         | Dynamic + leakage              |
+| DRC Violations           | 0                | Magic + KLayout clean          |
+| LVS                      | Passed           | No LVS errors                  |
+| Antenna Violations       | 0                | Clean                          |
+| GDS Generated            | Yes              | Flow completed successfully    |
+
 ### Command Arbiter Decoder
+
+<p align="center">
+  <img src="../img/layout_gds/arbiter.png" width="49%" />
+  <img src="../img/layout_gds/arbiterwire.png" width="49%" />
+</p>
+
+<p align="center">
+  <em>Layout of the Command Arbiter Decoder. The left image shows the cell placement without metal layers, highlighting the underlying standard-cell structure, while the right image includes the metal routing, illustrating the interconnections and signal wiring across the design.</em>
+</p>
+
+
+| Metric                     | Value            | Notes                          |
+|--------------------------|------------------|--------------------------------|
+| Technology               | SKY130A          | Open PDK (config pdk::sky130*) |
+| Core Area                | 0.1315 mm²       | From 131,454 µm²               |
+| Die Area                 | 0.1444 mm²       | From 144,400 µm²               |
+| Utilization              | 7.19%            | Standard cell utilization      |
+| Standard Cell Count      | 2,898            | Std cell instances             |
+| Sequential Cell Count    | 64               | Sequential elements            |
+| Routing Completion       | 100%             | No unrouted nets               |
+| Worst Negative Slack     | 0.00 ns          | Timing met                     |
+| Total Negative Slack     | 0.00 ns          | No violations                  |
+| Max Frequency            | ~208 MHz         | Estimated from ~4.8 ns slack   |
+| Total Power              | 0.934 mW         | Dynamic + leakage              |
+| DRC Violations           | 0                | Magic + KLayout clean          |
+| LVS                      | Passed           | No LVS errors                  |
+| Antenna Violations       | 3                | Minor violations present       |
+| GDS Generated            | Yes              | Flow completed successfully    |
+
 ### Mask Generator
+
+<p align="center">
+  <img src="../img/layout_gds/mask.png" width="49%" />
+  <img src="../img/layout_gds/maskwire.png" width="49%" />
+</p>
+
+<p align="center">
+  <em>Layout of the Mask Generator. The left image shows the cell placement without metal layers, highlighting the underlying standard-cell structure, while the right image includes the metal routing, illustrating the interconnections and signal wiring across the design.</em>
+</p>
+
+
+| Metric                | Value             | Notes                            |
+| --------------------- | ----------------- | -------------------------------- |
+| Technology            | SKY130A           | Open PDK (config pdk::sky130*)   |
+| Core Area             | 0.131 mm²         | From 131,454 µm²                 |
+| Die Area              | 0.144 mm²         | From 144,400 µm²                 |
+| Utilization           | 39.20%            | From 0.392 (stdcell utilization) |
+| Standard Cell Count   | 7,471             | Std cell instances               |
+| Sequential Cell Count | 599               | Sequential cells                 |
+| Routing Completion    | 100%              | route__drc_errors = 0            |
+| Worst Negative Slack  | -0.36 ns          | timing__setup__wns               |
+| Total Negative Slack  | -9.20 ns          | timing__setup__tns               |
+| Max Frequency         | ~100 MHz (target) | CLOCK_PERIOD ≈ 10 ns (given)     |
+| Total Power           | 9.70 mW           | power__total (0.0097 W)          |
+| DRC Violations        | 0                 | Magic + KLayout clean            |
+| LVS                   | Passed            | No LVS errors                    |
+| Antenna Violations    | 1                 | route__antenna_violation__count  |
+| GDS Generated         | Yes               | Flow completed                   |
+
 ### Memory System
+🚧 Content coming soon.
+
 ### UART
 
+<p align="center">
+  <img src="../img/layout_gds/UART.png" width="49%" />
+  <img src="../img/layout_gds/UARTIRE.png" width="49%" />
+</p>
+
+<p align="center">
+  <em>Layout of the VGA Controller. The left image shows the cell placement without metal layers, highlighting the underlying standard-cell structure, while the right image includes the metal routing, illustrating the interconnections and signal wiring across the design.</em>
+</p>
+
+
+| Metric                | Value             | Notes                                     |
+| --------------------- | ----------------- | ----------------------------------------- |
+| Technology            | SKY130A           | Open PDK (config pdk::sky130*)            |
+| Core Area             | 0.0801 mm²        | From 80,146.9 µm²                         |
+| Die Area              | 0.0900 mm²        | From 90,000 µm²                           |
+| Utilization           | 26.86%            | From 0.2686 (stdcell utilization)         |
+| Standard Cell Count   | 3,331             | design__instance__count                   |
+| Sequential Cell Count | 278               | design__instance__count__class:sequential |
+| Routing Completion    | 100%              | route__drc_errors = 0                     |
+| Worst Negative Slack  | 0.00 ns           | timing__setup__wns                        |
+| Total Negative Slack  | 0.00 ns           | timing__setup__tns                        |
+| Max Frequency         | ~100 MHz (target) | CLOCK_PERIOD ≈ 10 ns                      |
+| Total Power           | 2.66 mW           | power__total (0.00266 W)                  |
+| DRC Violations        | 0                 | Magic + KLayout clean                     |
+| LVS                   | Passed            | No LVS errors (assumed from clean flow)   |
+| Antenna Violations    | 1                 | route__antenna_violation__count           |
+| GDS Generated         | Yes               | Flow completed                            |
+
+
 ## Lacerta Gate Level Simulation
+🚧 Content coming soon.
 
 ## Lacerta PCB
  

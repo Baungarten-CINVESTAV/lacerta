@@ -49,10 +49,7 @@ The **command arbiter and decoder** receives commands arriving from the availabl
 
 This module also resolves control flow when multiple command sources are present, ensuring that commands are accepted in a predictable order. In practice, it serves as the control hub that translates bus-level requests into concrete operations such as drawing, updating buffers, or changing display parameters.
 
-### Display Generation and Mask-Generation Logic
-
-The **display generation logic** converts decoded graphical commands into modifications of the stored image representation. It produces the pixel-level or region-level updates that must be written into memory so that the requested graphical elements appear on the screen.
-
+### Mask-Generation Logic
 The associated **mask-generation logic** supports selective updates by defining which portions of the frame or which pixel groups are affected by a given command. This is useful for rendering structured interface elements such as icons, bars, or indicators while avoiding unnecessary full-frame rewrites.
 
 ### Memory Subsystem and Main Frame Memory
@@ -97,7 +94,7 @@ Firmware executed on the Caravel RISC-V processor is responsible for:
 
 During operation, the RISC-V processor reads incoming data from communication interfaces and translates this information into graphical updates. The processor sends commands through the **Wishbone master interface** to the Lacerta display engine, which writes the corresponding graphical data into the system memory.
 
-The **VGA controller** then reads the graphical data stored in memory and generates the video signal that produces the final image on the display.
+The **VGA controller** reads the graphical data stored in memory and generates the video signal that produces the final image on the display.
 
 In addition to running on the embedded processor, the Lacerta system can also interact with **external microcontrollers**. In this configuration, an external controller may collect sensor data or perform additional processing and then transmit the relevant information to the Caravel system using standard communication interfaces such as **UART, SPI, or I2C**.
 
