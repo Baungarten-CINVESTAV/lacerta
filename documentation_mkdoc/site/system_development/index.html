@@ -117,6 +117,10 @@
     <li class="toctree-l2"><a class="reference internal" href="#lacerta-pcb">Lacerta PCB</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#lacerta-interface-design-software">Lacerta Interface Design Software</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#lacerta-interface-design-software-gui-notes">Lacerta Interface Design Software — GUI Notes</a>
+    </li>
+        </ul>
     </li>
     </ul>
                 </li>
@@ -356,6 +360,14 @@
 <p>Another major stage in the development was the creation of the <strong>serialization and export flow</strong>. Scene content is converted into structured dictionaries through helper routines such as <code>_serialize_item</code>, then saved as JSON so that the interface can be reloaded and edited later. During export, the tool generates the assets needed by the Lacerta platform, including rendered images and binary or textual data representations derived from the current scene. The export path is therefore not limited to storing editor state; it also prepares the interface information in a form that can be consumed by the Lacerta hardware and firmware flow.</p>
 <p>The software was further extended with a <strong>deployment path to hardware</strong> through serial communication. The <code>SerialLoader</code> class implements memory-oriented UART transactions that allow the application to send masks, background images, and compiled interface-related data directly to the target platform. The upload process is executed asynchronously through <code>UploadWorker</code>, preventing the graphical interface from blocking during long transfers. In this way, the software does not stop at design-time preview: it acts as the operational bridge between the interface editor and the real Lacerta system running on hardware.</p>
 <p>Finally, the development of the Lacerta Interface Design Software incorporated supporting features that improve usability and reproducibility, such as persistent settings, toolchain-path checking, scene management, canvas background handling, and multi-depth export support. Together, these elements make the application a key part of the Lacerta ecosystem: it is the environment where interfaces are conceived, visually assembled, converted into deployable assets, and finally transferred to the embedded graphics hardware for execution.</p>
+<h3 id="lacerta-interface-design-software-gui-notes">Lacerta Interface Design Software — GUI Notes</h3>
+<p>Important:
+- The prebuilt GUI in this repository is currently distributed as a Windows executable package and can only be run on <strong>Windows</strong>.
+- Before running the GUI, you must extract the files located in <code>Interface_Design_Software/exe_file_GUI</code> (the RAR parts). Ensure all parts are in the same directory and extract them with a tool such as 7-Zip or WinRAR.</p>
+<p>Quick steps
+1. Copy the folder <a href="https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/Interface_Design_Software/exe_file_GUI">Interface_Design_Software/exe_file_GUI</a> to a Windows machine (or access it from Windows).
+2. Extract/unpack all archive parts (e.g. LacertaHMIDesigner.part1.rar, part2, part3) into a single directory.
+3. Run the extracted installer or executable on Windows.</p>
               
             </div>
           </div><footer>

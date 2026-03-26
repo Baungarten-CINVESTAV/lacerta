@@ -38,6 +38,32 @@ The ASIC receives input data from sensors, external microcontrollers, or other e
 
 The goal of Lacerta is to provide a low-cost, fully open-source reference architecture for embedded human–machine interfaces (HMI). By combining configurable hardware graphics generation with flexible input interfaces, Lacerta enables the rapid development of customizable dashboards and monitoring systems for industrial, commercial, and edge-IoT applications.
 
+<p align="center">
+<img src="documentation_mkdoc/docs/img/Flow_interface.drawio.svg">
+</p>
+<p align="center">
+<b>Figure 4.</b> Lacerta interface creation workflow. A graphical editor is used to design custom interface layouts, which are translated into configuration data interpreted by the Lacerta hardware engine to generate the graphical display.
+</p>
+
+<p align="center">
+<img src="documentation_mkdoc/docs/img/lacerta_blockd2.svg">
+</p>
+<p align="center">
+<b>Figure 5.</b> Block diagram of the Lacerta ASIC inside the Caravel environment. The figure shows how a host computer or the embedded Caravel RISC-V processor sends commands through UART and Wishbone interfaces to the command arbiter, rendering logic, and memory subsystem; the updated frame data is then read by the VGA controller to drive the screen.
+</p>
+
+## Open and Reproducible Architecture
+
+Lacerta is designed as a **fully open-source reference architecture**. The project includes all required design artifacts to reproduce the system, including:
+
+- Documentation (Current file)
+- [RTL source code for the ASIC implementation](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/verilog/rtl)
+- [Librelane physical design flow integration](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/openlane)  
+- [Verification testbenches]()  
+- [PCB design files]()
+- [Firmware examples](https://github.com/chipfoundry/caravel_board)  
+- [Interface design tools](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/Interface_Design_Software)
+
 ### Lacerta Interface Design Software — GUI Notes
 
 Important:
@@ -45,7 +71,7 @@ Important:
 - Before running the GUI, you must extract the files located in `Interface_Design_Software/exe_file_GUI` (the RAR parts). Ensure all parts are in the same directory and extract them with a tool such as 7-Zip or WinRAR.
 
 Quick steps
-1. Copy the folder [Interface_Design_Software/exe_file_GUI](Interface_Design_Software/exe_file_GUI) to a Windows machine (or access it from Windows).
+1. Copy the folder [Interface_Design_Software/exe_file_GUI](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/Interface_Design_Software/exe_file_GUI) to a Windows machine (or access it from Windows).
 2. Extract/unpack all archive parts (e.g. LacertaHMIDesigner.part1.rar, part2, part3) into a single directory.
 3. Run the extracted installer or executable on Windows.
 

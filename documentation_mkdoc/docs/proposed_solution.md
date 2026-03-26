@@ -65,11 +65,12 @@ This workflow allows developers to design complex interfaces without writing ext
 
 Lacerta is designed as a **fully open-source reference architecture**. The project includes all required design artifacts to reproduce the system, including:
 
-- RTL source code for the ASIC implementation  
-- OpenLane physical design flow integration  
-- verification testbenches  
-- PCB design files  
-- firmware examples  
-- documentation and interface design tools
+- Documentation (Current file)
+- [RTL source code for the ASIC implementation](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/verilog/rtl)
+- [Librelane physical design flow integration](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/openlane)  
+- [Verification testbenches]()  
+- [PCB design files]()
+- [Firmware examples](https://github.com/chipfoundry/caravel_board)  
+- [Interface design tools](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/Interface_Design_Software)
 
 By providing an open and reproducible platform, Lacerta enables developers, researchers, and educators to build customizable embedded human–machine interfaces for industrial, commercial, and edge-IoT applications.

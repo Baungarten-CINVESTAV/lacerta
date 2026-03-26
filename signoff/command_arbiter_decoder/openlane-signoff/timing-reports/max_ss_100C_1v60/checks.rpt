@@ -1,0 +1,771 @@
+
+===========================================================================
+report_checks -unconstrained
+===========================================================================
+======================= max_ss_100C_1v60 Corner ===================================
+
+Startpoint: _0986_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _0986_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock clk (rise edge)
+                                  0.000000    0.000000   clock source latency
+     2    0.056797    0.000000    0.000000    0.000000 ^ clk (in)
+                                                         clk (net)
+                      0.007984    0.003992    0.003992 ^ clkbuf_0_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    33    0.237275    0.371311    0.420093    0.424085 ^ clkbuf_0_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_0_clk (net)
+                      0.375139    0.030295    0.454380 ^ clkbuf_4_0_0_clk/A (sky130_fd_sc_hd__clkbuf_8)
+    16    0.056704    0.172767    0.438754    0.893134 ^ clkbuf_4_0_0_clk/X (sky130_fd_sc_hd__clkbuf_8)
+                                                         clknet_4_0_0_clk (net)
+                      0.173790    0.009829    0.902963 ^ _0986_/CLK (sky130_fd_sc_hd__dfrtp_1)
+     2    0.012308    0.160069    0.871735    1.774698 v _0986_/Q (sky130_fd_sc_hd__dfrtp_1)
+                                                         net273 (net)
+                      0.160069    0.000341    1.775039 v hold153/A (sky130_fd_sc_hd__dlygate4sd3_1)
+     1    0.002652    0.104671    1.164136    2.939175 v hold153/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                                                         net528 (net)
+                      0.104671    0.000195    2.939369 v _0732_/A1 (sky130_fd_sc_hd__mux2_1)
+     1    0.002536    0.114321    0.658238    3.597607 v _0732_/X (sky130_fd_sc_hd__mux2_1)
+                                                         _0384_ (net)
+                      0.114321    0.000170    3.597777 v _0733_/A1 (sky130_fd_sc_hd__mux2_1)
+     1    0.002204    0.104804    0.656306    4.254084 v _0733_/X (sky130_fd_sc_hd__mux2_1)
+                                                         _0106_ (net)
+                      0.104804    0.000160    4.254244 v _0986_/D (sky130_fd_sc_hd__dfrtp_1)
+                                              4.254244   data arrival time
+
+                                 10.000000   10.000000   clock clk (rise edge)
+                                  0.000000   10.000000   clock source latency
+     2    0.056797    0.000000    0.000000   10.000000 ^ clk (in)
+                                                         clk (net)
+                      0.007984    0.003992   10.003993 ^ clkbuf_0_clk/A (sky130_fd_sc_hd__clkbuf_16)
+    33    0.237275    0.371311    0.420093   10.424086 ^ clkbuf_0_clk/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_0_clk (net)
+                      0.375139    0.030294   10.454380 ^ clkbuf_4_0_0_clk/A (sky130_fd_sc_hd__clkbuf_8)
+    16    0.056704    0.172767    0.438754   10.893134 ^ clkbuf_4_0_0_clk/X (sky130_fd_sc_hd__clkbuf_8)
+                                                         clknet_4_0_0_clk (net)
+                      0.173790    0.009829   10.902964 ^ _0986_/CLK (sky130_fd_sc_hd__dfrtp_1)
+                                  0.000000   10.902964   clock reconvergence pessimism
+                                 -0.263393   10.639570   library setup time
+                                             10.639570   data required time
+---------------------------------------------------------------------------------------------
+                                             10.639570   data required time
+                                             -4.254244   data arrival time
+---------------------------------------------------------------------------------------------
+                                              6.385327   slack (MET)
+
+
+
+
+===========================================================================
+report_checks --slack_max -0.01
+============================================================================
+======================= max_ss_100C_1v60 Corner ===================================
+
+No paths found.
+
+
+===========================================================================
+ report_check_types -max_slew -max_cap -max_fanout -violators
+============================================================================
+======================= max_ss_100C_1v60 Corner ===================================
+
+max slew
+
+Pin                                        Limit        Slew       Slack
+------------------------------------------------------------------------
+ANTENNA__0920__RESET_B/DIODE            1.500000    1.679172   -0.179172 (VIOLATED)
+_0920_/RESET_B                          1.500000    1.679105   -0.179105 (VIOLATED)
+ANTENNA__0983__RESET_B/DIODE            1.500000    1.679073   -0.179073 (VIOLATED)
+_0983_/RESET_B                          1.500000    1.679036   -0.179036 (VIOLATED)
+ANTENNA__0931__RESET_B/DIODE            1.500000    1.678900   -0.178900 (VIOLATED)
+ANTENNA__0961__RESET_B/DIODE            1.500000    1.678858   -0.178858 (VIOLATED)
+_0931_/RESET_B                          1.500000    1.678429   -0.178429 (VIOLATED)
+ANTENNA__0863__RESET_B/DIODE            1.500000    1.678422   -0.178422 (VIOLATED)
+_0863_/RESET_B                          1.500000    1.678356   -0.178356 (VIOLATED)
+_0952_/RESET_B                          1.500000    1.678287   -0.178288 (VIOLATED)
+ANTENNA__0952__RESET_B/DIODE            1.500000    1.677964   -0.177964 (VIOLATED)
+_0961_/RESET_B                          1.500000    1.676960   -0.176960 (VIOLATED)
+ANTENNA__0862__RESET_B/DIODE            1.500000    1.675839   -0.175839 (VIOLATED)
+ANTENNA__0841__RESET_B/DIODE            1.500000    1.675784   -0.175784 (VIOLATED)
+_0862_/RESET_B                          1.500000    1.675770   -0.175770 (VIOLATED)
+ANTENNA__0928__RESET_B/DIODE            1.500000    1.675039   -0.175039 (VIOLATED)
+_0928_/RESET_B                          1.500000    1.674962   -0.174962 (VIOLATED)
+_0841_/RESET_B                          1.500000    1.674881   -0.174881 (VIOLATED)
+_0986_/RESET_B                          1.500000    1.674860   -0.174861 (VIOLATED)
+ANTENNA__0986__RESET_B/DIODE            1.500000    1.674591   -0.174591 (VIOLATED)
+ANTENNA__0951__RESET_B/DIODE            1.500000    1.673747   -0.173747 (VIOLATED)
+_0951_/RESET_B                          1.500000    1.672153   -0.172153 (VIOLATED)
+_0973_/RESET_B                          1.500000    1.669615   -0.169615 (VIOLATED)
+ANTENNA__0973__RESET_B/DIODE            1.500000    1.669428   -0.169428 (VIOLATED)
+ANTENNA__0975__RESET_B/DIODE            1.500000    1.666867   -0.166867 (VIOLATED)
+_0953_/RESET_B                          1.500000    1.663316   -0.163316 (VIOLATED)
+_0975_/RESET_B                          1.500000    1.663121   -0.163121 (VIOLATED)
+ANTENNA__0953__RESET_B/DIODE            1.500000    1.658270   -0.158270 (VIOLATED)
+_0917_/RESET_B                          1.500000    1.656174   -0.156174 (VIOLATED)
+ANTENNA__0917__RESET_B/DIODE            1.500000    1.656162   -0.156162 (VIOLATED)
+ANTENNA__0853__RESET_B/DIODE            1.500000    1.656109   -0.156109 (VIOLATED)
+_0853_/RESET_B                          1.500000    1.656045   -0.156045 (VIOLATED)
+ANTENNA__0942__RESET_B/DIODE            1.500000    1.653642   -0.153642 (VIOLATED)
+ANTENNA__0964__RESET_B/DIODE            1.500000    1.653567   -0.153567 (VIOLATED)
+_0942_/RESET_B                          1.500000    1.653523   -0.153523 (VIOLATED)
+_0964_/RESET_B                          1.500000    1.650432   -0.150432 (VIOLATED)
+ANTENNA__0829__SET_B/DIODE              1.500000    1.649186   -0.149186 (VIOLATED)
+_0829_/SET_B                            1.500000    1.646335   -0.146335 (VIOLATED)
+_0832_/RESET_B                          1.500000    1.639704   -0.139704 (VIOLATED)
+ANTENNA__0832__RESET_B/DIODE            1.500000    1.639313   -0.139313 (VIOLATED)
+_0971_/RESET_B                          1.500000    1.634621   -0.134621 (VIOLATED)
+ANTENNA__0971__RESET_B/DIODE            1.500000    1.634618   -0.134618 (VIOLATED)
+ANTENNA__0839__RESET_B/DIODE            1.500000    1.630814   -0.130814 (VIOLATED)
+_0839_/RESET_B                          1.500000    1.630551   -0.130551 (VIOLATED)
+_0860_/RESET_B                          1.500000    1.629750   -0.129750 (VIOLATED)
+_0949_/RESET_B                          1.500000    1.629585   -0.129585 (VIOLATED)
+ANTENNA__0949__RESET_B/DIODE            1.500000    1.629175   -0.129175 (VIOLATED)
+ANTENNA__0850__SET_B/DIODE              1.500000    1.628101   -0.128101 (VIOLATED)
+_0850_/SET_B                            1.500000    1.628039   -0.128039 (VIOLATED)
+ANTENNA__0860__RESET_B/DIODE            1.500000    1.627333   -0.127333 (VIOLATED)
+ANTENNA__0939__RESET_B/DIODE            1.500000    1.622124   -0.122124 (VIOLATED)
+_0939_/RESET_B                          1.500000    1.622085   -0.122085 (VIOLATED)
+ANTENNA__1004__RESET_B/DIODE            1.500000    1.611525   -0.111525 (VIOLATED)
+_1004_/RESET_B                          1.500000    1.607444   -0.107444 (VIOLATED)
+_0705_/Y                                1.495779    1.595688   -0.099909 (VIOLATED)
+_0959_/RESET_B                          1.500000    1.599016   -0.099016 (VIOLATED)
+_0732_/S                                1.500000    1.598678   -0.098678 (VIOLATED)
+ANTENNA__0732__S/DIODE                  1.500000    1.598666   -0.098666 (VIOLATED)
+_0726_/S                                1.500000    1.598637   -0.098637 (VIOLATED)
+ANTENNA__0726__S/DIODE                  1.500000    1.598624   -0.098624 (VIOLATED)
+_0728_/S                                1.500000    1.598343   -0.098343 (VIOLATED)
+ANTENNA__0728__S/DIODE                  1.500000    1.598339   -0.098339 (VIOLATED)
+ANTENNA__0959__RESET_B/DIODE            1.500000    1.598171   -0.098171 (VIOLATED)
+_0724_/S                                1.500000    1.598139   -0.098140 (VIOLATED)
+ANTENNA__0724__S/DIODE                  1.500000    1.597994   -0.097994 (VIOLATED)
+_0707_/S                                1.500000    1.597733   -0.097733 (VIOLATED)
+ANTENNA__0707__S/DIODE                  1.500000    1.597638   -0.097638 (VIOLATED)
+ANTENNA__0714__S/DIODE                  1.500000    1.597535   -0.097535 (VIOLATED)
+_0714_/S                                1.500000    1.597446   -0.097446 (VIOLATED)
+_0712_/S                                1.500000    1.597384   -0.097384 (VIOLATED)
+ANTENNA__0712__S/DIODE                  1.500000    1.597377   -0.097377 (VIOLATED)
+ANTENNA__0730__S/DIODE                  1.500000    1.597203   -0.097203 (VIOLATED)
+_0730_/S                                1.500000    1.597114   -0.097114 (VIOLATED)
+_0734_/B                                1.500000    1.595912   -0.095912 (VIOLATED)
+ANTENNA__0734__B/DIODE                  1.500000    1.595911   -0.095911 (VIOLATED)
+_0742_/B                                1.500000    1.595899   -0.095899 (VIOLATED)
+ANTENNA__0742__B/DIODE                  1.500000    1.595891   -0.095891 (VIOLATED)
+_0720_/B                                1.500000    1.595879   -0.095879 (VIOLATED)
+ANTENNA__0720__B/DIODE                  1.500000    1.595878   -0.095878 (VIOLATED)
+_0738_/B                                1.500000    1.595858   -0.095858 (VIOLATED)
+ANTENNA__0738__B/DIODE                  1.500000    1.595856   -0.095856 (VIOLATED)
+_0746_/B                                1.500000    1.595785   -0.095785 (VIOLATED)
+ANTENNA__0746__B/DIODE                  1.500000    1.595782   -0.095782 (VIOLATED)
+_0709_/S                                1.500000    1.595759   -0.095759 (VIOLATED)
+ANTENNA__0709__S/DIODE                  1.500000    1.595756   -0.095756 (VIOLATED)
+_0706_/B                                1.500000    1.595753   -0.095753 (VIOLATED)
+ANTENNA__0706__B/DIODE                  1.500000    1.595752   -0.095752 (VIOLATED)
+ANTENNA__0716__B/DIODE                  1.500000    1.595735   -0.095735 (VIOLATED)
+_0716_/B                                1.500000    1.595732   -0.095732 (VIOLATED)
+ANTENNA__0705__Y/DIODE                  1.500000    1.595712   -0.095712 (VIOLATED)
+_0848_/SET_B                            1.500000    1.589609   -0.089609 (VIOLATED)
+ANTENNA__0848__SET_B/DIODE              1.500000    1.588918   -0.088918 (VIOLATED)
+ANTENNA__0948__RESET_B/DIODE            1.500000    1.585402   -0.085402 (VIOLATED)
+_0948_/RESET_B                          1.500000    1.585026   -0.085026 (VIOLATED)
+_0965_/RESET_B                          1.500000    1.579291   -0.079291 (VIOLATED)
+ANTENNA__0965__RESET_B/DIODE            1.500000    1.578865   -0.078865 (VIOLATED)
+_0926_/RESET_B                          1.500000    1.572532   -0.072532 (VIOLATED)
+ANTENNA__0926__RESET_B/DIODE            1.500000    1.572436   -0.072436 (VIOLATED)
+ANTENNA__0915__RESET_B/DIODE            1.500000    1.571858   -0.071858 (VIOLATED)
+_0915_/RESET_B                          1.500000    1.571776   -0.071776 (VIOLATED)
+ANTENNA__0943__RESET_B/DIODE            1.500000    1.570421   -0.070421 (VIOLATED)
+_0943_/RESET_B                          1.500000    1.570381   -0.070381 (VIOLATED)
+ANTENNA__0854__RESET_B/DIODE            1.500000    1.564171   -0.064171 (VIOLATED)
+_0854_/RESET_B                          1.500000    1.564135   -0.064135 (VIOLATED)
+ANTENNA__0861__RESET_B/DIODE            1.500000    1.552872   -0.052872 (VIOLATED)
+_0950_/RESET_B                          1.500000    1.552632   -0.052632 (VIOLATED)
+ANTENNA__0950__RESET_B/DIODE            1.500000    1.552548   -0.052548 (VIOLATED)
+_0861_/RESET_B                          1.500000    1.552462   -0.052462 (VIOLATED)
+ANTENNA__0856__SET_B/DIODE              1.500000    1.543848   -0.043848 (VIOLATED)
+ANTENNA__0945__RESET_B/DIODE            1.500000    1.543806   -0.043806 (VIOLATED)
+_0945_/RESET_B                          1.500000    1.543732   -0.043732 (VIOLATED)
+_0856_/SET_B                            1.500000    1.543398   -0.043398 (VIOLATED)
+ANTENNA__0840__SET_B/DIODE              1.500000    1.527185   -0.027185 (VIOLATED)
+_0840_/SET_B                            1.500000    1.523156   -0.023156 (VIOLATED)
+_0972_/RESET_B                          1.500000    1.517810   -0.017810 (VIOLATED)
+ANTENNA__0972__RESET_B/DIODE            1.500000    1.517775   -0.017775 (VIOLATED)
+ANTENNA__0970__RESET_B/DIODE            1.500000    1.513972   -0.013972 (VIOLATED)
+_0970_/RESET_B                          1.500000    1.513336   -0.013336 (VIOLATED)
+ANTENNA__0859__SET_B/DIODE              1.500000    1.511538   -0.011538 (VIOLATED)
+_0859_/SET_B                            1.500000    1.511039   -0.011039 (VIOLATED)
+ANTENNA__0838__SET_B/DIODE              1.500000    1.509001   -0.009001 (VIOLATED)
+_0477_/Y                                1.496182    1.499850   -0.003668 (VIOLATED)
+_0838_/SET_B                            1.500000    1.501589   -0.001589 (VIOLATED)
+_0793_/C                                1.500000    1.500021   -0.000021 (VIOLATED)
+max_cap318/A                            1.500000    1.500020   -0.000020 (VIOLATED)
+ANTENNA__0538__B/DIODE                  1.500000    1.500018   -0.000018 (VIOLATED)
+_0538_/B                                1.500000    1.500018   -0.000018 (VIOLATED)
+ANTENNA_max_cap318_A/DIODE              1.500000    1.500018   -0.000018 (VIOLATED)
+_0774_/C                                1.500000    1.500017   -0.000017 (VIOLATED)
+ANTENNA__0793__C/DIODE                  1.500000    1.500016   -0.000016 (VIOLATED)
+ANTENNA__0774__C/DIODE                  1.500000    1.500015   -0.000016 (VIOLATED)
+_0763_/D                                1.500000    1.500007   -0.000007 (VIOLATED)
+ANTENNA__0763__D/DIODE                  1.500000    1.500005   -0.000006 (VIOLATED)
+
+max capacitance
+
+Pin                                        Limit         Cap       Slack
+------------------------------------------------------------------------
+_0705_/Y                                0.167551    0.184962   -0.017411 (VIOLATED)
+_0477_/Y                                0.065012    0.067146   -0.002134 (VIOLATED)
+_0440_/Y                                0.036631    0.037640   -0.001009 (VIOLATED)
+
+
+
+===========================================================================
+report_parasitic_annotation -report_unannotated
+============================================================================
+Found 112 unannotated drivers.
+ host_rd_buff_empty
+ uart_mem_raddr[0]
+ uart_mem_raddr[1]
+ uart_mem_raddr[2]
+ uart_mem_raddr[3]
+ uart_mem_raddr[4]
+ uart_mem_raddr[5]
+ uart_mem_raddr[6]
+ uart_mem_raddr[7]
+ uart_mem_wdata[22]
+ uart_mem_wdata[23]
+ uart_mem_wdata[24]
+ uart_mem_wdata[25]
+ uart_mem_wdata[26]
+ uart_mem_wdata[27]
+ uart_mem_wdata[28]
+ uart_mem_wdata[29]
+ uart_mem_wdata[30]
+ uart_mem_wdata[31]
+ wb_slave_mem_raddr[28]
+ wb_slave_mem_raddr[29]
+ wb_slave_mem_raddr[30]
+ wb_slave_mem_raddr[31]
+ wb_slave_mem_waddr[28]
+ wb_slave_mem_waddr[29]
+ wb_slave_mem_waddr[30]
+ wb_slave_mem_waddr[31]
+ wb_slave_mem_wdata[22]
+ wb_slave_mem_wdata[23]
+ wb_slave_mem_wdata[24]
+ wb_slave_mem_wdata[25]
+ wb_slave_mem_wdata[26]
+ wb_slave_mem_wdata[27]
+ wb_slave_mem_wdata[28]
+ wb_slave_mem_wdata[29]
+ wb_slave_mem_wdata[30]
+ wb_slave_mem_wdata[31]
+ wb_slave_mem_wmask[0]
+ wb_slave_mem_wmask[1]
+ wb_slave_mem_wmask[2]
+ wb_slave_mem_wmask[3]
+ clkload0/X
+ clkload1/Y
+ clkload10/Y
+ clkload11/Y
+ clkload12/Y
+ clkload13/X
+ clkload14/Y
+ clkload2/Y
+ clkload3/Y
+ clkload4/Y
+ clkload5/X
+ clkload6/Y
+ clkload7/Y
+ clkload8/Y
+ clkload9/X
+ command_arbiter_decoder_320/HI
+ command_arbiter_decoder_321/HI
+ command_arbiter_decoder_322/HI
+ command_arbiter_decoder_323/HI
+ command_arbiter_decoder_324/HI
+ command_arbiter_decoder_325/HI
+ command_arbiter_decoder_326/HI
+ command_arbiter_decoder_327/HI
+ command_arbiter_decoder_328/HI
+ command_arbiter_decoder_329/HI
+ command_arbiter_decoder_330/HI
+ command_arbiter_decoder_331/HI
+ command_arbiter_decoder_332/HI
+ command_arbiter_decoder_333/HI
+ command_arbiter_decoder_334/HI
+ command_arbiter_decoder_335/HI
+ command_arbiter_decoder_336/HI
+ command_arbiter_decoder_337/HI
+ command_arbiter_decoder_338/HI
+ command_arbiter_decoder_339/HI
+ command_arbiter_decoder_340/HI
+ command_arbiter_decoder_341/HI
+ command_arbiter_decoder_342/HI
+ command_arbiter_decoder_343/HI
+ command_arbiter_decoder_344/HI
+ command_arbiter_decoder_345/HI
+ command_arbiter_decoder_346/HI
+ command_arbiter_decoder_347/HI
+ command_arbiter_decoder_348/HI
+ command_arbiter_decoder_349/HI
+ command_arbiter_decoder_350/HI
+ command_arbiter_decoder_351/HI
+ command_arbiter_decoder_352/HI
+ command_arbiter_decoder_353/HI
+ command_arbiter_decoder_354/HI
+ command_arbiter_decoder_355/HI
+ command_arbiter_decoder_356/HI
+ command_arbiter_decoder_357/HI
+ command_arbiter_decoder_358/HI
+ command_arbiter_decoder_359/HI
+ command_arbiter_decoder_360/HI
+ command_arbiter_decoder_361/HI
+ command_arbiter_decoder_362/HI
+ command_arbiter_decoder_363/HI
+ command_arbiter_decoder_364/HI
+ command_arbiter_decoder_365/HI
+ command_arbiter_decoder_366/HI
+ command_arbiter_decoder_367/HI
+ command_arbiter_decoder_368/HI
+ command_arbiter_decoder_369/HI
+ command_arbiter_decoder_370/HI
+ command_arbiter_decoder_371/HI
+ command_arbiter_decoder_372/HI
+ command_arbiter_decoder_373/HI
+ command_arbiter_decoder_374/HI
+ command_arbiter_decoder_375/LO
+Found 0 partially unannotated drivers.
+
+===========================================================================
+max slew violation count 133
+max fanout violation count 0
+max cap violation count 3
+============================================================================
+
+===========================================================================
+check_setup -verbose -unconstrained_endpoints -multiple_clock -no_clock -no_input_delay -loops -generated_clocks
+===========================================================================
+Warning: There are 167 input ports missing set_input_delay.
+  arst_n
+  drw_inc_busy
+  host_rd_buff_empty
+  host_rd_buff_rdata[0]
+  host_rd_buff_rdata[1]
+  host_rd_buff_rdata[2]
+  host_rd_buff_rdata[3]
+  host_rd_buff_rdata[4]
+  host_rd_buff_rdata[5]
+  host_rd_buff_rdata[6]
+  host_rd_buff_rdata[7]
+  host_rpg_ack
+  host_wpg_ack
+  host_wr_buff_full
+  uart_mem_raddr[0]
+  uart_mem_raddr[1]
+  uart_mem_raddr[2]
+  uart_mem_raddr[3]
+  uart_mem_raddr[4]
+  uart_mem_raddr[5]
+  uart_mem_raddr[6]
+  uart_mem_raddr[7]
+  uart_mem_re
+  uart_mem_waddr[0]
+  uart_mem_waddr[1]
+  uart_mem_waddr[2]
+  uart_mem_waddr[3]
+  uart_mem_waddr[4]
+  uart_mem_waddr[5]
+  uart_mem_waddr[6]
+  uart_mem_waddr[7]
+  uart_mem_wdata[0]
+  uart_mem_wdata[10]
+  uart_mem_wdata[11]
+  uart_mem_wdata[12]
+  uart_mem_wdata[13]
+  uart_mem_wdata[14]
+  uart_mem_wdata[15]
+  uart_mem_wdata[16]
+  uart_mem_wdata[17]
+  uart_mem_wdata[18]
+  uart_mem_wdata[19]
+  uart_mem_wdata[1]
+  uart_mem_wdata[20]
+  uart_mem_wdata[21]
+  uart_mem_wdata[22]
+  uart_mem_wdata[23]
+  uart_mem_wdata[24]
+  uart_mem_wdata[25]
+  uart_mem_wdata[26]
+  uart_mem_wdata[27]
+  uart_mem_wdata[28]
+  uart_mem_wdata[29]
+  uart_mem_wdata[2]
+  uart_mem_wdata[30]
+  uart_mem_wdata[31]
+  uart_mem_wdata[3]
+  uart_mem_wdata[4]
+  uart_mem_wdata[5]
+  uart_mem_wdata[6]
+  uart_mem_wdata[7]
+  uart_mem_wdata[8]
+  uart_mem_wdata[9]
+  uart_mem_we
+  wb_mem_sys_wb_ack_o
+  wb_slave_mem_raddr[0]
+  wb_slave_mem_raddr[10]
+  wb_slave_mem_raddr[11]
+  wb_slave_mem_raddr[12]
+  wb_slave_mem_raddr[13]
+  wb_slave_mem_raddr[14]
+  wb_slave_mem_raddr[15]
+  wb_slave_mem_raddr[16]
+  wb_slave_mem_raddr[17]
+  wb_slave_mem_raddr[18]
+  wb_slave_mem_raddr[19]
+  wb_slave_mem_raddr[1]
+  wb_slave_mem_raddr[20]
+  wb_slave_mem_raddr[21]
+  wb_slave_mem_raddr[22]
+  wb_slave_mem_raddr[23]
+  wb_slave_mem_raddr[24]
+  wb_slave_mem_raddr[25]
+  wb_slave_mem_raddr[26]
+  wb_slave_mem_raddr[27]
+  wb_slave_mem_raddr[28]
+  wb_slave_mem_raddr[29]
+  wb_slave_mem_raddr[2]
+  wb_slave_mem_raddr[30]
+  wb_slave_mem_raddr[31]
+  wb_slave_mem_raddr[3]
+  wb_slave_mem_raddr[4]
+  wb_slave_mem_raddr[5]
+  wb_slave_mem_raddr[6]
+  wb_slave_mem_raddr[7]
+  wb_slave_mem_raddr[8]
+  wb_slave_mem_raddr[9]
+  wb_slave_mem_re
+  wb_slave_mem_waddr[0]
+  wb_slave_mem_waddr[10]
+  wb_slave_mem_waddr[11]
+  wb_slave_mem_waddr[12]
+  wb_slave_mem_waddr[13]
+  wb_slave_mem_waddr[14]
+  wb_slave_mem_waddr[15]
+  wb_slave_mem_waddr[16]
+  wb_slave_mem_waddr[17]
+  wb_slave_mem_waddr[18]
+  wb_slave_mem_waddr[19]
+  wb_slave_mem_waddr[1]
+  wb_slave_mem_waddr[20]
+  wb_slave_mem_waddr[21]
+  wb_slave_mem_waddr[22]
+  wb_slave_mem_waddr[23]
+  wb_slave_mem_waddr[24]
+  wb_slave_mem_waddr[25]
+  wb_slave_mem_waddr[26]
+  wb_slave_mem_waddr[27]
+  wb_slave_mem_waddr[28]
+  wb_slave_mem_waddr[29]
+  wb_slave_mem_waddr[2]
+  wb_slave_mem_waddr[30]
+  wb_slave_mem_waddr[31]
+  wb_slave_mem_waddr[3]
+  wb_slave_mem_waddr[4]
+  wb_slave_mem_waddr[5]
+  wb_slave_mem_waddr[6]
+  wb_slave_mem_waddr[7]
+  wb_slave_mem_waddr[8]
+  wb_slave_mem_waddr[9]
+  wb_slave_mem_wdata[0]
+  wb_slave_mem_wdata[10]
+  wb_slave_mem_wdata[11]
+  wb_slave_mem_wdata[12]
+  wb_slave_mem_wdata[13]
+  wb_slave_mem_wdata[14]
+  wb_slave_mem_wdata[15]
+  wb_slave_mem_wdata[16]
+  wb_slave_mem_wdata[17]
+  wb_slave_mem_wdata[18]
+  wb_slave_mem_wdata[19]
+  wb_slave_mem_wdata[1]
+  wb_slave_mem_wdata[20]
+  wb_slave_mem_wdata[21]
+  wb_slave_mem_wdata[22]
+  wb_slave_mem_wdata[23]
+  wb_slave_mem_wdata[24]
+  wb_slave_mem_wdata[25]
+  wb_slave_mem_wdata[26]
+  wb_slave_mem_wdata[27]
+  wb_slave_mem_wdata[28]
+  wb_slave_mem_wdata[29]
+  wb_slave_mem_wdata[2]
+  wb_slave_mem_wdata[30]
+  wb_slave_mem_wdata[31]
+  wb_slave_mem_wdata[3]
+  wb_slave_mem_wdata[4]
+  wb_slave_mem_wdata[5]
+  wb_slave_mem_wdata[6]
+  wb_slave_mem_wdata[7]
+  wb_slave_mem_wdata[8]
+  wb_slave_mem_wdata[9]
+  wb_slave_mem_we
+  wb_slave_mem_wmask[0]
+  wb_slave_mem_wmask[1]
+  wb_slave_mem_wmask[2]
+  wb_slave_mem_wmask[3]
+Warning: There are 253 unconstrained endpoints.
+  conf_logics_0[0]
+  conf_logics_0[10]
+  conf_logics_0[11]
+  conf_logics_0[12]
+  conf_logics_0[13]
+  conf_logics_0[14]
+  conf_logics_0[15]
+  conf_logics_0[16]
+  conf_logics_0[17]
+  conf_logics_0[18]
+  conf_logics_0[19]
+  conf_logics_0[1]
+  conf_logics_0[20]
+  conf_logics_0[2]
+  conf_logics_0[3]
+  conf_logics_0[4]
+  conf_logics_0[5]
+  conf_logics_0[6]
+  conf_logics_0[7]
+  conf_logics_0[8]
+  conf_logics_0[9]
+  conf_logics_1[0]
+  conf_logics_1[10]
+  conf_logics_1[11]
+  conf_logics_1[12]
+  conf_logics_1[13]
+  conf_logics_1[14]
+  conf_logics_1[15]
+  conf_logics_1[16]
+  conf_logics_1[17]
+  conf_logics_1[18]
+  conf_logics_1[19]
+  conf_logics_1[1]
+  conf_logics_1[20]
+  conf_logics_1[2]
+  conf_logics_1[3]
+  conf_logics_1[4]
+  conf_logics_1[5]
+  conf_logics_1[6]
+  conf_logics_1[7]
+  conf_logics_1[8]
+  conf_logics_1[9]
+  drw_inc_start
+  host_rd_buff_rden
+  host_rpg_burst_length[0]
+  host_rpg_burst_length[1]
+  host_rpg_burst_length[2]
+  host_rpg_burst_length[3]
+  host_rpg_burst_length[4]
+  host_rpg_burst_length[5]
+  host_rpg_burst_length[6]
+  host_rpg_burst_length[7]
+  host_rpg_burst_length[8]
+  host_rpg_burst_length[9]
+  host_rpg_busy
+  host_rpg_st_addr[0]
+  host_rpg_st_addr[1]
+  host_rpg_st_addr[2]
+  host_rpg_st_addr[3]
+  host_rpg_st_addr[4]
+  host_rpg_st_addr[5]
+  host_rpg_st_addr[6]
+  host_rpg_st_addr[7]
+  host_rpg_st_addr[8]
+  host_rpg_st_addr[9]
+  host_wpg_burst_length[0]
+  host_wpg_burst_length[1]
+  host_wpg_burst_length[2]
+  host_wpg_burst_length[3]
+  host_wpg_burst_length[4]
+  host_wpg_burst_length[5]
+  host_wpg_burst_length[6]
+  host_wpg_burst_length[7]
+  host_wpg_burst_length[8]
+  host_wpg_burst_length[9]
+  host_wpg_busy
+  host_wpg_st_addr[0]
+  host_wpg_st_addr[1]
+  host_wpg_st_addr[2]
+  host_wpg_st_addr[3]
+  host_wpg_st_addr[4]
+  host_wpg_st_addr[5]
+  host_wpg_st_addr[6]
+  host_wpg_st_addr[7]
+  host_wpg_st_addr[8]
+  host_wpg_st_addr[9]
+  host_wr_buff_wdata[0]
+  host_wr_buff_wdata[1]
+  host_wr_buff_wdata[2]
+  host_wr_buff_wdata[3]
+  host_wr_buff_wdata[4]
+  host_wr_buff_wdata[5]
+  host_wr_buff_wdata[6]
+  host_wr_buff_wdata[7]
+  host_wr_buff_wren
+  obj_height[0]
+  obj_height[10]
+  obj_height[1]
+  obj_height[2]
+  obj_height[3]
+  obj_height[4]
+  obj_height[5]
+  obj_height[6]
+  obj_height[7]
+  obj_height[8]
+  obj_height[9]
+  obj_st_mask[0]
+  obj_st_mask[10]
+  obj_st_mask[11]
+  obj_st_mask[12]
+  obj_st_mask[13]
+  obj_st_mask[14]
+  obj_st_mask[15]
+  obj_st_mask[16]
+  obj_st_mask[17]
+  obj_st_mask[18]
+  obj_st_mask[19]
+  obj_st_mask[1]
+  obj_st_mask[20]
+  obj_st_mask[21]
+  obj_st_mask[2]
+  obj_st_mask[3]
+  obj_st_mask[4]
+  obj_st_mask[5]
+  obj_st_mask[6]
+  obj_st_mask[7]
+  obj_st_mask[8]
+  obj_st_mask[9]
+  obj_st_pix[0]
+  obj_st_pix[10]
+  obj_st_pix[11]
+  obj_st_pix[12]
+  obj_st_pix[13]
+  obj_st_pix[14]
+  obj_st_pix[15]
+  obj_st_pix[16]
+  obj_st_pix[17]
+  obj_st_pix[18]
+  obj_st_pix[19]
+  obj_st_pix[1]
+  obj_st_pix[20]
+  obj_st_pix[21]
+  obj_st_pix[2]
+  obj_st_pix[3]
+  obj_st_pix[4]
+  obj_st_pix[5]
+  obj_st_pix[6]
+  obj_st_pix[7]
+  obj_st_pix[8]
+  obj_st_pix[9]
+  obj_type[0]
+  obj_type[1]
+  obj_type[2]
+  obj_type[3]
+  obj_value[0]
+  obj_value[10]
+  obj_value[11]
+  obj_value[12]
+  obj_value[13]
+  obj_value[14]
+  obj_value[1]
+  obj_value[2]
+  obj_value[3]
+  obj_value[4]
+  obj_value[5]
+  obj_value[6]
+  obj_value[7]
+  obj_value[8]
+  obj_value[9]
+  obj_width[0]
+  obj_width[10]
+  obj_width[1]
+  obj_width[2]
+  obj_width[3]
+  obj_width[4]
+  obj_width[5]
+  obj_width[6]
+  obj_width[7]
+  obj_width[8]
+  obj_width[9]
+  uart_mem_rdata[0]
+  uart_mem_rdata[10]
+  uart_mem_rdata[11]
+  uart_mem_rdata[12]
+  uart_mem_rdata[13]
+  uart_mem_rdata[14]
+  uart_mem_rdata[15]
+  uart_mem_rdata[16]
+  uart_mem_rdata[17]
+  uart_mem_rdata[18]
+  uart_mem_rdata[19]
+  uart_mem_rdata[1]
+  uart_mem_rdata[20]
+  uart_mem_rdata[21]
+  uart_mem_rdata[22]
+  uart_mem_rdata[23]
+  uart_mem_rdata[24]
+  uart_mem_rdata[25]
+  uart_mem_rdata[26]
+  uart_mem_rdata[27]
+  uart_mem_rdata[28]
+  uart_mem_rdata[29]
+  uart_mem_rdata[2]
+  uart_mem_rdata[30]
+  uart_mem_rdata[31]
+  uart_mem_rdata[3]
+  uart_mem_rdata[4]
+  uart_mem_rdata[5]
+  uart_mem_rdata[6]
+  uart_mem_rdata[7]
+  uart_mem_rdata[8]
+  uart_mem_rdata[9]
+  uart_mem_rdy
+  up_soft_reset
+  up_soft_reset_req
+  wb_slave_mem_rdata[0]
+  wb_slave_mem_rdata[10]
+  wb_slave_mem_rdata[11]
+  wb_slave_mem_rdata[12]
+  wb_slave_mem_rdata[13]
+  wb_slave_mem_rdata[14]
+  wb_slave_mem_rdata[15]
+  wb_slave_mem_rdata[16]
+  wb_slave_mem_rdata[17]
+  wb_slave_mem_rdata[18]
+  wb_slave_mem_rdata[19]
+  wb_slave_mem_rdata[1]
+  wb_slave_mem_rdata[20]
+  wb_slave_mem_rdata[21]
+  wb_slave_mem_rdata[22]
+  wb_slave_mem_rdata[23]
+  wb_slave_mem_rdata[24]
+  wb_slave_mem_rdata[25]
+  wb_slave_mem_rdata[26]
+  wb_slave_mem_rdata[27]
+  wb_slave_mem_rdata[28]
+  wb_slave_mem_rdata[29]
+  wb_slave_mem_rdata[2]
+  wb_slave_mem_rdata[30]
+  wb_slave_mem_rdata[31]
+  wb_slave_mem_rdata[3]
+  wb_slave_mem_rdata[4]
+  wb_slave_mem_rdata[5]
+  wb_slave_mem_rdata[6]
+  wb_slave_mem_rdata[7]
+  wb_slave_mem_rdata[8]
+  wb_slave_mem_rdata[9]
+  wb_slave_mem_rdy
+  wb_slave_mem_wr_data_ack
+  wb_slave_up_en
+  _0991_/D
+  _1004_/D
+  _1006_/D
