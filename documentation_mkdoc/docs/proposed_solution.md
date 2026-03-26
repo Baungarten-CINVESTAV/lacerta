@@ -68,7 +68,7 @@ Lacerta is designed as a **fully open-source reference architecture**. The proje
 - Documentation (Current file)
 - [RTL source code for the ASIC implementation](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/verilog/rtl)
 - [Librelane physical design flow integration](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/openlane)  
-- [Verification testbenches]()  
+<!--- [Verification testbenches]()  -->
 - [PCB design files]()
 - [Firmware examples](https://github.com/chipfoundry/caravel_board)  
 - [Interface design tools](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/Interface_Design_Software)

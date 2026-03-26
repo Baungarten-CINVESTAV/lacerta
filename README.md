@@ -46,7 +46,7 @@ The goal of Lacerta is to provide a low-cost, fully open-source reference archit
 </p>
 
 <p align="center">
-<img src="documentation_mkdoc/docs/img/lacerta_blockd2.svg">
+<img src="documentation_mkdoc/docs/img/lacerta_blockd2-caravel.drawio.svg">
 </p>
 <p align="center">
 <b>Figure 5.</b> Block diagram of the Lacerta ASIC inside the Caravel environment. The figure shows how a host computer or the embedded Caravel RISC-V processor sends commands through UART and Wishbone interfaces to the command arbiter, rendering logic, and memory subsystem; the updated frame data is then read by the VGA controller to drive the screen.
@@ -56,7 +56,7 @@ The goal of Lacerta is to provide a low-cost, fully open-source reference archit
 
 Lacerta is designed as a **fully open-source reference architecture**. The project includes all required design artifacts to reproduce the system, including:
 
-- Documentation (Current file)
+- [Documentation](https://baungarten-cinvestav.github.io/lacerta/)
 - [RTL source code for the ASIC implementation](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/verilog/rtl)
 - [Librelane physical design flow integration](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/openlane)  
 - [Verification testbenches]()  

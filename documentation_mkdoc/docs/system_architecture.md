@@ -19,7 +19,7 @@ The ASIC includes the following main modules:
 - VGA controller  
 
 <p align="center">
-<img src="../img/lacerta_blockd2.svg">
+<img src="../img/lacerta_blockd2-caravel.drawio.svg">
 </p>
 <p align="center">
 <b>Figure 5.</b> Block diagram of the Lacerta ASIC inside the Caravel environment. The figure shows how a host computer or the embedded Caravel RISC-V processor sends commands through UART and Wishbone interfaces to the command arbiter, rendering logic, and memory subsystem; the updated frame data is then read by the VGA controller to drive the screen.

@@ -1,0 +1,273 @@
+
+===========================================================================
+report_checks -unconstrained
+===========================================================================
+======================= max_tt_025C_1v80 Corner ===================================
+
+Startpoint: wb_we_i (input port clocked by wb_clk)
+Endpoint: _368_ (rising edge-triggered flip-flop clocked by wb_clk)
+Path Group: wb_clk
+Path Type: max
+
+Fanout         Cap        Slew       Delay        Time   Description
+---------------------------------------------------------------------------------------------
+                                  0.000000    0.000000   clock wb_clk (rise edge)
+                                  0.000000    0.000000   clock network delay (propagated)
+                                  2.000000    2.000000 ^ input external delay
+     2    0.006628    0.200000    0.000000    2.000000 ^ wb_we_i (in)
+                                                         wb_we_i (net)
+                      0.200306    0.000153    2.000153 ^ hold178/A (sky130_fd_sc_hd__dlygate4sd3_1)
+     1    0.004152    0.064840    0.585306    2.585459 ^ hold178/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                                                         net318 (net)
+                      0.064840    0.000168    2.585628 ^ input34/A (sky130_fd_sc_hd__clkbuf_4)
+     7    0.063855    0.196196    0.244882    2.830510 ^ input34/X (sky130_fd_sc_hd__clkbuf_4)
+                                                         net34 (net)
+                      0.196872    0.009469    2.839979 ^ fanout119/A (sky130_fd_sc_hd__clkbuf_8)
+    33    0.127950    0.225385    0.298545    3.138524 ^ fanout119/X (sky130_fd_sc_hd__clkbuf_8)
+                                                         net119 (net)
+                      0.231708    0.029875    3.168399 ^ _151_/A (sky130_fd_sc_hd__inv_2)
+     5    0.061252    0.156273    0.185366    3.353764 v _151_/Y (sky130_fd_sc_hd__inv_2)
+                                                         _071_ (net)
+                      0.157587    0.011530    3.365294 v fanout118/A (sky130_fd_sc_hd__clkbuf_4)
+    17    0.075567    0.153522    0.283390    3.648684 v fanout118/X (sky130_fd_sc_hd__clkbuf_4)
+                                                         net118 (net)
+                      0.154192    0.008465    3.657149 v _294_/B (sky130_fd_sc_hd__or3_1)
+     1    0.003469    0.070481    0.382494    4.039643 v _294_/X (sky130_fd_sc_hd__or3_1)
+                                                         _148_ (net)
+                      0.070481    0.000195    4.039838 v hold27/A (sky130_fd_sc_hd__dlygate4sd3_1)
+     1    0.003711    0.057894    0.566618    4.606456 v hold27/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                                                         net167 (net)
+                      0.057894    0.000241    4.606698 v _295_/B1 (sky130_fd_sc_hd__o211a_1)
+     1    0.004044    0.044652    0.131807    4.738504 v _295_/X (sky130_fd_sc_hd__o211a_1)
+                                                         _066_ (net)
+                      0.044658    0.000288    4.738792 v hold28/A (sky130_fd_sc_hd__dlygate4sd3_1)
+     1    0.002848    0.053286    0.548438    5.287231 v hold28/X (sky130_fd_sc_hd__dlygate4sd3_1)
+                                                         net168 (net)
+                      0.053286    0.000196    5.287426 v _368_/D (sky130_fd_sc_hd__dfxtp_1)
+                                              5.287426   data arrival time
+
+                                 10.000000   10.000000   clock wb_clk (rise edge)
+                                  0.000000   10.000000   clock source latency
+     2    0.036011    0.000000    0.000000   10.000000 ^ wb_clk_i (in)
+                                                         wb_clk_i (net)
+                      0.010092    0.005046   10.005046 ^ clkbuf_0_wb_clk_i/A (sky130_fd_sc_hd__clkbuf_16)
+    17    0.162668    0.174996    0.211549   10.216595 ^ clkbuf_0_wb_clk_i/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_0_wb_clk_i (net)
+                      0.175876    0.010009   10.226604 ^ clkbuf_3_5__f_wb_clk_i/A (sky130_fd_sc_hd__clkbuf_16)
+    12    0.044166    0.064641    0.188586   10.415190 ^ clkbuf_3_5__f_wb_clk_i/X (sky130_fd_sc_hd__clkbuf_16)
+                                                         clknet_3_5__leaf_wb_clk_i (net)
+                      0.064883    0.003301   10.418491 ^ _368_/CLK (sky130_fd_sc_hd__dfxtp_1)
+                                 -0.250000   10.168491   clock uncertainty
+                                  0.000000   10.168491   clock reconvergence pessimism
+                                 -0.109519   10.058971   library setup time
+                                             10.058971   data required time
+---------------------------------------------------------------------------------------------
+                                             10.058971   data required time
+                                             -5.287426   data arrival time
+---------------------------------------------------------------------------------------------
+                                              4.771545   slack (MET)
+
+
+
+
+===========================================================================
+report_checks --slack_max -0.01
+============================================================================
+======================= max_tt_025C_1v80 Corner ===================================
+
+No paths found.
+
+
+===========================================================================
+ report_check_types -max_slew -max_cap -max_fanout -violators
+============================================================================
+======================= max_tt_025C_1v80 Corner ===================================
+
+max fanout
+
+Pin                                   Limit Fanout  Slack
+---------------------------------------------------------
+fanout103/X                              16     33    -17 (VIOLATED)
+fanout104/X                              16     33    -17 (VIOLATED)
+fanout105/X                              16     33    -17 (VIOLATED)
+fanout106/X                              16     33    -17 (VIOLATED)
+fanout107/X                              16     33    -17 (VIOLATED)
+fanout108/X                              16     33    -17 (VIOLATED)
+fanout110/X                              16     33    -17 (VIOLATED)
+fanout111/X                              16     33    -17 (VIOLATED)
+fanout112/X                              16     33    -17 (VIOLATED)
+fanout114/X                              16     33    -17 (VIOLATED)
+fanout115/X                              16     33    -17 (VIOLATED)
+fanout117/X                              16     33    -17 (VIOLATED)
+fanout119/X                              16     33    -17 (VIOLATED)
+fanout121/X                              16     33    -17 (VIOLATED)
+fanout109/X                              16     31    -15 (VIOLATED)
+fanout113/X                              16     27    -11 (VIOLATED)
+_161_/Y                                  16     25     -9 (VIOLATED)
+clkbuf_3_2__f_wb_clk_i/X                 16     25     -9 (VIOLATED)
+clkbuf_3_1__f_wb_clk_i/X                 16     23     -7 (VIOLATED)
+clkbuf_3_0__f_wb_clk_i/X                 16     19     -3 (VIOLATED)
+clkbuf_3_4__f_wb_clk_i/X                 16     19     -3 (VIOLATED)
+fanout122/X                              16     18     -2 (VIOLATED)
+clkbuf_0_wb_clk_i/X                      16     17        (VIOLATED)
+fanout116/X                              16     17        (VIOLATED)
+fanout118/X                              16     17        (VIOLATED)
+fanout120/X                              16     17        (VIOLATED)
+
+
+
+===========================================================================
+report_parasitic_annotation -report_unannotated
+============================================================================
+Found 76 unannotated drivers.
+ wb_adr_i[10]
+ wb_adr_i[11]
+ wb_adr_i[12]
+ wb_adr_i[13]
+ wb_adr_i[14]
+ wb_adr_i[15]
+ wb_adr_i[16]
+ wb_adr_i[17]
+ wb_adr_i[18]
+ wb_adr_i[19]
+ wb_adr_i[20]
+ wb_adr_i[21]
+ wb_adr_i[22]
+ wb_adr_i[23]
+ wb_adr_i[24]
+ wb_adr_i[25]
+ wb_adr_i[26]
+ wb_adr_i[27]
+ wb_adr_i[28]
+ wb_adr_i[29]
+ wb_adr_i[30]
+ wb_adr_i[31]
+ wb_dat_i[10]
+ wb_dat_i[11]
+ wb_dat_i[12]
+ wb_dat_i[13]
+ wb_dat_i[14]
+ wb_dat_i[15]
+ wb_dat_i[16]
+ wb_dat_i[17]
+ wb_dat_i[18]
+ wb_dat_i[19]
+ wb_dat_i[20]
+ wb_dat_i[21]
+ wb_dat_i[22]
+ wb_dat_i[23]
+ wb_dat_i[24]
+ wb_dat_i[25]
+ wb_dat_i[26]
+ wb_dat_i[27]
+ wb_dat_i[28]
+ wb_dat_i[29]
+ wb_dat_i[30]
+ wb_dat_i[31]
+ wb_dat_i[8]
+ wb_dat_i[9]
+ wb_sel_i[0]
+ wb_sel_i[1]
+ wb_sel_i[2]
+ wb_sel_i[3]
+ wr_buff_full
+ clkload0/Y
+ clkload1/X
+ clkload2/X
+ clkload3/Y
+ clkload4/Y
+ clkload5/Y
+ clkload6/Y
+ wb_slave_to_mem_sys_ports_123/HI
+ wb_slave_to_mem_sys_ports_124/HI
+ wb_slave_to_mem_sys_ports_125/HI
+ wb_slave_to_mem_sys_ports_126/HI
+ wb_slave_to_mem_sys_ports_127/HI
+ wb_slave_to_mem_sys_ports_128/HI
+ wb_slave_to_mem_sys_ports_129/HI
+ wb_slave_to_mem_sys_ports_130/HI
+ wb_slave_to_mem_sys_ports_131/HI
+ wb_slave_to_mem_sys_ports_132/HI
+ wb_slave_to_mem_sys_ports_133/HI
+ wb_slave_to_mem_sys_ports_134/HI
+ wb_slave_to_mem_sys_ports_135/HI
+ wb_slave_to_mem_sys_ports_136/HI
+ wb_slave_to_mem_sys_ports_137/HI
+ wb_slave_to_mem_sys_ports_138/HI
+ wb_slave_to_mem_sys_ports_139/HI
+ wb_slave_to_mem_sys_ports_140/HI
+Found 0 partially unannotated drivers.
+
+===========================================================================
+max slew violation count 0
+max fanout violation count 26
+max cap violation count 0
+============================================================================
+
+===========================================================================
+check_setup -verbose -unconstrained_endpoints -multiple_clock -no_clock -no_input_delay -loops -generated_clocks
+===========================================================================
+Warning: There are 14 input ports missing set_input_delay.
+  rd_buff_empty
+  rd_buff_rdata[0]
+  rd_buff_rdata[1]
+  rd_buff_rdata[2]
+  rd_buff_rdata[3]
+  rd_buff_rdata[4]
+  rd_buff_rdata[5]
+  rd_buff_rdata[6]
+  rd_buff_rdata[7]
+  rpg_ack
+  up_soft_reset
+  wb_rst_i
+  wpg_ack
+  wr_buff_full
+Warning: There are 48 unconstrained endpoints.
+  rpg_burst_length[0]
+  rpg_burst_length[1]
+  rpg_burst_length[2]
+  rpg_burst_length[3]
+  rpg_burst_length[4]
+  rpg_burst_length[5]
+  rpg_burst_length[6]
+  rpg_burst_length[7]
+  rpg_burst_length[8]
+  rpg_burst_length[9]
+  rpg_st_addr[0]
+  rpg_st_addr[1]
+  rpg_st_addr[2]
+  rpg_st_addr[3]
+  rpg_st_addr[4]
+  rpg_st_addr[5]
+  rpg_st_addr[6]
+  rpg_st_addr[7]
+  rpg_st_addr[8]
+  rpg_st_addr[9]
+  wpg_burst_length[0]
+  wpg_burst_length[1]
+  wpg_burst_length[2]
+  wpg_burst_length[3]
+  wpg_burst_length[4]
+  wpg_burst_length[5]
+  wpg_burst_length[6]
+  wpg_burst_length[7]
+  wpg_burst_length[8]
+  wpg_burst_length[9]
+  wpg_st_addr[0]
+  wpg_st_addr[1]
+  wpg_st_addr[2]
+  wpg_st_addr[3]
+  wpg_st_addr[4]
+  wpg_st_addr[5]
+  wpg_st_addr[6]
+  wpg_st_addr[7]
+  wpg_st_addr[8]
+  wpg_st_addr[9]
+  wr_buff_wdata[0]
+  wr_buff_wdata[1]
+  wr_buff_wdata[2]
+  wr_buff_wdata[3]
+  wr_buff_wdata[4]
+  wr_buff_wdata[5]
+  wr_buff_wdata[6]
+  wr_buff_wdata[7]

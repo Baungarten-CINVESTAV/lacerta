@@ -1,3 +1,11 @@
+<p align="center">
+<img src="../documentation_mkdoc/docs/img/Flow_interface.drawio.svg">
+</p>
+<p align="center">
+<b>Figure 4.</b> Lacerta interface creation workflow. A graphical editor is used to design custom interface layouts, which are translated into configuration data interpreted by the Lacerta hardware engine to generate the graphical display.
+</p>
+
+
 # Lacerta Interface Design Software — GUI Notes
 
 Important:
