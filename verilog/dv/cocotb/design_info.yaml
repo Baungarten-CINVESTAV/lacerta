@@ -1,8 +1,8 @@
-CARAVEL_ROOT: /usr/caravel_user_project/caravel
-MCW_ROOT: /usr/caravel_user_project/mgmt_core_wrapper
+CARAVEL_ROOT: /home/baungarten/Desktop/lacerta_march/caravel
+MCW_ROOT: /home/baungarten/Desktop/lacerta_march/mgmt_core_wrapper
 PDK: sky130A
-PDK_ROOT: /usr/pdk
-USER_PROJECT_ROOT: /usr/caravel_user_project
+PDK_ROOT: /home/baungarten/Desktop/lacerta_march/dependencies/pdks
+USER_PROJECT_ROOT: /home/baungarten/Desktop/lacerta_march
 caravan: false
 clk: 25
 emailto:

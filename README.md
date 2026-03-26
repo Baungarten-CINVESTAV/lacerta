@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="img/Logo_Black_background_white.svg" alt="Mifral logo" width="220">
+  <img src="documentation_mkdoc/docs/img/Logo_Black_background_white.svg" alt="Mifral logo" width="220">
 </p>
 
 # Lacerta: Open Hardware Interface Engine for Embedded Systems
 
-![Lacerta logo](img/Lacerta2.png)
+![Lacerta logo](documentation_mkdoc/docs/img/Lacerta2.png)
 
 ## Project Overview
 
@@ -19,7 +19,7 @@ The generated interface may include visual components such as:
 - Numeric indicators
 - Status indicators
 <p align="center">
-<img src="img/sample_icons.jpg">
+<img src="documentation_mkdoc/docs/img/sample_icons.jpg">
 </p>
 <p align="center">
 <b>Figure 1.</b> Examples of graphical components supported by Lacerta, including buttons, horizontal and vertical bars, numeric indicators, and status indicators used to visualize real-time system data.
@@ -28,7 +28,7 @@ The generated interface may include visual components such as:
 The ASIC receives input data from sensors, external microcontrollers, or other embedded systems and dynamically updates the graphical elements according to the incoming data stream. Both analog and digital signals can be connected to the Lacerta platform through appropriate interface circuitry or external converters, enabling the visualization of a wide range of real-world signals. This allows physical measurements such as temperature, voltage, speed, or system status signals to be directly represented through graphical components including bars, indicators, and numeric displays.
 
 <p align="center">
-<img src="img/flow1.drawio.svg">
+<img src="documentation_mkdoc/docs/img/flow1.drawio.svg">
 </p>
 <p align="center">
 <b>Figure 2.</b> Lacerta system concept: heterogeneous input signals are processed by the Lacerta ASIC to generate the custom graphical HMI displayed on a monitor.
