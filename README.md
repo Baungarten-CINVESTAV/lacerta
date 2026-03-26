@@ -10,6 +10,8 @@
 
 **Lacerta** is an open-source hardware platform that enables the rapid creation of graphical interfaces for embedded systems using custom silicon.
 
+**The whole documentation can be found** [**here**](https://github.com/your-user/your-repo).
+
 The system allows developers to design graphical interfaces using a graphical configuration tool and deploy them directly to hardware implemented in a custom ASIC integrated with the Caravel SoC platform. The hardware renders the interface in real time and outputs the result through a VGA display.
 
 The generated interface may include visual components such as:
