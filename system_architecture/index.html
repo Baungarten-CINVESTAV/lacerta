@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>System Architecture - Lacerta</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "System Architecture";
+        var mkdocs_page_input_path = "system_architecture.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Lacerta
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../problem_statement/">Problem Statement</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../proposed_solution/">Proposed Solution</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">System Architecture</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#custom-silicon-caravel-user-project">Custom Silicon (Caravel User Project)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#uart-configuration-interface">UART Configuration Interface</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#embedded-caravel-risc-v-control-processor">Embedded Caravel RISC-V Control Processor</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wishbone-master-and-slave-interfaces">Wishbone Master and Slave Interfaces</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#command-arbiter-and-decoder">Command Arbiter and Decoder</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#display-generation-and-mask-generation-logic">Display Generation and Mask-Generation Logic</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#memory-subsystem-and-main-frame-memory">Memory Subsystem and Main Frame Memory</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vga-controller">VGA Controller</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lacerta-board">Lacerta Board</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#firmware">Firmware</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#interface-design-software">Interface Design Software</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../system_development/">System Development</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Lacerta</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">System Architecture</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="system-architecture-overview">System Architecture Overview</h1>
+<p>The Lacerta platform consists of four major components: the <strong>custom silicon implementation</strong>, the <strong>PCBA hardware</strong>, the <strong>firmware layer</strong>, and the <strong>interface design software</strong>. Together, these elements form a complete open-source system for creating, deploying, and operating customizable embedded graphical interfaces.</p>
+<h2 id="custom-silicon-caravel-user-project">Custom Silicon (Caravel User Project)</h2>
+<p>The core of the Lacerta platform is a custom ASIC implemented in the <strong>SKY130 process</strong> and integrated inside the <strong>Caravel user project area</strong>. This subsystem realizes the hardware graphics engine that receives interface commands, updates the internal frame data, and generates the video stream presented on the display.</p>
+<p>The Lacerta ASIC follows a memory-centric architecture. Configuration data can be loaded from an external host through <strong>UART</strong> or issued internally by the embedded <strong>Caravel RISC-V</strong> processor. These commands are routed through the <strong>Wishbone interconnect</strong> to the rendering logic, which updates the frame contents stored in memory. The <strong>VGA controller</strong> then reads that memory and continuously converts it into the output video signal.</p>
+<p>The ASIC includes the following main modules:</p>
+<ul>
+<li>UART configuration interface  </li>
+<li>Embedded Caravel RISC-V control processor  </li>
+<li>Wishbone master and slave interfaces  </li>
+<li>Command arbiter and decoder  </li>
+<li>Display generation and mask-generation logic  </li>
+<li>Memory subsystem and main frame memory  </li>
+<li>VGA controller  </li>
+</ul>
+<p align="center">
+<img src="../img/lacerta_blockd2.svg">
+</p>
+<p align="center">
+<b>Figure 5.</b> Block diagram of the Lacerta ASIC inside the Caravel environment. The figure shows how a host computer or the embedded Caravel RISC-V processor sends commands through UART and Wishbone interfaces to the command arbiter, rendering logic, and memory subsystem; the updated frame data is then read by the VGA controller to drive the screen.
+</p>
+
+<h3 id="uart-configuration-interface">UART Configuration Interface</h3>
+<p>The <strong>UART configuration interface</strong> provides the external entry point for loading or updating the graphical interface. A host computer can send commands, parameters, and interface data through this serial channel, allowing the system to be configured without directly modifying the hardware.</p>
+<p>In the architecture shown in Figure 5, the UART block acts as a bridge between the external host and the internal control path. It forwards incoming data toward the command-processing logic, enabling interface definitions, state updates, and control values to be injected into the ASIC during operation.</p>
+<h3 id="embedded-caravel-risc-v-control-processor">Embedded Caravel RISC-V Control Processor</h3>
+<p>The embedded <strong>Caravel RISC-V processor</strong> acts as the local software-controlled supervisor of the Lacerta graphics engine. It can execute firmware that interprets interface behavior, reacts to sensor or communication inputs, and generates the commands required to update the visual state of the system.</p>
+<p>Rather than generating pixels directly, the processor issues transactions over the internal bus to configure the rendering blocks and memory-mapped registers. This makes the RISC-V core responsible for high-level control, while the dedicated graphics hardware performs the time-critical rendering and display tasks.</p>
+<h3 id="wishbone-master-and-slave-interfaces">Wishbone Master and Slave Interfaces</h3>
+<p>The <strong>Wishbone interfaces</strong> provide the internal communication path between the Caravel control domain and the Lacerta user-project hardware. The <strong>Wishbone master</strong> side is used by the embedded processor to initiate configuration and rendering transactions, while the <strong>Wishbone slave</strong> interfaces expose memory-mapped control and data ports inside the Lacerta ASIC.</p>
+<p>These interfaces allow software to write commands, set parameters, and access internal buffers using a standard bus protocol. By relying on Wishbone, the design stays modular and compatible with the Caravel integration model, while also making each hardware block accessible in a structured and reusable way.</p>
+<h3 id="command-arbiter-and-decoder">Command Arbiter and Decoder</h3>
+<p>The <strong>command arbiter and decoder</strong> receives commands arriving from the available control sources and determines how they should be executed inside the graphics engine. Its main role is to interpret the incoming transaction type, identify the target function, and route the request to the proper rendering or memory block.</p>
+<p>This module also resolves control flow when multiple command sources are present, ensuring that commands are accepted in a predictable order. In practice, it serves as the control hub that translates bus-level requests into concrete operations such as drawing, updating buffers, or changing display parameters.</p>
+<h3 id="display-generation-and-mask-generation-logic">Display Generation and Mask-Generation Logic</h3>
+<p>The <strong>display generation logic</strong> converts decoded graphical commands into modifications of the stored image representation. It produces the pixel-level or region-level updates that must be written into memory so that the requested graphical elements appear on the screen.</p>
+<p>The associated <strong>mask-generation logic</strong> supports selective updates by defining which portions of the frame or which pixel groups are affected by a given command. This is useful for rendering structured interface elements such as icons, bars, or indicators while avoiding unnecessary full-frame rewrites.</p>
+<h3 id="memory-subsystem-and-main-frame-memory">Memory Subsystem and Main Frame Memory</h3>
+<p>The <strong>memory subsystem</strong> stores the graphical data used to represent the current interface image. It includes the internal memory organization, access ports, and storage structures needed to support both command-driven writes and continuous display reads.</p>
+<p>Within this subsystem, the <strong>main frame memory</strong> holds the active image or framebuffer that the VGA path will read for display generation. Because this memory is shared between rendering logic and video output, it forms the central data repository of the entire Lacerta graphics pipeline.</p>
+<h3 id="vga-controller">VGA Controller</h3>
+<p>The <strong>VGA controller</strong> is the final stage of the graphics pipeline and is responsible for transforming the stored frame data into a real-time video signal. It continuously reads the image data from memory in raster order and converts it into synchronized output timing and pixel values.</p>
+<p>This block generates the horizontal sync, vertical sync, and video color signals required by a VGA display. By separating video timing generation from the command and rendering path, Lacerta can update the interface in memory while maintaining a stable and continuous screen output.</p>
+<h2 id="lacerta-board">Lacerta Board</h2>
+<p>The Lacerta Board integrates multiple subsystems including power regulation, clock generation, communication interfaces, and peripheral connectivity into a single PCB. The board enables seamless interaction between a host computer and the embedded system through a USB-to-Serial (FTDI) interface, while also supporting external programming via SPI Flash memory.</p>
+<p>At its core, the board host the main SoC, exposing essential signals such as GPIOs, power rails, and communication buses. Additional components such as a MEMS oscillator provide stable timing, while voltage regulators ensure reliable power delivery. The inclusion of accessible pin headers allows flexible expansion and testing, making the platform suitable for both prototyping and educational use.</p>
+<p>The system also supports graphical output through a VGA interface, enabling the development of hardware-driven user interfaces. Debugging and control are facilitated through onboard LEDs and a reset button, providing immediate feedback and system management capabilities. Overall, the board offers an integrated environment for plug and play.</p>
+<p align="center">
+<img src="../img/Lacerta-3D.png">
+</p>
+<p align="center">
+<b>Figure 7.</b> 3D rendering of the Lacerta Board, illustrating component placement and layout, including the Caravel/Lacerta chip placement, voltage regulators, clock generation circuitry, SPI Flash memory interface, GPIO headers, and peripheral connectors, providing a realistic view of the assembled hardware platform.
+</p>
+
+<h2 id="firmware">Firmware</h2>
+<p>The Lacerta platform includes a firmware layer that can run directly on the <strong>embedded RISC-V processor provided by the Caravel SoC</strong>. This firmware acts as the control layer responsible for managing the graphical interface and coordinating the interaction between system inputs and the Lacerta hardware rendering engine.</p>
+<p>Firmware executed on the Caravel RISC-V processor is responsible for:</p>
+<ul>
+<li>receiving input data from sensors or external systems  </li>
+<li>updating graphical elements in memory  </li>
+<li>configuring interface parameters  </li>
+<li>controlling the display generation circuit through the Wishbone bus  </li>
+</ul>
+<p>During operation, the RISC-V processor reads incoming data from communication interfaces and translates this information into graphical updates. The processor sends commands through the <strong>Wishbone master interface</strong> to the Lacerta display engine, which writes the corresponding graphical data into the system memory.</p>
+<p>The <strong>VGA controller</strong> then reads the graphical data stored in memory and generates the video signal that produces the final image on the display.</p>
+<p>In addition to running on the embedded processor, the Lacerta system can also interact with <strong>external microcontrollers</strong>. In this configuration, an external controller may collect sensor data or perform additional processing and then transmit the relevant information to the Caravel system using standard communication interfaces such as <strong>UART, SPI, or I2C</strong>.</p>
+<p>This architecture allows Lacerta to operate in two modes:</p>
+<ul>
+<li><strong>Standalone mode</strong>, where the Caravel RISC-V processor runs the firmware and directly manages the graphical interface.</li>
+<li><strong>Co-processor mode</strong>, where an external microcontroller provides data or commands that are forwarded to the Lacerta display engine through the Caravel platform.</li>
+</ul>
+<p>By leveraging the embedded RISC-V processor and the Wishbone interconnect, the firmware provides a flexible mechanism for controlling the graphical interface while maintaining compatibility with a wide range of embedded systems and sensor sources.</p>
+<h2 id="interface-design-software">Interface Design Software</h2>
+<p>The fourth major component of the Lacerta architecture is the <strong>interface design software</strong>, which provides the user-facing environment for defining custom graphical interfaces.</p>
+<p>A desktop graphical tool will allow users to create custom interfaces through a visual editor.</p>
+<p>The software will export configuration files used by the hardware engine.</p>
+<p>Through this visual editor, users can place and configure graphical elements such as buttons, bars, numeric indicators, and status displays. The tool allows the interface to be designed at a high level without requiring manual implementation of low-level graphics logic.</p>
+<p align="center">
+<img src="../img/Lacerta_GUI.jpg">
+</p>
+<p align="center">
+<b>Figure 6.</b> Graphical editor of the Lacerta Interface Design Software, where users can design custom embedded interfaces by arranging graphical components such as seven-segment displays, bars, and indicators.
+</p>
+
+<p>Once the design is complete, the software generates a configuration file that describes the interface structure and parameters. This file is then loaded into the Lacerta hardware engine, enabling the ASIC to render the desired interface directly in hardware.</p>
+<p>By combining these four components, Lacerta provides a complete and reproducible platform for configurable embedded HMIs, spanning interface creation, silicon implementation, runtime control, and physical system integration.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../proposed_solution/" class="btn btn-neutral float-left" title="Proposed Solution"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../system_development/" class="btn btn-neutral float-right" title="System Development">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../proposed_solution/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../system_development/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
