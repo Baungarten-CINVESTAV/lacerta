@@ -64,7 +64,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#command-arbiter-and-decoder">Command Arbiter and Decoder</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#display-generation-and-mask-generation-logic">Display Generation and Mask-Generation Logic</a>
+    <li class="toctree-l3"><a class="reference internal" href="#mask-generation-logic">Mask-Generation Logic</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#memory-subsystem-and-main-frame-memory">Memory Subsystem and Main Frame Memory</a>
     </li>
@@ -124,7 +124,7 @@
 <li>VGA controller  </li>
 </ul>
 <p align="center">
-<img src="../img/lacerta_blockd2.svg">
+<img src="../img/lacerta_blockd2-caravel.drawio.svg">
 </p>
 <p align="center">
 <b>Figure 5.</b> Block diagram of the Lacerta ASIC inside the Caravel environment. The figure shows how a host computer or the embedded Caravel RISC-V processor sends commands through UART and Wishbone interfaces to the command arbiter, rendering logic, and memory subsystem; the updated frame data is then read by the VGA controller to drive the screen.
@@ -142,8 +142,7 @@
 <h3 id="command-arbiter-and-decoder">Command Arbiter and Decoder</h3>
 <p>The <strong>command arbiter and decoder</strong> receives commands arriving from the available control sources and determines how they should be executed inside the graphics engine. Its main role is to interpret the incoming transaction type, identify the target function, and route the request to the proper rendering or memory block.</p>
 <p>This module also resolves control flow when multiple command sources are present, ensuring that commands are accepted in a predictable order. In practice, it serves as the control hub that translates bus-level requests into concrete operations such as drawing, updating buffers, or changing display parameters.</p>
-<h3 id="display-generation-and-mask-generation-logic">Display Generation and Mask-Generation Logic</h3>
-<p>The <strong>display generation logic</strong> converts decoded graphical commands into modifications of the stored image representation. It produces the pixel-level or region-level updates that must be written into memory so that the requested graphical elements appear on the screen.</p>
+<h3 id="mask-generation-logic">Mask-Generation Logic</h3>
 <p>The associated <strong>mask-generation logic</strong> supports selective updates by defining which portions of the frame or which pixel groups are affected by a given command. This is useful for rendering structured interface elements such as icons, bars, or indicators while avoiding unnecessary full-frame rewrites.</p>
 <h3 id="memory-subsystem-and-main-frame-memory">Memory Subsystem and Main Frame Memory</h3>
 <p>The <strong>memory subsystem</strong> stores the graphical data used to represent the current interface image. It includes the internal memory organization, access ports, and storage structures needed to support both command-driven writes and continuous display reads.</p>
@@ -172,7 +171,7 @@
 <li>controlling the display generation circuit through the Wishbone bus  </li>
 </ul>
 <p>During operation, the RISC-V processor reads incoming data from communication interfaces and translates this information into graphical updates. The processor sends commands through the <strong>Wishbone master interface</strong> to the Lacerta display engine, which writes the corresponding graphical data into the system memory.</p>
-<p>The <strong>VGA controller</strong> then reads the graphical data stored in memory and generates the video signal that produces the final image on the display.</p>
+<p>The <strong>VGA controller</strong> reads the graphical data stored in memory and generates the video signal that produces the final image on the display.</p>
 <p>In addition to running on the embedded processor, the Lacerta system can also interact with <strong>external microcontrollers</strong>. In this configuration, an external controller may collect sensor data or perform additional processing and then transmit the relevant information to the Caravel system using standard communication interfaces such as <strong>UART, SPI, or I2C</strong>.</p>
 <p>This architecture allows Lacerta to operate in two modes:</p>
 <ul>
