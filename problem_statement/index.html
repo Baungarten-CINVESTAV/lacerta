@@ -44,13 +44,11 @@
                 </li>
               </ul>
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Problem Statement</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Problem Statement</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#what-is-an-hmi">What is an HMI?</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#challenges-in-embedded-hmi-development">Challenges in Embedded HMI Development</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#heterogeneous-signal-sources">Heterogeneous Signal Sources</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#need-for-an-open-hardware-interface-platform">Need for an Open Hardware Interface Platform</a>
     </li>
@@ -81,6 +79,10 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="../system_development/">System Development</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../appendix/">Appendix</a>
                 </li>
               </ul>
       </div>
@@ -133,23 +135,6 @@ title="What is HMI?" frameborder="0" allowfullscreen></iframe>
 </ul>
 <p>In resource-constrained systems, these tasks compete with the primary functionality of the embedded application, increasing firmware complexity and reducing system efficiency.</p>
 <p>Another common limitation is the lack of <strong>flexible and reusable hardware platforms</strong> for building custom interfaces. Many commercial HMI solutions rely on proprietary ecosystems or fixed display modules that limit customization. As a result, developers often need to design new interface logic for every project.</p>
-<h2 id="heterogeneous-signal-sources">Heterogeneous Signal Sources</h2>
-<p>Real-world embedded systems frequently interact with <strong>both analog and digital signals</strong>. Analog signals may represent physical quantities such as:</p>
-<ul>
-<li>temperature  </li>
-<li>pressure  </li>
-<li>voltage  </li>
-<li>current  </li>
-<li>sensor amplitudes  </li>
-</ul>
-<p>Digital signals may originate from:</p>
-<ul>
-<li>microcontrollers  </li>
-<li>communication interfaces  </li>
-<li>counters and timers  </li>
-<li>control logic</li>
-</ul>
-<p>Transforming these heterogeneous signals into a responsive graphical interface typically requires additional software layers, external processing units, or specialized display modules.</p>
 <h2 id="need-for-an-open-hardware-interface-platform">Need for an Open Hardware Interface Platform</h2>
 <p>A reusable open-source hardware solution capable of generating graphical interfaces directly in hardware could significantly simplify the development of embedded HMIs.</p>
 <p>Such a platform would allow developers to:</p>

@@ -40,7 +40,7 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">Home</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#project-overview">Project Overview</a>
     </li>
@@ -61,6 +61,10 @@
               </ul>
               <ul>
                 <li class="toctree-l1"><a class="reference internal" href="system_development/">System Development</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="appendix/">Appendix</a>
                 </li>
               </ul>
       </div>
@@ -93,8 +97,8 @@
 <h1 id="lacerta-open-hardware-interface-engine-for-embedded-systems">Lacerta: Open Hardware Interface Engine for Embedded Systems</h1>
 <p><img alt="Lacerta logo" src="img/Lacerta2.png" /></p>
 <h2 id="project-overview">Project Overview</h2>
-<p><strong>Lacerta</strong> is an open-source hardware platform that enables the rapid creation of graphical interfaces for embedded systems using custom silicon.</p>
-<p>The system allows developers to design graphical interfaces using a graphical configuration tool and deploy them directly to hardware implemented in a custom ASIC integrated with the Caravel SoC platform. The hardware renders the interface in real time and outputs the result through a VGA display.</p>
+<p><strong>Lacerta</strong> is an open-source hardware platform that enables the rapid creation of graphical interfaces for embedded systems.</p>
+<p>The system allows developers to design graphical interfaces using a graphical configuration tool and deploy them directly to hardware implemented in a custom ASIC integrated with the Caravel SoC platform. The hardware renders the interface in real time and outputs the result to SPI-driven TFT/OLED screens commonly used in embedded devices.</p>
 <p>The generated interface may include visual components such as:</p>
 <ul>
 <li>Buttons</li>
@@ -109,12 +113,21 @@
 <b>Figure 1.</b> Examples of graphical components supported by Lacerta, including buttons, horizontal and vertical bars, numeric indicators, graphics, and status indicators used to visualize real-time system data.
 </p>
 
-<p>The ASIC receives input data from sensors, external microcontrollers, or other embedded systems and dynamically updates the graphical elements according to the incoming data stream. Both analog and digital signals can be connected to the Lacerta platform through appropriate interface circuitry or external converters, enabling the visualization of a wide range of real-world signals. This allows physical measurements such as temperature, voltage, speed, or system status signals to be directly represented through graphical components including bars, indicators, and numeric displays.</p>
+<p>The ASIC receives information via UART streams and supports two main modes of operation for updating the display:</p>
+<ol>
+<li>
+<p><strong>Direct Mode:</strong> Data received via UART is sent directly to the user project area. In this mode, the values are updated on the SPI TFT/OLED screen with minimal latency, ideal for simple or time-critical updates.</p>
+</li>
+<li>
+<p><strong>Processing Mode:</strong> Data from UART is first routed to the integrated RISC-V core, where any mathematical operations, functions, or custom logic can be applied. After processing, the results are sent to the user project area to update the display. This mode is suitable for applications requiring data manipulation or more complex interface logic.</p>
+</li>
+</ol>
+<p>This flexible architecture allows Lacerta to efficiently manage multiple inputs and screen objects using a single UART protocol, adapting to both straightforward and advanced use cases. Any other signal types must be converted to UART beforehand by external interface circuitry or preprocessing devices.</p>
 <p align="center">
-<img src="img/flow1.drawio.svg">
+<img src="img/flow_sensor_lacertav2.png">
 </p>
 <p align="center">
-<b>Figure 2.</b> Lacerta system concept: heterogeneous input signals are processed by the Lacerta ASIC to generate the custom graphical HMI displayed on a monitor.
+<b>Figure 2.</b> Lacerta system concept: signals are processed by the Lacerta ASIC to generate the custom graphical HMI displayed on SPI-driven TFT/OLED displays for compact embedded installations.
 </p>
 
 <p>The goal of Lacerta is to provide a low-cost, fully open-source reference architecture for embedded human–machine interfaces (HMI). By combining configurable hardware graphics generation with flexible input interfaces, Lacerta enables the rapid development of customizable dashboards and monitoring systems for industrial, commercial, and edge-IoT applications.</p>
@@ -165,6 +178,6 @@
 </html>
 
 <!--
-MkDocs version : 1.6.1
-Build Date UTC : 2026-04-18 00:00:53.385108+00:00
+MkDocs version : 1.5.3
+Build Date UTC : 2026-04-30 23:41:58.020217+00:00
 -->
