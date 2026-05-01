@@ -1,0 +1,42 @@
+ gpio/user/analog |   in   |   out  | analog |  oeb min/sim/max  | configuration
+   0 /  0 /       |        |  vssd* |        | vssd*/vssd*/vssd* | FIXED_STD_INPUT_NOPULL 
+   1 /  1 /       |        |  vssd* |        | vssd*/vssd*/vssd* | FIXED_STD_INPUT_NOPULL 
+   2 /  2 /       |        |  vssd* |        | vssd*/vssd*/vssd* | FIXED_STD_INPUT_NOPULL 
+   3 /  3 /       |        |  vssd* |        | vssd*/vssd*/vssd* | FIXED_STD_INPUT_PULLUP 
+   4 /  4 /       |        |  vssd* |        | vssd*/vssd*/vssd* | FIXED_STD_INPUT_NOPULL 
+   5 /  5 /       |      4 |  vssd* |        | vssd*/vssd*/vssd* | MGMT_STD_INPUT_NOPULL 
+   6 /  6 /       |        |      2 |        | vssd*/vssd*/vssd* | MGMT_STD_OUTPUT 1 warnings/errors
+   7 /  7 /   0   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+   8 /  8 /   1   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+   9 /  9 /   2   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  10 / 10 /   3   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  11 / 11 /   4   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  12 / 12 /   5   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  13 / 13 /   6   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  14 / 14 /   7   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  15 / 15 /   8   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  16 / 16 /   9   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  17 / 17 /  10   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  18 / 18 /  11   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  19 / 19 /  12   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  20 / 20 /  13   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  21 / 21 /  14   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  22 / 22 /  15   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  23 / 23 /  16   |      4 |      2 |        | vssd*/     /vccd* | USER_STD_BIDIRECTIONAL 
+  24 / 24 /  17   |      4 |      2 |        | vssd*/     /vccd* | USER_STD_BIDIRECTIONAL 
+  25 / 25 /  18   |      4 |      2 |        | vssd*/     /vccd* | USER_STD_BIDIRECTIONAL 
+  26 / 26 /  19   |      4 |      2 |        | vssd*/     /vccd* | USER_STD_BIDIRECTIONAL 
+  27 / 27 /  20   |      4 |      2 |        | vssd*/     /vccd* | USER_STD_BIDIRECTIONAL 
+  28 / 28 /  21   |      4 |      2 |        | vssd*/     /vccd* | USER_STD_BIDIRECTIONAL 
+  29 / 29 /  22   |      4 |      2 |        | vssd*/     /vccd* | USER_STD_BIDIRECTIONAL 
+  30 / 30 /  23   |      4 |      2 |        | vssd*/     /vccd* | USER_STD_BIDIRECTIONAL 
+  31 / 31 /  24   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  32 / 32 /  25   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  33 / 33 /  26   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  34 / 34 /  27   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  35 / 35 /  28   |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  36 / 36 /       |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+  37 / 37 /       |        |      2 |        | vssd*/vssd*/vssd* | USER_STD_OUTPUT 
+
+*** Detected the following warnings and/or errors: ***
+GPIO  6: Warning: user output connection to management output gpio ignored

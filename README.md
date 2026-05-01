@@ -585,7 +585,7 @@ These settings describe the intended behavior of a robust full-wrapper hardening
 
 
 <p align="center">
-<img src="../img/klayout_lacerta.png" width="500">
+<img src="documentation_mkdoc/docs/img/klayout_lacerta.png" width="500">
 </p>
 <p align="center">
 <b>Figure 5.</b> KLayout view of the Lacerta custom ASIC layout, showing the physical implementation of the design within the SKY130 Caravel user project area.
@@ -636,6 +636,58 @@ Table 2 summarizes the post-layout timing and electrical-check results for the L
 | `max_ss_100C_1v60` | 0.7488 | 1.5180 | 0.0000 | 0 | 0.3046 | 3.9897 | 0.0000 | 0 | 5 | 16 |
 | `max_ff_n40C_1v95` | 0.1247 | 0.3165 | 0.0000 | 0 | 6.9196 | 13.8115 | 0.0000 | 0 | 0 | 0 |
 
+## Precheck log
+2026-04-30 11:20:10 [INFO] Extracting compressed files in: /home/baungarten/Desktop/lacerta_march
+2026-04-30 11:20:11 [INFO] Project type: digital
+2026-04-30 11:20:12 [INFO] GDS hash (user_project_wrapper): 6b97c7a8678942fc2cc9d44b268f9c97943aedf2
+2026-04-30 11:20:13 [INFO] Tools: KLayout v0.29.2 | Magic v8.3.471
+2026-04-30 11:20:13 [INFO] PDK: SKY130A unknown
+2026-04-30 11:20:13 [INFO] Running 13 checks: [topcell_check, gpio_defines, xor, klayout_feol, klayout_beol, klayout_offgrid, klayout_met_min_ca_density, klayout_pin_label_purposes_overlapping_drawing, klayout_zeroarea, spike_check, illegal_cellname_check, lvs, oeb]
+2026-04-30 11:20:15 [INFO] Single top cell 'user_project_wrapper' found
+2026-04-30 11:20:15 [INFO] GPIO defines: parsing verilog/rtl/user_defines.v
+2026-04-30 11:20:15 [INFO] GPIO defines report: /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/reports/gpio_defines.report
+2026-04-30 11:20:32 [INFO] Total XOR differences: 0
+2026-04-30 11:20:32 [INFO] Running: klayout -b -r /usr/local/lib/python3.9/site-packages/cf_precheck/drc_scripts/sky130A_mr.drc -rd input=/home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds -rd topcell=user_project_wrapper -rd report=/home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/reports/klayout_feol_check.xml -rd thr=32 -rd feol=true
+2026-04-30 11:25:24 [INFO] No DRC violations found
+2026-04-30 11:25:24 [INFO] Running: klayout -b -r /usr/local/lib/python3.9/site-packages/cf_precheck/drc_scripts/sky130A_mr.drc -rd input=/home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds -rd topcell=user_project_wrapper -rd report=/home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/reports/klayout_beol_check.xml -rd thr=32 -rd beol=true
+2026-04-30 11:37:27 [INFO] No DRC violations found
+2026-04-30 11:37:27 [INFO] Running: klayout -b -r /usr/local/lib/python3.9/site-packages/cf_precheck/drc_scripts/sky130A_mr.drc -rd input=/home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds -rd topcell=user_project_wrapper -rd report=/home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/reports/klayout_offgrid_check.xml -rd thr=32 -rd offgrid=true
+2026-04-30 11:40:26 [INFO] No DRC violations found
+2026-04-30 11:40:26 [INFO] Running: klayout -b -r /usr/local/lib/python3.9/site-packages/cf_precheck/drc_scripts/met_min_ca_density.lydrc -rd input=/home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds -rd topcell=user_project_wrapper -rd report=/home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/reports/klayout_met_min_ca_density_check.xml -rd thr=32
+2026-04-30 11:41:15 [INFO] No DRC violations found
+2026-04-30 11:41:15 [INFO] Running: klayout -b -r /usr/local/lib/python3.9/site-packages/cf_precheck/drc_scripts/pin_label_purposes_overlapping_drawing.rb.drc -rd input=/home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds -rd topcell=user_project_wrapper -rd report=/home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/reports/klayout_pin_label_purposes_overlapping_drawing_check.xml -rd thr=32 -rd top_cell_name=user_project_wrapper
+2026-04-30 11:41:48 [INFO] No DRC violations found
+2026-04-30 11:41:48 [INFO] Running: klayout -b -r /usr/local/lib/python3.9/site-packages/cf_precheck/drc_scripts/zeroarea.rb.drc -rd input=/home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds -rd topcell=user_project_wrapper -rd report=/home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/reports/klayout_zeroarea_check.xml -rd thr=32 -rd cleaned_output=/home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/user_project_wrapper_no_zero_areas.gds
+2026-04-30 11:41:56 [INFO] No DRC violations found
+2026-04-30 11:41:56 [INFO] Running: bash /usr/local/lib/python3.9/site-packages/cf_precheck/drc_scripts/gdsArea0 -V -m /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/outputs/reports/spike_check.xml /home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds
+2026-04-30 11:42:02 [INFO] No spikes found
+2026-04-30 11:42:04 [INFO] Loading LVS environment from /home/baungarten/Desktop/lacerta_march/lvs/user_project_wrapper/lvs_config.json
+2026-04-30 11:42:04 [INFO] EXTRACT_FLATGLOB: 
+2026-04-30 11:42:04 [INFO] EXTRACT_ABSTRACT: *__fill_* *__fakediode_* *__tapvpwrvgnd_*
+2026-04-30 11:42:04 [WARNING] Missing LVS configuration variable EXTRACT_CREATE_SUBCUT
+2026-04-30 11:42:04 [INFO] LVS_FLATTEN: 
+2026-04-30 11:42:04 [INFO] LVS_NOFLATTEN: 
+2026-04-30 11:42:04 [INFO] LVS_IGNORE: 
+2026-04-30 11:42:04 [INFO] LVS_SPICE_FILES: /home/baungarten/Desktop/lacerta_march/dependencies/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice/sky130_ef_sc_hd__decap*.spice /home/baungarten/Desktop/lacerta_march/dependencies/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice
+2026-04-30 11:42:04 [INFO] LVS_VERILOG_FILES: /home/baungarten/Desktop/lacerta_march/verilog/gl/user_proj_example.v /home/baungarten/Desktop/lacerta_march/verilog/gl/user_project_wrapper.v
+2026-04-30 11:42:04 [INFO] LAYOUT_FILE: /home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds
+2026-04-30 11:42:04 [INFO] Running: run_be_checks --nooeb
+2026-04-30 11:42:04 [INFO] LVS output directory: /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10
+2026-04-30 11:51:57 [INFO] Loading LVS environment from /home/baungarten/Desktop/lacerta_march/lvs/user_project_wrapper/lvs_config.json
+2026-04-30 11:51:57 [INFO] EXTRACT_FLATGLOB: 
+2026-04-30 11:51:57 [INFO] EXTRACT_ABSTRACT: *__fill_* *__fakediode_* *__tapvpwrvgnd_*
+2026-04-30 11:51:57 [WARNING] Missing LVS configuration variable EXTRACT_CREATE_SUBCUT
+2026-04-30 11:51:57 [INFO] LVS_FLATTEN: 
+2026-04-30 11:51:57 [INFO] LVS_NOFLATTEN: 
+2026-04-30 11:51:57 [INFO] LVS_IGNORE: 
+2026-04-30 11:51:57 [INFO] LVS_SPICE_FILES: /home/baungarten/Desktop/lacerta_march/dependencies/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice/sky130_ef_sc_hd__decap*.spice /home/baungarten/Desktop/lacerta_march/dependencies/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice
+2026-04-30 11:51:57 [INFO] LVS_VERILOG_FILES: /home/baungarten/Desktop/lacerta_march/verilog/gl/user_proj_example.v /home/baungarten/Desktop/lacerta_march/verilog/gl/user_project_wrapper.v
+2026-04-30 11:51:57 [INFO] LAYOUT_FILE: /home/baungarten/Desktop/lacerta_march/gds/user_project_wrapper.gds
+2026-04-30 11:51:57 [INFO] Running: run_oeb_check --noextract
+2026-04-30 11:51:57 [INFO] OEB output directory: /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10
+2026-04-30 11:52:04 [WARNING] ERC check failed (stat=4), see /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/logs/OEB_check.log
+
+
 ## Lacerta PCB
  
 The **Lacerta PCB** provides the physical platform used to power, configure, and evaluate the Lacerta hardware. At a general level, the board brings together the Caravel device, external memory, communication interfaces, clock generation, power regulation, and display connectivity required to operate the Lacerta graphics subsystem as a complete embedded system. In addition to hosting the main integrated circuits, the board exposes test points, headers, and peripheral connectors that simplify bring-up, debugging, and laboratory validation.
@@ -685,7 +737,7 @@ Table 3 lists the main priced BOM entries together with direct supplier links. T
 | `R5,R6,R11,R14` | 4 | RC0402FR-071KL | 0.40 | [Yageo 1 kOhm resistors](https://www.digikey.com/es/products/detail/yageo/RC0402FR-071KL/726513) |
 
 <p align="center">
-  <img src="../img/scren_pcb_diag.png" width="500">
+  <img src="documentation_mkdoc/docs/img/scren_pcb_diag.png" width="500">
 </p>
 <p align="center">
 <b>Figure 12.</b> Schematic of the Lacerta development board, showing the main functional blocks including the Caravel connection, USB-to-serial interface, flash memory, clock generator, power regulation, and display/output connectors.
@@ -694,7 +746,7 @@ Table 3 lists the main priced BOM entries together with direct supplier links. T
 The PCB implementation translates this schematic into a compact development board that places the major components and user interfaces in accessible locations. The 3D view highlights the physical arrangement of the display and interface connectors, the Caravel-related devices, the USB/FTDI section, memory devices, headers, and support circuitry. This representation is useful for understanding the mechanical integration of the board and for checking connector placement, component accessibility, and assembly feasibility during the hardware-development process.
 
 <p align="center">
-  <img src="../img/PCB_UART.jpeg" width="500">
+  <img src="documentation_mkdoc/docs/img/PCB_UART.jpeg" width="500">
 </p>
 <p align="center">
 <b>Figure 13.</b> 3D view of the Lacerta PCB, illustrating the assembled component placement, external connectors, and overall physical organization of the development board.
@@ -703,7 +755,7 @@ The PCB implementation translates this schematic into a compact development boar
 The routed PCB layout shows how the electrical connections between these subsystems are realized on the board. It provides a detailed view of component placement, copper routing, and board dimensions, and it reflects the practical constraints of signal integrity, power distribution, and connector accessibility. Together, the schematic, 3D rendering, and final layout document the complete PCB-development flow for Lacerta, from circuit definition to manufacturable board implementation.
 
 <p align="center">
-  <img src="../img/pcb_2d.png" width="500">
+  <img src="documentation_mkdoc/docs/img/pcb_2d.png" width="500">
 </p>
 <p align="center">
 <b>Figure 14.</b> PCB layout of the Lacerta development board, showing the routed interconnections, component placement, and board geometry used to implement the final hardware platform.
