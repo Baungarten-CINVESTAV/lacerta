@@ -3,8 +3,8 @@
     "name": "lacerta",
     "type": "digital",
     "user": "baungarten-cinvestav",
-    "version": "1",
-    "user_project_wrapper_hash": "fb9d9fff556a35cf4e9547e2bd9ff0ec00f4cc92b44aec80e3e493c1cf71e9f8",
+    "version": "2",
+    "user_project_wrapper_hash": "964a3927b4fe31b56d59614c0a79a12206e3df6ec5348a2b4e0c956977481f7a",
     "gpio_config": {
       "5": "13'h0403",
       "6": "13'h1809",
