@@ -142,7 +142,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#lacerta-verification">Lacerta Verification</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#system-level-verification-philosophy">System-Level Verification Philosophy</a>
+    <li class="toctree-l3"><a class="reference internal" href="#system-level-verification">System-Level Verification</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#dig_top_tbsv-verification-flow">dig_top_tb.sv Verification Flow</a>
         <ul>
@@ -176,6 +176,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lacerta-rtl-verification">Lacerta RTL Verification</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#hardening-configuration">Hardening Configuration</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#selected-hardening-option">Selected Hardening Option</a>
@@ -188,8 +190,6 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#lacerta-gate-level-simulation">Lacerta Gate Level Simulation</a>
-    </li>
     <li class="toctree-l2"><a class="reference internal" href="#lacerta-pcb">Lacerta PCB</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#lacerta-interface-design-software">Lacerta Interface Design Software</a>
@@ -199,6 +199,10 @@
         </ul>
     </li>
     </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../lacerta_gui_fpga_demo/">GUI and FPGA Demo</a>
                 </li>
               </ul>
               <ul>
@@ -767,7 +771,7 @@ Its main functional job is to route requests from several clients into the memor
 <p>At the block level, dedicated environments were created for the UART front end, the shared memory subsystem, the Wishbone adapters, the command decoder, and the display-related logic. These environments focused on local protocol correctness, handshake legality, data stability, and forward progress. The later sections of this document list the principal checks captured for each block.</p>
 <p>At the system level, the main integration environment is <code>verif/dig_top_tb.sv</code>. This testbench drives the top-level <code>dig_top</code> instance through the UART path, connects the design to an SRAM behavioral model (<code>CY7C1049GN_i</code>), and observes the TFT SPI outputs exactly as a real deployment would use them. In practice, this makes the testbench an end-to-end verification vehicle: a command is injected as UART traffic, decoded by the control plane, executed through the memory subsystem, and finally checked either at the SRAM image or at the TFT serial output.</p>
 <p>More information about the simulation flow, active checkers, and expected data paths can be found in <a href="../dig_top_tb_flow_diagram.html">dig_top_tb_flow_diagram.html</a>.</p>
-<h3 id="system-level-verification-philosophy">System-Level Verification Philosophy</h3>
+<h3 id="system-level-verification">System-Level Verification</h3>
 <p>The full-system verification flow is organized around three complementary ideas:</p>
 <ol>
 <li>
@@ -776,13 +780,11 @@ Its main functional job is to route requests from several clients into the memor
 </li>
 <li>
 <p><strong>Independent reference data</strong><br />
-   The testbench builds its own expected data structures before execution begins:</p>
-</li>
-<li><code>tft_init_mem</code> stores the expected TFT initialization sequence, including command, data, and delay entries.</li>
-<li><code>tft_sidebar</code> stores the expected sidebar stream sent to the TFT.</li>
-<li><code>tft_active_area</code> stores the logical active-screen image used for full-frame display verification.</li>
-<li>
-<p><code>tb_sram</code> acts as a golden SRAM image. It is initialized from the active-area data and then updated by the testbench's own object-drawing rules before being compared against the DUT-visible SRAM model.</p>
+   The testbench builds its own expected data structures before execution begins:
+    <code>tft_init_mem</code> stores the expected TFT initialization sequence, including command, data, and delay entries.
+    <code>tft_sidebar</code> stores the expected sidebar stream sent to the TFT.
+    <code>tft_active_area</code> stores the logical active-screen image used for full-frame display verification.
+    <code>tb_sram</code> acts as a golden SRAM image. It is initialized from the active-area data and then updated by the testbench's own object-drawing rules before being compared against the DUT-visible SRAM model.</p>
 </li>
 <li>
 <p><strong>Concurrent checking</strong><br />
@@ -936,6 +938,41 @@ Its main functional job is to route requests from several clients into the memor
 <li>Verify that <code>wr_buff_wren</code> cannot be asserted when <code>wr_buff_full</code> is high.</li>
 <li>Verify that <code>rpg_busy</code>, <code>wpg_busy</code>, <code>rpg_ack</code>, <code>wpg_ack</code>, <code>wr_buff_full</code>, <code>rd_buff_rden</code>, and <code>wr_buff_wren</code> can be asserted only while <code>busy</code> is high.</li>
 </ol>
+<h2 id="lacerta-rtl-verification">Lacerta RTL Verification</h2>
+<p>The RTL simulation stage was used to verify the functional behavior of the Lacerta top-level design and to confirm the correctness of the TFT initialization transaction sequence before physical implementation. In this test, the simulation output shows that the expected delays were observed and that the initialization values stored in <code>tft_init_mem</code> were transmitted correctly to <code>spi_master</code>. The resulting log provides evidence that the initialization FSM and SPI output path behave as intended during the early display bring-up sequence at the RTL verification stage.</p>
+<p>A section from the RTL simulation log is shown below. The complete log file is available for download here: <a href="../lacerta_gate_level_simulation.log">lacerta_gate_level_simulation.log</a>.</p>
+<pre><code class="language-text">Time resolution is 1 ps
+open_wave_config /home/miguel/Documents/lacerta/verif/work/work.dig_top_tb.wcfg
+run -all
+delay encountered 20
+PASS: correct delay 1020321 for entry 0 was measured
+delay encountered 120
+PASS: correct delay 6049997 for entry 1 was measured
+PASS: correct tft_init_mem data 0001 for entry 2 was sent to spi_master
+delay encountered 150
+PASS: correct delay 7549959 for entry 3 was measured
+PASS: correct tft_init_mem data 0011 for entry 4 was sent to spi_master
+delay encountered 120
+PASS: correct delay 6049959 for entry 5 was measured
+PASS: correct tft_init_mem data 003a for entry 6 was sent to spi_master
+PASS: correct tft_init_mem data 0155 for entry 7 was sent to spi_master
+delay encountered 10
+PASS: correct delay 549920 for entry 8 was measured
+PASS: correct tft_init_mem data 0036 for entry 9 was sent to spi_master
+PASS: correct tft_init_mem data 01a8 for entry 10 was sent to spi_master
+PASS: correct tft_init_mem data 002a for entry 11 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 12 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 13 was sent to spi_master
+PASS: correct tft_init_mem data 0101 for entry 14 was sent to spi_master
+PASS: correct tft_init_mem data 013f for entry 15 was sent to spi_master
+PASS: correct tft_init_mem data 002b for entry 16 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 17 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 18 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 19 was sent to spi_master
+PASS: correct tft_init_mem data 01ef for entry 20 was sent to spi_master
+PASS: correct tft_init_mem data 0020 for entry 21 was sent to spi_master
+PASS: correct tft_init_mem data 0013 for entry 22 was sent to spi_master
+</code></pre>
 <h2 id="hardening-configuration">Hardening Configuration</h2>
 <p>This page documents the OpenLane hardening setup used for the <code>user_project_wrapper</code> flow in Lacerta and records the top-level hardening option selected for the project.</p>
 <h3 id="selected-hardening-option">Selected Hardening Option</h3>
@@ -1013,11 +1050,490 @@ Its main functional job is to route requests from several clients into the memor
 &quot;RUN_CVC&quot;: 1
 </code></pre>
 <p>These settings describe the intended behavior of a robust full-wrapper hardening run, including synthesis checking, placement control, timing optimization, PDN generation, antenna repair, filler insertion, tap/decap insertion, clock-tree synthesis, and final electrical checks.</p>
-<h2 id="lacerta-gate-level-simulation">Lacerta Gate Level Simulation</h2>
-<p>🚧 Content coming soon.</p>
+<p align="center">
+<img src="../img/klayout_lacerta.png">
+</p>
+<p align="center">
+<b>Figure 5.</b> KLayout view of the Lacerta custom ASIC layout, showing the physical implementation of the design within the SKY130 Caravel user project area.
+</p>
+
+<p>To complement the layout view, Table 1 summarizes the main implementation metrics of the Lacerta chip extracted from the final OpenLane hardening results. These values provide a compact overview of the physical size, logic complexity, utilization, power, timing, and routing quality achieved for the final ASIC integration.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Technology / integration platform</td>
+<td>SKY130 in Caravel user project area</td>
+</tr>
+<tr>
+<td>Die size</td>
+<td>2920 um x 3520 um</td>
+</tr>
+<tr>
+<td>Die area</td>
+<td>10.2784 mm^2</td>
+</tr>
+<tr>
+<td>Core size</td>
+<td>2908.58 um x 3497.92 um</td>
+</tr>
+<tr>
+<td>Core area</td>
+<td>10.1740 mm^2</td>
+</tr>
+<tr>
+<td>User I/O count</td>
+<td>645</td>
+</tr>
+<tr>
+<td>Standard-cell instance count</td>
+<td>171,157</td>
+</tr>
+<tr>
+<td>Standard-cell area</td>
+<td>466,947 um^2</td>
+</tr>
+<tr>
+<td>Core utilization</td>
+<td>4.59%</td>
+</tr>
+<tr>
+<td>Total power</td>
+<td>0.0261 W</td>
+</tr>
+<tr>
+<td>Internal power</td>
+<td>0.0193 W</td>
+</tr>
+<tr>
+<td>Switching power</td>
+<td>0.0068 W</td>
+</tr>
+<tr>
+<td>Leakage power</td>
+<td>4.02e-7 W</td>
+</tr>
+<tr>
+<td>Worst setup slack (WNS)</td>
+<td>0.0 ns</td>
+</tr>
+<tr>
+<td>Worst hold slack (WNS)</td>
+<td>0.0 ns</td>
+</tr>
+<tr>
+<td>Worst setup slack margin</td>
+<td>0.3046 ns</td>
+</tr>
+<tr>
+<td>Worst hold slack margin</td>
+<td>0.1247 ns</td>
+</tr>
+<tr>
+<td>Total negative setup slack (TNS)</td>
+<td>0.0 ns</td>
+</tr>
+<tr>
+<td>Total negative hold slack (TNS)</td>
+<td>0.0 ns</td>
+</tr>
+<tr>
+<td>Setup violations</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Hold violations</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Final routing DRC errors</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Total routed wirelength</td>
+<td>1,305,691 um</td>
+</tr>
+<tr>
+<td>Total vias</td>
+<td>160,121</td>
+</tr>
+<tr>
+<td>Power-grid violations</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Table 2 summarizes the post-layout timing and electrical-check results for the Lacerta chip across the main process, voltage, and temperature corners evaluated during signoff. It highlights hold and setup slack, total negative slack, violation counts, and basic design-rule indicators such as maximum capacitance and slew violations. Together, these results provide a compact view of implementation robustness and show that the design closes timing without setup or hold violations across all analyzed corners, while only a small number of electrical violations remain in the worst-case conditions.</p>
+<table>
+<thead>
+<tr>
+<th>Corner / Group</th>
+<th style="text-align: right;">Hold Worst Slack (ns)</th>
+<th style="text-align: right;">Reg-to-Reg Hold (ns)</th>
+<th style="text-align: right;">Hold TNS (ns)</th>
+<th style="text-align: right;">Hold Violations</th>
+<th style="text-align: right;">Setup Worst Slack (ns)</th>
+<th style="text-align: right;">Reg-to-Reg Setup (ns)</th>
+<th style="text-align: right;">Setup TNS (ns)</th>
+<th style="text-align: right;">Setup Violations</th>
+<th style="text-align: right;">Max Cap Violations</th>
+<th style="text-align: right;">Max Slew Violations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overall</td>
+<td style="text-align: right;">0.1247</td>
+<td style="text-align: right;">0.3086</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.3046</td>
+<td style="text-align: right;">3.9897</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr>
+<td><code>nom_tt_025C_1v80</code></td>
+<td style="text-align: right;">0.2935</td>
+<td style="text-align: right;">0.6345</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.2682</td>
+<td style="text-align: right;">11.3491</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>nom_ss_100C_1v60</code></td>
+<td style="text-align: right;">0.8170</td>
+<td style="text-align: right;">1.4920</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.3652</td>
+<td style="text-align: right;">4.3456</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><code>nom_ff_n40C_1v95</code></td>
+<td style="text-align: right;">0.1777</td>
+<td style="text-align: right;">0.3121</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.9450</td>
+<td style="text-align: right;">13.9299</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>min_tt_025C_1v80</code></td>
+<td style="text-align: right;">0.3587</td>
+<td style="text-align: right;">0.6291</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.3281</td>
+<td style="text-align: right;">11.5404</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>min_ss_100C_1v60</code></td>
+<td style="text-align: right;">0.8853</td>
+<td style="text-align: right;">1.4690</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.4830</td>
+<td style="text-align: right;">4.7069</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><code>min_ff_n40C_1v95</code></td>
+<td style="text-align: right;">0.2267</td>
+<td style="text-align: right;">0.3086</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.9862</td>
+<td style="text-align: right;">14.0569</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>max_tt_025C_1v80</code></td>
+<td style="text-align: right;">0.2242</td>
+<td style="text-align: right;">0.6405</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5.2312</td>
+<td style="text-align: right;">11.1618</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td><code>max_ss_100C_1v60</code></td>
+<td style="text-align: right;">0.7488</td>
+<td style="text-align: right;">1.5180</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.3046</td>
+<td style="text-align: right;">3.9897</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr>
+<td><code>max_ff_n40C_1v95</code></td>
+<td style="text-align: right;">0.1247</td>
+<td style="text-align: right;">0.3165</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6.9196</td>
+<td style="text-align: right;">13.8115</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
 <h2 id="lacerta-pcb">Lacerta PCB</h2>
 <p>The <strong>Lacerta PCB</strong> provides the physical platform used to power, configure, and evaluate the Lacerta hardware. At a general level, the board brings together the Caravel device, external memory, communication interfaces, clock generation, power regulation, and display connectivity required to operate the Lacerta graphics subsystem as a complete embedded system. In addition to hosting the main integrated circuits, the board exposes test points, headers, and peripheral connectors that simplify bring-up, debugging, and laboratory validation.</p>
 <p>From the schematic point of view, the board is organized into clearly separated functional domains. These include the <strong>Caravel interface</strong>, the <strong>USB-to-serial path</strong> used for configuration and communication, the <strong>flash-memory interface</strong>, the <strong>clock-generator circuit</strong>, the <strong>power-supply section</strong>, and the <strong>display/output connectors</strong>. This partitioning makes the design easier to validate and reflects the main operational needs of Lacerta: receiving commands, storing data, accessing the Caravel platform, and driving an external display.</p>
+<p>From a cost perspective, the Lacerta board was designed around widely available commercial parts, keeping the supporting electronics relatively affordable for prototyping and laboratory validation. Based on the current bill of materials in <a href="../Lacerta%20bom.csv">Lacerta bom.csv</a>, the populated board components with listed prices sum to approximately <strong>USD 28.46</strong>. This estimate covers the off-the-shelf electronic components only and does <strong>not</strong> include PCB fabrication, board assembly, shipping, taxes, or the cost of the custom Lacerta/Caravel chip itself, which appears in the BOM as a non-priced item.</p>
+<p>The cost distribution is dominated by a small number of active devices, especially the external SRAM, the programmable oscillator, and the FT232H USB interface. In contrast, most passive parts and headers contribute only a small fraction of the total. This is typical for a development-oriented board, where communication, memory, and clock-generation devices account for much of the material cost while still enabling a flexible and easy-to-evaluate hardware platform.</p>
+<table>
+<thead>
+<tr>
+<th>Cost category</th>
+<th style="text-align: right;">Estimated cost (USD)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>External SRAM (<code>U12</code>)</td>
+<td style="text-align: right;">5.72</td>
+<td>CY7C1049GN-10VXI</td>
+</tr>
+<tr>
+<td>Programmable oscillator (<code>U10</code>)</td>
+<td style="text-align: right;">4.47</td>
+<td>DS1086LU+T</td>
+</tr>
+<tr>
+<td>USB interface (<code>U1</code>)</td>
+<td style="text-align: right;">4.09</td>
+<td>FT232HQ</td>
+</tr>
+<tr>
+<td>Resistor networks and discretes</td>
+<td style="text-align: right;">2.42</td>
+<td>Main resistor lines combined</td>
+</tr>
+<tr>
+<td>Capacitors</td>
+<td style="text-align: right;">2.50</td>
+<td>All capacitor lines combined</td>
+</tr>
+<tr>
+<td>Flash memory (<code>U7</code>)</td>
+<td style="text-align: right;">0.93</td>
+<td>W25Q32JVSSIQ</td>
+</tr>
+<tr>
+<td>Regulators (<code>U5</code>, <code>U6</code>)</td>
+<td style="text-align: right;">0.98</td>
+<td>TAR5S16U</td>
+</tr>
+<tr>
+<td>Connectors and headers</td>
+<td style="text-align: right;">4.04</td>
+<td>USB, sockets, and pin headers</td>
+</tr>
+<tr>
+<td>Clock sources (<code>X1</code>, <code>Y1</code>)</td>
+<td style="text-align: right;">1.13</td>
+<td>10 MHz oscillator and 12 MHz crystal</td>
+</tr>
+<tr>
+<td>LEDs, switch, mux, buffers, ferrite bead</td>
+<td style="text-align: right;">2.18</td>
+<td>Support circuitry</td>
+</tr>
+<tr>
+<td>Custom Lacerta/Caravel chip (<code>U11</code>)</td>
+<td style="text-align: right;">Not priced</td>
+<td>ASIC cost not included in BOM total</td>
+</tr>
+<tr>
+<td>Total priced components</td>
+<td style="text-align: right;">28.46</td>
+<td>Excludes PCB, assembly, shipping, taxes, and ASIC fabrication</td>
+</tr>
+</tbody>
+</table>
+<p>Table 3 lists the main priced BOM entries together with direct supplier links. These links document the exact components used for the current board revision and make the cost estimate traceable to the underlying purchase sources.</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th style="text-align: right;">Qty</th>
+<th>Part number</th>
+<th style="text-align: right;">Sum (USD)</th>
+<th>Supplier link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>U12</code></td>
+<td style="text-align: right;">1</td>
+<td>CY7C1049GN-10VXI</td>
+<td style="text-align: right;">5.72</td>
+<td><a href="https://www.digikey.com/en/products/detail/infineon-technologies/CY7C1049G-10VXI/5247556">Infineon SRAM</a></td>
+</tr>
+<tr>
+<td><code>U10</code></td>
+<td style="text-align: right;">1</td>
+<td>DS1086LU+T</td>
+<td style="text-align: right;">4.47</td>
+<td><a href="https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/DS1086LU-T/1196640">Analog Devices / Maxim oscillator</a></td>
+</tr>
+<tr>
+<td><code>U1</code></td>
+<td style="text-align: right;">1</td>
+<td>FT232HQ</td>
+<td style="text-align: right;">4.09</td>
+<td><a href="https://www.digikey.com.mx/es/products/detail/ftdi-future-technology-devices-international-ltd/FT232HQ-REEL/2614626">FTDI FT232H</a></td>
+</tr>
+<tr>
+<td><code>R1,R4,R7,R8,R9,R10,R12,R13,R15,R16,R17,R18,R19,R20</code></td>
+<td style="text-align: right;">14</td>
+<td>RV0805JR-0710KL</td>
+<td style="text-align: right;">1.82</td>
+<td><a href="https://www.mouser.mx/ProductDetail/YAGEO/RV0805JR-0710KL?qs=qpJ%252B%252B%252Bdg6p3bGiIDT3p%252B0w%3D%3D&amp;srsltid=AfmBOor_k13NHklcFtUsSFFZvJFpaMbXbqOGeWpW-8F9AYrfn2fu0pLO">Yageo 10 kOhm resistors</a></td>
+</tr>
+<tr>
+<td><code>C2,C3,C4,C5,C6,C7,C8,C9,C18,C20,C21,C24</code></td>
+<td style="text-align: right;">12</td>
+<td>CL21B104KBCNNNC</td>
+<td style="text-align: right;">1.20</td>
+<td><a href="https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B104KBCNNNC/3886661?s=N4IgTCBcDaIMIBkwEYBCyAMAWA0quAckXCALoC%2BQA">Samsung 0.1 uF capacitors</a></td>
+</tr>
+<tr>
+<td><code>U5,U6</code></td>
+<td style="text-align: right;">2</td>
+<td>TAR5S16U</td>
+<td style="text-align: right;">0.98</td>
+<td><a href="https://www.digikey.com/en/products/detail/toshiba-semiconductor-and-storage/TAR5S16U-TE85L-F/10379930">Toshiba regulators</a></td>
+</tr>
+<tr>
+<td><code>U7</code></td>
+<td style="text-align: right;">1</td>
+<td>W25Q32JVSSIQ</td>
+<td style="text-align: right;">0.93</td>
+<td><a href="https://www.digikey.com/es/products/detail/winbond-electronics/W25Q32JVSSIQ/5803981">Winbond flash memory</a></td>
+</tr>
+<tr>
+<td><code>J1</code></td>
+<td style="text-align: right;">1</td>
+<td>105017-0001</td>
+<td style="text-align: right;">0.92</td>
+<td><a href="https://www.digikey.com.mx/es/products/detail/molex/1050170001/2350832">Molex Micro-USB connector</a></td>
+</tr>
+<tr>
+<td><code>J11</code></td>
+<td style="text-align: right;">1</td>
+<td>61301011121</td>
+<td style="text-align: right;">0.95</td>
+<td><a href="https://www.digikey.com/es/products/detail/w%C3%BCrth-elektronik/61301011121/2508439">Wurth 1x10 header</a></td>
+</tr>
+<tr>
+<td><code>J10</code></td>
+<td style="text-align: right;">1</td>
+<td>PPTC141LFBN-RC</td>
+<td style="text-align: right;">0.77</td>
+<td><a href="https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC141LFBN-RC/810152">Sullins socket</a></td>
+</tr>
+<tr>
+<td><code>C1,C11,C14,C17,C22,C23</code></td>
+<td style="text-align: right;">6</td>
+<td>CL21B103KBANNNC</td>
+<td style="text-align: right;">0.60</td>
+<td><a href="https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B103KBANNNC/3886673">Samsung 0.01 uF capacitors</a></td>
+</tr>
+<tr>
+<td><code>X1</code></td>
+<td style="text-align: right;">1</td>
+<td>DSC6001JE1B-010.0000</td>
+<td style="text-align: right;">0.59</td>
+<td><a href="https://www.digikey.com/en/products/detail/microchip-technology/DSC6001JE1B-010-0000/24396951">Microchip 10 MHz oscillator</a></td>
+</tr>
+<tr>
+<td><code>U9</code></td>
+<td style="text-align: right;">1</td>
+<td>TMUX4053PWR</td>
+<td style="text-align: right;">0.58</td>
+<td><a href="https://www.digikey.com/en/products/detail/texas-instruments/TMUX4053PWR/17748481">TI analog mux</a></td>
+</tr>
+<tr>
+<td><code>Y1</code></td>
+<td style="text-align: right;">1</td>
+<td>ABM8-272-T3</td>
+<td style="text-align: right;">0.54</td>
+<td><a href="https://www.digikey.com/en/products/detail/abracon-llc/ABM8-272-T3/22472366">Abracon 12 MHz crystal</a></td>
+</tr>
+<tr>
+<td><code>D1,D3,D4</code></td>
+<td style="text-align: right;">3</td>
+<td>LTST-C150KRKT</td>
+<td style="text-align: right;">0.48</td>
+<td><a href="https://www.digikey.com.mx/es/products/detail/liteon/LTST-C150KRKT/386761">Lite-On LEDs</a></td>
+</tr>
+<tr>
+<td><code>C12,C15,C16,C25</code></td>
+<td style="text-align: right;">4</td>
+<td>CL21A106KPFNNNE</td>
+<td style="text-align: right;">0.40</td>
+<td><a href="https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21A106KPFNNNE/3886710?s=N4IgTCBcDaIMIBkwEYCCyAMA2A0gBQDEA5EgURAF0BfIA">Samsung 10 uF capacitors</a></td>
+</tr>
+<tr>
+<td><code>J3,J5,J8,J9</code></td>
+<td style="text-align: right;">4</td>
+<td>M50-3530242</td>
+<td style="text-align: right;">0.40</td>
+<td><a href="https://www.digikey.com.mx/es/products/detail/harwin-inc/M50-3530242/7044013?s=N4IgTCBcDaILIFYAMBaAzAtSwBYIF0BfIA">Harwin 1x02 headers</a></td>
+</tr>
+<tr>
+<td><code>R5,R6,R11,R14</code></td>
+<td style="text-align: right;">4</td>
+<td>RC0402FR-071KL</td>
+<td style="text-align: right;">0.40</td>
+<td><a href="https://www.digikey.com/es/products/detail/yageo/RC0402FR-071KL/726513">Yageo 1 kOhm resistors</a></td>
+</tr>
+</tbody>
+</table>
 <p align="center">
   <img src="../img/scren_pcb_diag.png" width="700">
 </p>
@@ -1062,7 +1578,7 @@ Its main functional job is to route requests from several clients into the memor
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../system_architecture/" class="btn btn-neutral float-left" title="System Architecture"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../appendix/" class="btn btn-neutral float-right" title="Appendix">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../lacerta_gui_fpga_demo/" class="btn btn-neutral float-right" title="GUI and FPGA Demo">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -1088,7 +1604,7 @@ Its main functional job is to route requests from several clients into the memor
       <span><a href="../system_architecture/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../appendix/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../lacerta_gui_fpga_demo/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
