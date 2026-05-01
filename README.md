@@ -637,6 +637,7 @@ Table 2 summarizes the post-layout timing and electrical-check results for the L
 | `max_ff_n40C_1v95` | 0.1247 | 0.3165 | 0.0000 | 0 | 6.9196 | 13.8115 | 0.0000 | 0 | 0 | 0 |
 
 ## Precheck log
+ ```
 2026-04-30 11:20:10 [INFO] Extracting compressed files in: /home/baungarten/Desktop/lacerta_march
 2026-04-30 11:20:11 [INFO] Project type: digital
 2026-04-30 11:20:12 [INFO] GDS hash (user_project_wrapper): 6b97c7a8678942fc2cc9d44b268f9c97943aedf2
@@ -686,7 +687,7 @@ Table 2 summarizes the post-layout timing and electrical-check results for the L
 2026-04-30 11:51:57 [INFO] Running: run_oeb_check --noextract
 2026-04-30 11:51:57 [INFO] OEB output directory: /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10
 2026-04-30 11:52:04 [WARNING] ERC check failed (stat=4), see /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/logs/OEB_check.log
-
+ ``` 
 
 ## Lacerta PCB
  
