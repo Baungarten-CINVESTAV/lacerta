@@ -1,6 +1,6 @@
 {
   "project": {
-    "name": "lacerta",
+    "name": "Lacertav2_contest",
     "type": "digital",
     "user": "baungarten-cinvestav",
     "version": "2",
@@ -40,7 +40,7 @@
       "36": "13'h1808",
       "37": "13'h1808"
     },
-    "platform_project_id": "9ecf7d4c-9431-4fc1-bd93-f084919079ad",
+    "platform_project_id": "c5b7659d-7403-479c-89fe-0bb8594e62c8",
     "submission_state": "Draft",
     "github_repo_url": "https://github.com/Baungarten-CINVESTAV/lacerta"
   },

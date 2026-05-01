@@ -124,13 +124,6 @@ At a functional level, the system must:
 
 The design is organized around a shared memory architecture. Instead of each module touching the SRAM directly, all active clients use a common memory subsystem with buffered read and write channels, as shown in the figure below.
 
-<p align="center">
-<img src="documentation_mkdoc/docs/img/lacerta_blockd_vfinal.png">
-</p>
-<p align="center">
-<b>Figure 4.</b> Block diagram of the Lacerta ASIC inside the Caravel environment. The figure shows how UART data and the embedded Caravel RISC-V processor interact through the Wishbone-connected control path, rendering logic, and memory subsystem; the updated frame data is then read by the display output block to drive the screen.
-</p>
-
 ### High-Level Functional Flow
 
 The complete display flow is:
@@ -448,24 +441,292 @@ The verification plan for the **Mask Generator** block validates correct start/b
 5. Verify that `wr_buff_wren` cannot be asserted when `wr_buff_full` is high.
 6. Verify that `rpg_busy`, `wpg_busy`, `rpg_ack`, `wpg_ack`, `wr_buff_full`, `rd_buff_rden`, and `wr_buff_wren` can be asserted only while `busy` is high.
 
+## Lacerta RTL Verification
 
---------------------- OLD README ------------------------
+The RTL simulation stage was used to verify the functional behavior of the Lacerta top-level design and to confirm the correctness of the TFT initialization transaction sequence before physical implementation. In this test, the simulation output shows that the expected delays were observed and that the initialization values stored in `tft_init_mem` were transmitted correctly to `spi_master`. The resulting log provides evidence that the initialization FSM and SPI output path behave as intended during the early display bring-up sequence at the RTL verification stage.
 
-The goal of Lacerta is to provide a low-cost, fully open-source reference architecture for embedded human–machine interfaces (HMI). By combining configurable hardware graphics generation with flexible input interfaces, Lacerta enables the rapid development of customizable dashboards and monitoring systems for industrial, commercial, and edge-IoT applications.
+A section from the RTL simulation log is shown below. The complete log file is available for download here: [lacerta_gate_level_simulation.log](documentation_mkdoc/docs/lacerta_gate_level_simulation.log).
+
+```text
+Time resolution is 1 ps
+open_wave_config /home/miguel/Documents/lacerta/verif/work/work.dig_top_tb.wcfg
+run -all
+delay encountered 20
+PASS: correct delay 1020321 for entry 0 was measured
+delay encountered 120
+PASS: correct delay 6049997 for entry 1 was measured
+PASS: correct tft_init_mem data 0001 for entry 2 was sent to spi_master
+delay encountered 150
+PASS: correct delay 7549959 for entry 3 was measured
+PASS: correct tft_init_mem data 0011 for entry 4 was sent to spi_master
+delay encountered 120
+PASS: correct delay 6049959 for entry 5 was measured
+PASS: correct tft_init_mem data 003a for entry 6 was sent to spi_master
+PASS: correct tft_init_mem data 0155 for entry 7 was sent to spi_master
+delay encountered 10
+PASS: correct delay 549920 for entry 8 was measured
+PASS: correct tft_init_mem data 0036 for entry 9 was sent to spi_master
+PASS: correct tft_init_mem data 01a8 for entry 10 was sent to spi_master
+PASS: correct tft_init_mem data 002a for entry 11 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 12 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 13 was sent to spi_master
+PASS: correct tft_init_mem data 0101 for entry 14 was sent to spi_master
+PASS: correct tft_init_mem data 013f for entry 15 was sent to spi_master
+PASS: correct tft_init_mem data 002b for entry 16 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 17 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 18 was sent to spi_master
+PASS: correct tft_init_mem data 0100 for entry 19 was sent to spi_master
+PASS: correct tft_init_mem data 01ef for entry 20 was sent to spi_master
+PASS: correct tft_init_mem data 0020 for entry 21 was sent to spi_master
+PASS: correct tft_init_mem data 0013 for entry 22 was sent to spi_master
+```
+
+## Hardening Configuration
+
+This page documents the OpenLane hardening setup used for the `user_project_wrapper` flow in Lacerta and records the top-level hardening option selected for the project.
+
+### Selected Hardening Option
+
+The selected hardening option is:
+
+**Flat on Top-Level (Single Flat Design)**
+
+In this approach, the full user project is hardened directly at the `user_project_wrapper` level. OpenLane reads the top-level wrapper together with the project RTL and generates a single physical implementation for the wrapper.
+
+This option is typically used when:
+
+- the goal is to optimize the complete design as one integrated block,
+- higher top-level performance is preferred over separate block-level optimization,
+- and global placement and routing decisions are acceptable across the full design.
+
+For this flow, the top-level OpenLane run is performed inside:
+
+`openlane/user_project_wrapper`
+
+### Single OpenLane Run Setup
+
+For a flat top-level hardening flow, the wrapper configuration should:
+
+- set `DESIGN_IS_CORE` to `1` when required by the selected OpenLane flow,
+- include `user_project_wrapper.v` together with the full user RTL in `VERILOG_FILES`,
+- and ensure that `user_project_wrapper.v` directly instantiates the project design.
+
+In Lacerta, the wrapper configuration includes the top-level RTL together with the main functional blocks such as:
+
+- `dig_top.v`
+- `command_arbiter_decoder.v`
+- UART modules
+- Wishbone slave modules
+- screen control modules
+- drawing modules
+- memory-system RTL
+
+### Current Wrapper Configuration
+
+The wrapper hardening file is:
+
+`openlane/user_project_wrapper/config.json`
+
+This configuration includes the full RTL list under `VERILOG_FILES`, which matches the flat top-level hardening strategy. The file also enables several implementation and signoff-related options for a full wrapper run.
+
+Key settings from `config.json`:
+
+```json
+"SYNTH_ELABORATE_ONLY": false,
+"RUN_POST_GPL_DESIGN_REPAIR": true,
+"RUN_POST_CTS_RESIZER_TIMING": true,
+"DESIGN_REPAIR_BUFFER_INPUT_PORTS": true,
+"FP_PDN_ENABLE_RAILS": true,
+"RUN_ANTENNA_REPAIR": true,
+"RUN_FILL_INSERTION": true,
+"RUN_TAP_ENDCAP_INSERTION": true,
+"RUN_CTS": true,
+"RUN_IRDROP_REPORT": true
+```
+
+Additional implementation-oriented settings used in the same file include:
+
+```json
+"SYNTH_STRATEGY": "DELAY 4",
+"FP_CORE_UTIL": 30,
+"DESIGN_REPAIR_REMOVE_BUFFERS": true,
+"DESIGN_REPAIR_MAX_CAP_PCT": 85,
+"DESIGN_REPAIR_MAX_SLEW_PCT": 85,
+"RUN_POST_GRT_DESIGN_REPAIR": true,
+"RUN_POST_GRT_RESIZER_TIMING": true,
+"PL_RESIZER_HOLD_SLACK_MARGIN": 0.3,
+"GRT_RESIZER_HOLD_SLACK_MARGIN": 0.3
+```
+
+### Reference Hardening Variables for Top-Level Integration
+
+The following variables were identified as the hardening option reference for top-level integration:
+
+```json
+"QUIT_ON_SYNTH_CHECKS": 1,
+"FP_PDN_CHECK_NODES": 1,
+"SYNTH_ELABORATE_ONLY": 0,
+"PL_RANDOM_GLB_PLACEMENT": 0,
+"PL_RESIZER_DESIGN_OPTIMIZATIONS": 1,
+"PL_RESIZER_TIMING_OPTIMIZATIONS": 1,
+"GLB_RESIZER_DESIGN_OPTIMIZATIONS": 1,
+"GLB_RESIZER_TIMING_OPTIMIZATIONS": 1,
+"PL_RESIZER_BUFFER_INPUT_PORTS": 1,
+"FP_PDN_ENABLE_RAILS": 1,
+"GRT_REPAIR_ANTENNAS": 1,
+"RUN_FILL_INSERTION": 1,
+"RUN_TAP_DECAP_INSERTION": 1,
+"RUN_CTS": 1,
+"RUN_CVC": 1
+```
+
+These settings describe the intended behavior of a robust full-wrapper hardening run, including synthesis checking, placement control, timing optimization, PDN generation, antenna repair, filler insertion, tap/decap insertion, clock-tree synthesis, and final electrical checks.
+
+
 
 <p align="center">
-<img src="documentation_mkdoc/docs/img/Flow_interface.drawio.svg">
+<img src="../img/klayout_lacerta.png" width="500">
 </p>
 <p align="center">
-<b>Figure 4.</b> Lacerta interface creation workflow. A graphical editor is used to design custom interface layouts, which are translated into configuration data interpreted by the Lacerta hardware engine to generate the graphical display.
+<b>Figure 5.</b> KLayout view of the Lacerta custom ASIC layout, showing the physical implementation of the design within the SKY130 Caravel user project area.
 </p>
 
+To complement the layout view, Table 1 summarizes the main implementation metrics of the Lacerta chip extracted from the final OpenLane hardening results. These values provide a compact overview of the physical size, logic complexity, utilization, power, timing, and routing quality achieved for the final ASIC integration.
+
+| Parameter | Value |
+| --- | --- |
+| Technology / integration platform | SKY130 in Caravel user project area |
+| Die size | 2920 um x 3520 um |
+| Die area | 10.2784 mm^2 |
+| Core size | 2908.58 um x 3497.92 um |
+| Core area | 10.1740 mm^2 |
+| User I/O count | 645 |
+| Standard-cell instance count | 171,157 |
+| Standard-cell area | 466,947 um^2 |
+| Core utilization | 4.59% |
+| Total power | 0.0261 W |
+| Internal power | 0.0193 W |
+| Switching power | 0.0068 W |
+| Leakage power | 4.02e-7 W |
+| Worst setup slack (WNS) | 0.0 ns |
+| Worst hold slack (WNS) | 0.0 ns |
+| Worst setup slack margin | 0.3046 ns |
+| Worst hold slack margin | 0.1247 ns |
+| Total negative setup slack (TNS) | 0.0 ns |
+| Total negative hold slack (TNS) | 0.0 ns |
+| Setup violations | 0 |
+| Hold violations | 0 |
+| Final routing DRC errors | 0 |
+| Total routed wirelength | 1,305,691 um |
+| Total vias | 160,121 |
+| Power-grid violations | 0 |
+
+Table 2 summarizes the post-layout timing and electrical-check results for the Lacerta chip across the main process, voltage, and temperature corners evaluated during signoff. It highlights hold and setup slack, total negative slack, violation counts, and basic design-rule indicators such as maximum capacitance and slew violations. Together, these results provide a compact view of implementation robustness and show that the design closes timing without setup or hold violations across all analyzed corners, while only a small number of electrical violations remain in the worst-case conditions.
+
+| Corner / Group | Hold Worst Slack (ns) | Reg-to-Reg Hold (ns) | Hold TNS (ns) | Hold Violations | Setup Worst Slack (ns) | Reg-to-Reg Setup (ns) | Setup TNS (ns) | Setup Violations | Max Cap Violations | Max Slew Violations |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Overall | 0.1247 | 0.3086 | 0.0000 | 0 | 0.3046 | 3.9897 | 0.0000 | 0 | 5 | 16 |
+| `nom_tt_025C_1v80` | 0.2935 | 0.6345 | 0.0000 | 0 | 5.2682 | 11.3491 | 0.0000 | 0 | 0 | 0 |
+| `nom_ss_100C_1v60` | 0.8170 | 1.4920 | 0.0000 | 0 | 0.3652 | 4.3456 | 0.0000 | 0 | 2 | 2 |
+| `nom_ff_n40C_1v95` | 0.1777 | 0.3121 | 0.0000 | 0 | 6.9450 | 13.9299 | 0.0000 | 0 | 0 | 0 |
+| `min_tt_025C_1v80` | 0.3587 | 0.6291 | 0.0000 | 0 | 5.3281 | 11.5404 | 0.0000 | 0 | 0 | 0 |
+| `min_ss_100C_1v60` | 0.8853 | 1.4690 | 0.0000 | 0 | 0.4830 | 4.7069 | 0.0000 | 0 | 1 | 2 |
+| `min_ff_n40C_1v95` | 0.2267 | 0.3086 | 0.0000 | 0 | 6.9862 | 14.0569 | 0.0000 | 0 | 0 | 0 |
+| `max_tt_025C_1v80` | 0.2242 | 0.6405 | 0.0000 | 0 | 5.2312 | 11.1618 | 0.0000 | 0 | 0 | 0 |
+| `max_ss_100C_1v60` | 0.7488 | 1.5180 | 0.0000 | 0 | 0.3046 | 3.9897 | 0.0000 | 0 | 5 | 16 |
+| `max_ff_n40C_1v95` | 0.1247 | 0.3165 | 0.0000 | 0 | 6.9196 | 13.8115 | 0.0000 | 0 | 0 | 0 |
+
+## Lacerta PCB
+ 
+The **Lacerta PCB** provides the physical platform used to power, configure, and evaluate the Lacerta hardware. At a general level, the board brings together the Caravel device, external memory, communication interfaces, clock generation, power regulation, and display connectivity required to operate the Lacerta graphics subsystem as a complete embedded system. In addition to hosting the main integrated circuits, the board exposes test points, headers, and peripheral connectors that simplify bring-up, debugging, and laboratory validation.
+
+From the schematic point of view, the board is organized into clearly separated functional domains. These include the **Caravel interface**, the **USB-to-serial path** used for configuration and communication, the **flash-memory interface**, the **clock-generator circuit**, the **power-supply section**, and the **display/output connectors**. This partitioning makes the design easier to validate and reflects the main operational needs of Lacerta: receiving commands, storing data, accessing the Caravel platform, and driving an external display.
+
+From a cost perspective, the Lacerta board was designed around widely available commercial parts, keeping the supporting electronics relatively affordable for prototyping and laboratory validation. Based on the current bill of materials in [Lacerta bom.csv](</home/baungarten/Downloads/Lacerta bom.csv>), the populated board components with listed prices sum to approximately **USD 28.46**. This estimate covers the off-the-shelf electronic components only and does **not** include PCB fabrication, board assembly, shipping, taxes, or the cost of the custom Lacerta/Caravel chip itself, which appears in the BOM as a non-priced item.
+
+The cost distribution is dominated by a small number of active devices, especially the external SRAM, the programmable oscillator, and the FT232H USB interface. In contrast, most passive parts and headers contribute only a small fraction of the total. This is typical for a development-oriented board, where communication, memory, and clock-generation devices account for much of the material cost while still enabling a flexible and easy-to-evaluate hardware platform.
+
+| Cost category | Estimated cost (USD) | Notes |
+| --- | ---: | --- |
+| External SRAM (`U12`) | 5.72 | CY7C1049GN-10VXI |
+| Programmable oscillator (`U10`) | 4.47 | DS1086LU+T |
+| USB interface (`U1`) | 4.09 | FT232HQ |
+| Resistor networks and discretes | 2.42 | Main resistor lines combined |
+| Capacitors | 2.50 | All capacitor lines combined |
+| Flash memory (`U7`) | 0.93 | W25Q32JVSSIQ |
+| Regulators (`U5`, `U6`) | 0.98 | TAR5S16U |
+| Connectors and headers | 4.04 | USB, sockets, and pin headers |
+| Clock sources (`X1`, `Y1`) | 1.13 | 10 MHz oscillator and 12 MHz crystal |
+| LEDs, switch, mux, buffers, ferrite bead | 2.18 | Support circuitry |
+| Custom Lacerta/Caravel chip (`U11`) | Not priced | ASIC cost not included in BOM total |
+| Total priced components | 28.46 | Excludes PCB, assembly, shipping, taxes, and ASIC fabrication |
+
+Table 3 lists the main priced BOM entries together with direct supplier links. These links document the exact components used for the current board revision and make the cost estimate traceable to the underlying purchase sources.
+
+| Item | Qty | Part number | Sum (USD) | Supplier link |
+| --- | ---: | --- | ---: | --- |
+| `U12` | 1 | CY7C1049GN-10VXI | 5.72 | [Infineon SRAM](https://www.digikey.com/en/products/detail/infineon-technologies/CY7C1049G-10VXI/5247556) |
+| `U10` | 1 | DS1086LU+T | 4.47 | [Analog Devices / Maxim oscillator](https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/DS1086LU-T/1196640) |
+| `U1` | 1 | FT232HQ | 4.09 | [FTDI FT232H](https://www.digikey.com.mx/es/products/detail/ftdi-future-technology-devices-international-ltd/FT232HQ-REEL/2614626) |
+| `R1,R4,R7,R8,R9,R10,R12,R13,R15,R16,R17,R18,R19,R20` | 14 | RV0805JR-0710KL | 1.82 | [Yageo 10 kOhm resistors](https://www.mouser.mx/ProductDetail/YAGEO/RV0805JR-0710KL?qs=qpJ%252B%252B%252Bdg6p3bGiIDT3p%252B0w%3D%3D&srsltid=AfmBOor_k13NHklcFtUsSFFZvJFpaMbXbqOGeWpW-8F9AYrfn2fu0pLO) |
+| `C2,C3,C4,C5,C6,C7,C8,C9,C18,C20,C21,C24` | 12 | CL21B104KBCNNNC | 1.20 | [Samsung 0.1 uF capacitors](https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B104KBCNNNC/3886661?s=N4IgTCBcDaIMIBkwEYBCyAMAWA0quAckXCALoC%2BQA) |
+| `U5,U6` | 2 | TAR5S16U | 0.98 | [Toshiba regulators](https://www.digikey.com/en/products/detail/toshiba-semiconductor-and-storage/TAR5S16U-TE85L-F/10379930) |
+| `U7` | 1 | W25Q32JVSSIQ | 0.93 | [Winbond flash memory](https://www.digikey.com/es/products/detail/winbond-electronics/W25Q32JVSSIQ/5803981) |
+| `J1` | 1 | 105017-0001 | 0.92 | [Molex Micro-USB connector](https://www.digikey.com.mx/es/products/detail/molex/1050170001/2350832) |
+| `J11` | 1 | 61301011121 | 0.95 | [Wurth 1x10 header](https://www.digikey.com/es/products/detail/w%C3%BCrth-elektronik/61301011121/2508439) |
+| `J10` | 1 | PPTC141LFBN-RC | 0.77 | [Sullins socket](https://www.digikey.com/en/products/detail/sullins-connector-solutions/PPTC141LFBN-RC/810152) |
+| `C1,C11,C14,C17,C22,C23` | 6 | CL21B103KBANNNC | 0.60 | [Samsung 0.01 uF capacitors](https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21B103KBANNNC/3886673) |
+| `X1` | 1 | DSC6001JE1B-010.0000 | 0.59 | [Microchip 10 MHz oscillator](https://www.digikey.com/en/products/detail/microchip-technology/DSC6001JE1B-010-0000/24396951) |
+| `U9` | 1 | TMUX4053PWR | 0.58 | [TI analog mux](https://www.digikey.com/en/products/detail/texas-instruments/TMUX4053PWR/17748481) |
+| `Y1` | 1 | ABM8-272-T3 | 0.54 | [Abracon 12 MHz crystal](https://www.digikey.com/en/products/detail/abracon-llc/ABM8-272-T3/22472366) |
+| `D1,D3,D4` | 3 | LTST-C150KRKT | 0.48 | [Lite-On LEDs](https://www.digikey.com.mx/es/products/detail/liteon/LTST-C150KRKT/386761) |
+| `C12,C15,C16,C25` | 4 | CL21A106KPFNNNE | 0.40 | [Samsung 10 uF capacitors](https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL21A106KPFNNNE/3886710?s=N4IgTCBcDaIMIBkwEYCCyAMA2A0gBQDEA5EgURAF0BfIA) |
+| `J3,J5,J8,J9` | 4 | M50-3530242 | 0.40 | [Harwin 1x02 headers](https://www.digikey.com.mx/es/products/detail/harwin-inc/M50-3530242/7044013?s=N4IgTCBcDaILIFYAMBaAzAtSwBYIF0BfIA) |
+| `R5,R6,R11,R14` | 4 | RC0402FR-071KL | 0.40 | [Yageo 1 kOhm resistors](https://www.digikey.com/es/products/detail/yageo/RC0402FR-071KL/726513) |
+
 <p align="center">
-<img src="documentation_mkdoc/docs/img/lacerta_blockd2-caravel.drawio.svg">
+  <img src="../img/scren_pcb_diag.png" width="500">
 </p>
 <p align="center">
-<b>Figure 5.</b> Block diagram of the Lacerta ASIC inside the Caravel environment. The figure shows how a host computer or the embedded Caravel RISC-V processor sends commands through UART and Wishbone interfaces to the command arbiter, rendering logic, and memory subsystem; the updated frame data is then read by the VGA controller to drive the screen.
+<b>Figure 12.</b> Schematic of the Lacerta development board, showing the main functional blocks including the Caravel connection, USB-to-serial interface, flash memory, clock generator, power regulation, and display/output connectors.
 </p>
+
+The PCB implementation translates this schematic into a compact development board that places the major components and user interfaces in accessible locations. The 3D view highlights the physical arrangement of the display and interface connectors, the Caravel-related devices, the USB/FTDI section, memory devices, headers, and support circuitry. This representation is useful for understanding the mechanical integration of the board and for checking connector placement, component accessibility, and assembly feasibility during the hardware-development process.
+
+<p align="center">
+  <img src="../img/PCB_UART.jpeg" width="500">
+</p>
+<p align="center">
+<b>Figure 13.</b> 3D view of the Lacerta PCB, illustrating the assembled component placement, external connectors, and overall physical organization of the development board.
+</p>
+
+The routed PCB layout shows how the electrical connections between these subsystems are realized on the board. It provides a detailed view of component placement, copper routing, and board dimensions, and it reflects the practical constraints of signal integrity, power distribution, and connector accessibility. Together, the schematic, 3D rendering, and final layout document the complete PCB-development flow for Lacerta, from circuit definition to manufacturable board implementation.
+
+<p align="center">
+  <img src="../img/pcb_2d.png" width="500">
+</p>
+<p align="center">
+<b>Figure 14.</b> PCB layout of the Lacerta development board, showing the routed interconnections, component placement, and board geometry used to implement the final hardware platform.
+</p>
+
+## Video 1. Quick Example of the Lacerta GUI
+
+The first video presents a short demonstration of the Lacerta GUI. It gives an overview of the design environment and shows how graphical HMI elements can be arranged and edited inside the software.
+
+YouTube link: [Quick example of the Lacerta GUI](https://www.youtube.com/watch?v=zW_LcxRJl4U)
+
+<iframe width="720" height="405" src="https://www.youtube.com/watch?v=zW_LcxRJl4U"
+title="Quick example of the Lacerta GUI" frameborder="0" allowfullscreen></iframe>
+
+## Video 2. FPGA Implementation of the HMI from Video 1
+
+The second video shows the implementation of the HMI created in the first demonstration. Its purpose is to connect the GUI design stage with the actual hardware execution stage, showing how the interface behaves once deployed on the target platform.
+
+YouTube link: [Implementation of the HMI shown in Video 1](https://www.youtube.com/watch?v=hOmbS-Z8mIQ)
+
+<iframe width="720" height="405" src="https://www.youtube.com/watch?v=hOmbS-Z8mIQ"
+title="Implementation of the HMI shown in Video 1" frameborder="0" allowfullscreen></iframe>
+
 
 ## Open and Reproducible Architecture
 

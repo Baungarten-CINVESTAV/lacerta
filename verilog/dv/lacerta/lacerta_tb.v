@@ -24,7 +24,7 @@ module lacerta_tb;
 	reg CSB;
 	reg power1, power2;
 	reg power3, power4;
-
+	
 	wire gpio;
 	wire [37:0] mprj_io;
 
@@ -39,6 +39,12 @@ module lacerta_tb;
 
 	initial begin
 		clock = 0;
+	end
+	
+	initial
+	begin
+	#100_000_000;
+	$stop();
 	end
 
 
@@ -137,10 +143,10 @@ module lacerta_tb;
 		end
 	`endif 
 
-	/*initial begin
+	initial begin
 		$dumpfile("lacerta.vcd");
 		$dumpvars(0, lacerta_tb);
-	end*/
+	end
 
 
 	initial begin

@@ -1,4 +1,4 @@
-`include "defines_lacerta.v" //INCLUDE THIS FILE FOR SIMULATION
+//`include "defines_lacerta.v" //INCLUDE THIS FILE FOR SIMULATION
 module dig_top (
   input wire clk, // gpio
   input wire arst_n, // gpio
