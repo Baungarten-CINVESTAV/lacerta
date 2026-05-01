@@ -15,3 +15,15 @@
 /logs
 openlane2-venv
 design_info.yaml
+
+# Large generated submission files
+def/user_project_wrapper.def
+gds/user_project_wrapper.gds
+mag/user_project_wrapper.mag
+verilog/gl/user_project_wrapper.v
+
+# Large generated submission files
+def/user_project_wrapper.def
+gds/user_project_wrapper.gds
+mag/user_project_wrapper.mag
+verilog/gl/user_project_wrapper.v

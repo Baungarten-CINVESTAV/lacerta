@@ -20,7 +20,9 @@
 .SILENT: clean all
 
 
-PATTERNS = io_ports la_test1 la_test2 wb_port mprj_stimulus
+# Pick up all direct DV test directories automatically, but ignore the
+# cocotb subtree which is handled separately by the top-level Makefile.
+PATTERNS = $(shell find . -mindepth 1 -maxdepth 1 -type d ! -name cocotb -printf '%f ')
 
 all:  ${PATTERNS}
 

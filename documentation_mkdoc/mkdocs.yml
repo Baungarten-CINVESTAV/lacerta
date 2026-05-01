@@ -6,4 +6,5 @@ nav:
   - Proposed Solution: proposed_solution.md
   - System Architecture: system_architecture.md
   - System Development: system_development.md
+  - Appendix: appendix.md
 theme: readthedocs

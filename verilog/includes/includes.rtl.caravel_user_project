@@ -14,7 +14,34 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Caravel user project includes
--v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v	     
--v $(USER_PROJECT_VERILOG)/rtl/user_proj_example.v
+-v $(USER_PROJECT_VERILOG)/rtl/user_defines.v
+-v $(USER_PROJECT_VERILOG)/rtl/user_project_wrapper.v
+-v $(USER_PROJECT_VERILOG)/rtl/dig_top.v	     
+-v $(USER_PROJECT_VERILOG)/rtl/memory_system/sram_controller.v
+-v $(USER_PROJECT_VERILOG)/rtl/command_arbiter_decoder.v
+-v $(USER_PROJECT_VERILOG)/rtl/wb_slave/wb_slave_to_mem_sys_ports.v
+-v $(USER_PROJECT_VERILOG)/rtl/wb_slave/wb_slave_memory_mapped.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_two_ff_synchronizer.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_tnsm.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_status_reg.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_recv.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_ip.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_ip_memory_mapped.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_ip_memory_mapped_ctrl_fsm.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_edge_detector.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_control_reg.v
+-v $(USER_PROJECT_VERILOG)/rtl/uart/uart_clk_gen.v
+-v $(USER_PROJECT_VERILOG)/rtl/screen/tft_control_fsm.v
+-v $(USER_PROJECT_VERILOG)/rtl/screen/spi_master.v
+-v $(USER_PROJECT_VERILOG)/rtl/screen/screen_system.v
+-v $(USER_PROJECT_VERILOG)/rtl/screen/color_mapping_table.v
+-v $(USER_PROJECT_VERILOG)/rtl/drawing/mask_generator.v
+-v $(USER_PROJECT_VERILOG)/rtl/memory_system/buffers_discharger.v
+-v $(USER_PROJECT_VERILOG)/rtl/memory_system/buffers_filler.v
+-v $(USER_PROJECT_VERILOG)/rtl/memory_system/buffers.v
+-v $(USER_PROJECT_VERILOG)/rtl/memory_system/mem_sys.v
+-v $(USER_PROJECT_VERILOG)/rtl/memory_system/sfifo.v
+-v $(USER_PROJECT_VERILOG)/dv/lacerta/CY7C1049GN.v
+-v $(USER_PROJECT_VERILOG)/dv/lacerta/uart_bfm.v
 
  

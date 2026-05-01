@@ -23,7 +23,7 @@ module uart_status_reg(
 );
 
 reg [11:0] reg_;
-integer idx;
+//integer idx;
 
 always@(posedge clk, negedge arst_n) begin
 	if(!arst_n) begin
@@ -31,7 +31,7 @@ always@(posedge clk, negedge arst_n) begin
 	end else begin
 		// clear on read logic
 		if(re) begin
-			for(idx = 0; idx < 12; idx = idx + 1) begin
+			for( integer idx = 0; idx < 12; idx = idx + 1) begin
 				reg_[idx] <= rmask[idx] ? 1'b0 : reg_[idx];
 			end
 		end

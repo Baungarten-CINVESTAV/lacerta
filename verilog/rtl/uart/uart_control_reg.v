@@ -35,7 +35,7 @@ always @(posedge clk, negedge arst_n) begin
     reg_[5] <= 1'b0;     // 1 stop bit default
     reg_[4:3] <= 2'b00;  // No parity default
     reg_[18:10] <= 9'd0; // tnsm flag + data cleared
-    reg_[9:6] <= 4'd14;  // 230400 baud rate by default
+    reg_[9:6] <= 4'd14;  // 9600 baud rate by default
   end else begin
     if (we) begin
       reg_ <= (reg_ & ~wmask) | (datain & wmask); // only write when wmask is set

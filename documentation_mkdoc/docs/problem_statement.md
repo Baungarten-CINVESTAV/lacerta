@@ -34,24 +34,6 @@ In resource-constrained systems, these tasks compete with the primary functional
 
 Another common limitation is the lack of **flexible and reusable hardware platforms** for building custom interfaces. Many commercial HMI solutions rely on proprietary ecosystems or fixed display modules that limit customization. As a result, developers often need to design new interface logic for every project.
 
-## Heterogeneous Signal Sources
-
-Real-world embedded systems frequently interact with **both analog and digital signals**. Analog signals may represent physical quantities such as:
-
-- temperature  
-- pressure  
-- voltage  
-- current  
-- sensor amplitudes  
-
-Digital signals may originate from:
-
-- microcontrollers  
-- communication interfaces  
-- counters and timers  
-- control logic
-
-Transforming these heterogeneous signals into a responsive graphical interface typically requires additional software layers, external processing units, or specialized display modules.
 
 ## Need for an Open Hardware Interface Platform
 

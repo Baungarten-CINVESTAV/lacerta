@@ -4,7 +4,7 @@ Lacerta proposes an open hardware platform designed to simplify the creation of 
 
 Instead of requiring developers to manually program complex graphical interfaces in firmware, Lacerta allows the interface to be **visually designed using a graphical configuration tool**. This tool enables users to place graphical elements such as buttons, bars, numeric indicators, and status displays within a virtual layout that represents the final interface.
 
-Once the interface is designed, the configuration is exported as a description file that can be loaded into the Lacerta hardware engine. The ASIC interprets this configuration and generates the graphical output in real time.
+Once the interface is designed, the configuration is exported as a description file. This configuration is then transmitted to the Lacerta hardware engine via the **UART interface**, allowing the ASIC to be easily configured and updated from any compatible host system. The ASIC interprets this configuration and generates the graphical output in real time.
 
 ## Hardware-Based Interface Rendering
 
@@ -16,23 +16,23 @@ By implementing the interface generation logic in dedicated hardware, Lacerta pr
 - reduced firmware complexity  
 - lower processor utilization  
 - improved system responsiveness  
-- simplified integration with sensors and control systems
+- simplified integration with UART-based embedded systems
 
-The generated interface is transmitted to a display through a **VGA video output**, enabling the system to drive standard monitors or embedded displays without requiring external graphics processors.
+The generated interface is transmitted to a display through an **SPI TFT/OLED output**, enabling the system to drive compact embedded screens commonly used in modern devices, without requiring external graphics processors.
 
 ## Integration with Embedded Systems
 
-Lacerta is designed to interact with both **analog and digital signal sources**, allowing real-world system data to be directly visualized through the graphical interface.
+Lacerta is designed to receive data through a **UART interface**, allowing real-world system information to be visualized through the graphical interface.
 
-Analog signals originating from sensors such as temperature, pressure, voltage, or current sensors can be connected through external signal conditioning or analog-to-digital conversion stages. Digital signals produced by microcontrollers, communication peripherals, or control logic can be connected directly through digital interfaces.
+In its current architecture, Lacerta does not directly acquire analog or heterogeneous digital signals. Instead, the required data must be formatted as UART messages by an external microcontroller, preprocessing stage, or interface circuit before being sent to the ASIC.
 
-These signals are interpreted by the Lacerta interface engine and mapped to graphical elements such as bars or numeric indicators, enabling real-time visualization of system parameters.
+Once received through UART, the data is interpreted by the Lacerta interface engine and mapped to graphical elements such as bars or numeric indicators, enabling real-time visualization of system parameters.
 
 <p align="center">
-<img src="../img/flow_inputs.svg">
+<img src="../img/flow_inputs.png">
 </p>
 <p align="center">
-<b>Figure 3.</b> Example of heterogeneous input signals connected to the Lacerta platform. Sensor data, digital signals, and external controller outputs are processed by the Lacerta engine to update graphical interface elements in real time.
+<b>Figure 3.</b> Example of system data being adapted into UART messages before reaching the Lacerta platform, where the interface engine updates graphical elements in real time.
 </p>
 
 ## Interface Design Workflow
@@ -45,19 +45,19 @@ The Lacerta platform introduces a streamlined workflow for creating embedded gra
 2. **Configuration Generation**  
    The tool exports a configuration file describing the interface structure and graphical element parameters.
 
-3. **Hardware Deployment**  
-   The configuration is loaded into the Lacerta hardware engine integrated in the Caravel platform.
+3. **Hardware Deployment via UART**  
+   The configuration is sent to the Lacerta hardware engine through the UART interface, enabling easy and flexible configuration of the ASIC.
 
 4. **Runtime Visualization**  
-   Incoming sensor or system data dynamically updates the graphical elements rendered by the hardware.
+   Incoming UART data dynamically updates the graphical elements rendered by the hardware. If the original source is not UART, external circuitry or firmware must convert it beforehand.
 
 This workflow allows developers to design complex interfaces without writing extensive display control firmware.
 
 <p align="center">
-<img src="../img/Flow_interface.drawio.svg">
+<img src="../img/Flow_interfacev2.png">
 </p>
 <p align="center">
-<b>Figure 4.</b> Lacerta interface creation workflow. A graphical editor is used to design custom interface layouts, which are translated into configuration data interpreted by the Lacerta hardware engine to generate the graphical display.
+<b>Figure 4.</b> Lacerta interface creation workflow. A graphical editor is used to design custom interface layouts, which are translated into configuration data and transmitted via UART to the Lacerta hardware engine to generate the graphical display.
 </p>
 
 
