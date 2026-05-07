@@ -41,11 +41,11 @@ module lacerta_tb;
 		clock = 0;
 	end
 	
-	initial
+	/*initial
 	begin
 	#100_000_000;
 	$stop();
-	end
+	end*/
 
 
 	`ifdef ENABLE_SDF
@@ -145,7 +145,8 @@ module lacerta_tb;
 
 	initial begin
 		$dumpfile("lacerta.vcd");
-		$dumpvars(0, lacerta_tb);
+		//$dumpvars(0, lacerta_tb);
+		$dumpvars (0, lacerta_tb.clock, lacerta_tb.RSTB, lacerta_tb.gpio, lacerta_tb.mprj_io);
 	end
 
 
@@ -217,7 +218,7 @@ module lacerta_tb;
 		.resetb	  (RSTB)
 	);
 
-	assign arst_n = RSTB;
+	//assign arst_n = RSTB;
 
 	assign mprj_io[5] = uart_bfm_i.tx;
 	assign uart_bfm_i.rx = mprj_io[6];
@@ -277,15 +278,15 @@ module lacerta_tb;
 
 	parameter TB_NUM_OBJECTS = 10;
 
-	wire clk, arst_n; // clock and reset
-  /*initial begin
-    clk = 1'b0;
+	wire clk;
+	reg arst_n; // clock and reset
+  initial begin
     arst_n = 1'b0;
-      #302000ns;
+      #320000ns;
     arst_n = 1'b1;
   end
-	always #10ns clk = !clk; // 50MHz frecuency
-*/
+	//always #10ns clk = !clk; // 50MHz frecuency
+
 	// THIS IS THE DATA THAT SHOULD BE ISSUED TO THE TFT SCREEN FOR INITIALIZATION IN ORDER
 	reg [9:0] tft_init_mem [SCREEN_INIT_MEM_SIZE];
 	initial begin

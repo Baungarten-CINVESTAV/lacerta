@@ -98,8 +98,8 @@ assign io_oeb[2]  = 1'b0;
 assign io_oeb[3]  = 1'b0;
 assign io_oeb[4]  = 1'b0;
 */
-//assign io_oeb[5]  = 1'b1; // UART RX - input
-//assign io_oeb[6]  = 1'b0; // UART TX - output
+assign io_oeb[5]  = 1'b1; // UART RX - input
+assign io_oeb[6]  = 1'b0; // UART TX - output
 assign io_oeb[7]  = 1'b0; // Mem addr 15- output
 assign io_oeb[8]  = 1'b0; // Mem addr 14- output
 assign io_oeb[9]  = 1'b0; // Mem addr 13- output

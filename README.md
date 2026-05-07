@@ -48,6 +48,7 @@ This flexible architecture allows Lacerta to efficiently manage multiple inputs 
 The Lacerta platform is an open-source embedded graphics system built from four main parts: custom silicon, board-level hardware, firmware/control logic, and interface software. Together, these layers allow a host system to load graphics data, update interface objects, and drive a small SPI-connected display efficiently.
 
 ## Core architecture
+
 Lacerta platform is a custom ASIC implemented in the **SKY130 process** and integrated inside the **Caravel user project area**. This subsystem realizes the hardware graphics engine that receives interface commands, updates the internal display state, and generates the output stream presented on the display.
 
 The Lacerta ASIC follows a memory-centric architecture. Configuration data and runtime values enter the system through **UART**. Depending on the selected operating mode, the received data can be forwarded directly to the user project area or first processed by the embedded **Caravel RISC-V** processor. Internal transactions are routed through the **Wishbone interconnect** to the rendering logic, which updates the frame contents stored in memory. The display output block then reads that memory and continuously converts it into the signal required by the connected **SPI TFT/OLED display**.
@@ -108,6 +109,8 @@ The development of the Lacerta platform spans the complete hardware and software
 Together, these activities define the engineering workflow followed to implement, test, and deploy Lacerta as an open-source embedded graphical interface system. Each subsection highlights a different part of this process and explains how the individual development tasks contribute to the final platform.
 
 ## Lacerta RTL
+
+**RTL code can be found** [**here**](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/verilog/rtl).
 
 ### System Purpose
 
@@ -235,6 +238,9 @@ Another important top-level task is Wishbone routing. `dig_top` chooses whether 
 
 
 ## Lacerta Verification
+
+**Verilog TB code can be found** [**here**](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/verilog/dv/lacerta).
+
 A layered verification strategy was used to validate Lacerta from block level up to full-system behavior. The intent was not only to prove that individual modules operate correctly in isolation, but also to verify that the complete command, memory, drawing, and display paths remain coherent when exercised through the same interfaces used in deployment.
 
 At the block level, dedicated environments were created for the UART front end, the shared memory subsystem, the Wishbone adapters, the command decoder, and the display-related logic. These environments focused on local protocol correctness, handshake legality, data stability, and forward progress. The later sections of this document list the principal checks captured for each block.
@@ -245,7 +251,7 @@ At the system level, the main integration environment is `verif/dig_top_tb.sv`. 
 <img src="documentation_mkdoc/docs/img/Architecture overview.png">
 </p>
 <p align="center">
-<b>Figure 3.</b> The diagram summarizes the main verification components, including the clock and reset infrastructure, golden reference data, stimulus path, UART bus functional model, SRAM model, and checker logic used to validate the DUT behavior during gate-level simulation.
+<b>Figure 4.</b> The diagram summarizes the main verification components, including the clock and reset infrastructure, golden reference data, stimulus path, UART bus functional model, SRAM model, and checker logic used to validate the DUT behavior during gate-level simulation.
 </p>
 
 More information about the simulation flow, active checkers, and expected data paths can be found in [dig_top_tb_flow_diagram.html](dig_top_tb_flow_diagram.html).
@@ -441,7 +447,10 @@ The verification plan for the **Mask Generator** block validates correct start/b
 5. Verify that `wr_buff_wren` cannot be asserted when `wr_buff_full` is high.
 6. Verify that `rpg_busy`, `wpg_busy`, `rpg_ack`, `wpg_ack`, `wr_buff_full`, `rd_buff_rden`, and `wr_buff_wren` can be asserted only while `busy` is high.
 
+
 ## Lacerta RTL Verification
+
+**Verilog TB code can be found** [**here**](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/verilog/dv/lacerta).
 
 The RTL simulation stage was used to verify the functional behavior of the Lacerta top-level design and to confirm the correctness of the TFT initialization transaction sequence before physical implementation. In this test, the simulation output shows that the expected delays were observed and that the initialization values stored in `tft_init_mem` were transmitted correctly to `spi_master`. The resulting log provides evidence that the initialization FSM and SPI output path behave as intended during the early display bring-up sequence at the RTL verification stage.
 
@@ -481,7 +490,30 @@ PASS: correct tft_init_mem data 0020 for entry 21 was sent to spi_master
 PASS: correct tft_init_mem data 0013 for entry 22 was sent to spi_master
 ```
 
+
+### RTL/GL simulation
+
+A custom script was developed to execute RTL and GL simulations with the Caravel infrastructure, as the default Caravel simulation flow was out of date and only supported cocotb-based testbenches. This approach was necessary to correctly run assertion-based testbenches and ensure compatibility with the current Lacerta verification environment, which relies on SystemVerilog assertions and traditional testbench flows.
+
+The custom script, located in the [`dv_setup`](dv_setup) directory (`lacerta/dv_setup`), automates the setup and execution of both RTL and gate-level (GL) simulations. It handles environment configuration, Makefile patching, and the selection of the appropriate simulation mode (`SIM_MODE=RTL` or `SIM_MODE=GL`). The script also allows users to select which DV test to run via the `DV_TEST` variable, making it flexible for different verification scenarios.
+
+This approach ensures that all assertions and checkers in the testbenches are properly evaluated during simulation, which is not possible with the default Caravel cocotb-only flow. The script supports both host-based and Docker-based simulation environments, making it suitable for a variety of development setups.
+
+The main testbench (`lacerta_tb.sv`) and its associated waveform files can be found in the `lacerta/verilog/dv/lacerta` folder. The following figure shows an example waveform generated during simulation:
+
+<p align="center">
+  <img src="documentation_mkdoc/docs/img/waveform.png" width="700">
+</p>
+<p align="center">
+<b>Figure 6.</b> Example simulation waveform from the Lacerta RTL testbench, illustrating the verification an initial configuration of the memory_system through UART using IO port 5 an 6.
+</p>
+
+For detailed instructions on how to use the RTL/GL simulation flow, refer to the documentation and scripts in
+
 ## Hardening Configuration
+
+**Librelane configuration can be found** [**here**](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/openlane/user_project_wrapper).
+
 
 This page documents the OpenLane hardening setup used for the `user_project_wrapper` flow in Lacerta and records the top-level hardening option selected for the project.
 
@@ -593,50 +625,53 @@ These settings describe the intended behavior of a robust full-wrapper hardening
 
 To complement the layout view, Table 1 summarizes the main implementation metrics of the Lacerta chip extracted from the final OpenLane hardening results. These values provide a compact overview of the physical size, logic complexity, utilization, power, timing, and routing quality achieved for the final ASIC integration.
 
-| Parameter | Value |
-| --- | --- |
+| Parameter                        | Value                        |
+|-----------------------------------|------------------------------|
 | Technology / integration platform | SKY130 in Caravel user project area |
-| Die size | 2920 um x 3520 um |
-| Die area | 10.2784 mm^2 |
-| Core size | 2908.58 um x 3497.92 um |
-| Core area | 10.1740 mm^2 |
-| User I/O count | 645 |
-| Standard-cell instance count | 171,157 |
-| Standard-cell area | 466,947 um^2 |
-| Core utilization | 4.59% |
-| Total power | 0.0261 W |
-| Internal power | 0.0193 W |
-| Switching power | 0.0068 W |
-| Leakage power | 4.02e-7 W |
-| Worst setup slack (WNS) | 0.0 ns |
-| Worst hold slack (WNS) | 0.0 ns |
-| Worst setup slack margin | 0.3046 ns |
-| Worst hold slack margin | 0.1247 ns |
-| Total negative setup slack (TNS) | 0.0 ns |
-| Total negative hold slack (TNS) | 0.0 ns |
-| Setup violations | 0 |
-| Hold violations | 0 |
-| Final routing DRC errors | 0 |
-| Total routed wirelength | 1,305,691 um |
-| Total vias | 160,121 |
-| Power-grid violations | 0 |
+| Die size                         | 2920 um x 3520 um            |
+| Die area                         | 10.2784 mm²                  |
+| Core size                        | 2908.58 um x 3497.92 um      |
+| Core area                        | 10.1740 mm²                  |
+| User I/O count                    | 645                          |
+| Standard-cell instance count      | 170,896                      |
+| Standard-cell area                | 465,176 um²                  |
+| Core utilization                  | 4.57%                        |
+| Total power                       | 0.0250 W                     |
+| Internal power                    | 0.0186 W                     |
+| Switching power                   | 0.0065 W                     |
+| Leakage power                     | 4.02e-7 W                    |
+| Worst setup slack (WNS)           | 0.0 ns                       |
+| Worst hold slack (WNS)            | 0.0 ns                       |
+| Worst setup slack margin          | 0.9290 ns                    |
+| Worst hold slack margin           | 0.0151 ns                    |
+| Total negative setup slack (TNS)  | 0.0 ns                       |
+| Total negative hold slack (TNS)   | 0.0 ns                       |
+| Setup violations                  | 0                            |
+| Hold violations                   | 0                            |
+| Final routing DRC errors          | 0                            |
+| Total routed wirelength           | 1,287,756 um                 |
+| Total vias                        | 159,152                      |
+| Power-grid violations             | 0                            |
 
 Table 2 summarizes the post-layout timing and electrical-check results for the Lacerta chip across the main process, voltage, and temperature corners evaluated during signoff. It highlights hold and setup slack, total negative slack, violation counts, and basic design-rule indicators such as maximum capacitance and slew violations. Together, these results provide a compact view of implementation robustness and show that the design closes timing without setup or hold violations across all analyzed corners, while only a small number of electrical violations remain in the worst-case conditions.
 
-| Corner / Group | Hold Worst Slack (ns) | Reg-to-Reg Hold (ns) | Hold TNS (ns) | Hold Violations | Setup Worst Slack (ns) | Reg-to-Reg Setup (ns) | Setup TNS (ns) | Setup Violations | Max Cap Violations | Max Slew Violations |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Overall | 0.1247 | 0.3086 | 0.0000 | 0 | 0.3046 | 3.9897 | 0.0000 | 0 | 5 | 16 |
-| `nom_tt_025C_1v80` | 0.2935 | 0.6345 | 0.0000 | 0 | 5.2682 | 11.3491 | 0.0000 | 0 | 0 | 0 |
-| `nom_ss_100C_1v60` | 0.8170 | 1.4920 | 0.0000 | 0 | 0.3652 | 4.3456 | 0.0000 | 0 | 2 | 2 |
-| `nom_ff_n40C_1v95` | 0.1777 | 0.3121 | 0.0000 | 0 | 6.9450 | 13.9299 | 0.0000 | 0 | 0 | 0 |
-| `min_tt_025C_1v80` | 0.3587 | 0.6291 | 0.0000 | 0 | 5.3281 | 11.5404 | 0.0000 | 0 | 0 | 0 |
-| `min_ss_100C_1v60` | 0.8853 | 1.4690 | 0.0000 | 0 | 0.4830 | 4.7069 | 0.0000 | 0 | 1 | 2 |
-| `min_ff_n40C_1v95` | 0.2267 | 0.3086 | 0.0000 | 0 | 6.9862 | 14.0569 | 0.0000 | 0 | 0 | 0 |
-| `max_tt_025C_1v80` | 0.2242 | 0.6405 | 0.0000 | 0 | 5.2312 | 11.1618 | 0.0000 | 0 | 0 | 0 |
-| `max_ss_100C_1v60` | 0.7488 | 1.5180 | 0.0000 | 0 | 0.3046 | 3.9897 | 0.0000 | 0 | 5 | 16 |
-| `max_ff_n40C_1v95` | 0.1247 | 0.3165 | 0.0000 | 0 | 6.9196 | 13.8115 | 0.0000 | 0 | 0 | 0 |
+| Corner / Group        | Hold Worst Slack (ns) | Reg-to-Reg Hold (ns) | Hold TNS (ns) | Hold Violations | Setup Worst Slack (ns) | Reg-to-Reg Setup (ns) | Setup TNS (ns) | Setup Violations | Max Cap Violations | Max Slew Violations |
+|-----------------------|---------------------:|---------------------:|--------------:|----------------:|-----------------------:|----------------------:|---------------:|-----------------:|-------------------:|--------------------:|
+| Overall               | 0.0151               | 0.2878               | 0.0000        | 0               | 0.9290                | 8.1509               | 0.0000         | 0                | 6                  | 47                  |
+| `nom_tt_025C_1v80`    | 0.2248               | 0.6272               | 0.0000        | 0               | 6.0692                | 13.9265              | 0.0000         | 0                | 0                  | 0                   |
+| `nom_ss_100C_1v60`    | 0.0929               | 1.4592               | 0.0000        | 0               | 0.9719                | 8.4898               | 0.0000         | 0                | 2                  | 15                  |
+| `nom_ff_n40C_1v95`    | 0.1791               | 0.2879               | 0.0000        | 0               | 7.8085                | 15.9307              | 0.0000         | 0                | 0                  | 0                   |
+| `min_tt_025C_1v80`    | 0.2767               | 0.6248               | 0.0000        | 0               | 6.1163                | 14.1220              | 0.0000         | 0                | 0                  | 0                   |
+| `min_ss_100C_1v60`    | 0.1648               | 1.4278               | 0.0000        | 0               | 0.9884                | 8.8070               | 0.0000         | 0                | 1                  | 9                   |
+| `min_ff_n40C_1v95`    | 0.2279               | 0.2885               | 0.0000        | 0               | 7.8413                | 16.0592              | 0.0000         | 0                | 0                  | 0                   |
+| `max_tt_025C_1v80`    | 0.1682               | 0.6288               | 0.0000        | 0               | 6.0312                | 13.7420              | 0.0000         | 0                | 0                  | 0                   |
+| `max_ss_100C_1v60`    | 0.0151               | 1.4767               | 0.0000        | 0               | 0.9290                | 8.1509               | 0.0000         | 0                | 6                  | 47                  |
+| `max_ff_n40C_1v95`    | 0.1249               | 0.2878               | 0.0000        | 0               | 7.7814                | 15.8059              | 0.0000         | 0                | 0                  | 0                   |
 
 ## Precheck log
+
+**Precheck logs can be found** [**here**](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/precheck_results).
+
 2026-04-30 11:20:10 [INFO] Extracting compressed files in: /home/baungarten/Desktop/lacerta_march
 2026-04-30 11:20:11 [INFO] Project type: digital
 2026-04-30 11:20:12 [INFO] GDS hash (user_project_wrapper): 6b97c7a8678942fc2cc9d44b268f9c97943aedf2
@@ -688,8 +723,11 @@ Table 2 summarizes the post-layout timing and electrical-check results for the L
 2026-04-30 11:52:04 [WARNING] ERC check failed (stat=4), see /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/logs/OEB_check.log
 
 
+
 ## Lacerta PCB
  
+ **PCB files can be found** [**here**](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/PCB).
+
 The **Lacerta PCB** provides the physical platform used to power, configure, and evaluate the Lacerta hardware. At a general level, the board brings together the Caravel device, external memory, communication interfaces, clock generation, power regulation, and display connectivity required to operate the Lacerta graphics subsystem as a complete embedded system. In addition to hosting the main integrated circuits, the board exposes test points, headers, and peripheral connectors that simplify bring-up, debugging, and laboratory validation.
 
 From the schematic point of view, the board is organized into clearly separated functional domains. These include the **Caravel interface**, the **USB-to-serial path** used for configuration and communication, the **flash-memory interface**, the **clock-generator circuit**, the **power-supply section**, and the **display/output connectors**. This partitioning makes the design easier to validate and reflects the main operational needs of Lacerta: receiving commands, storing data, accessing the Caravel platform, and driving an external display.
@@ -740,7 +778,7 @@ Table 3 lists the main priced BOM entries together with direct supplier links. T
   <img src="documentation_mkdoc/docs/img/scren_pcb_diag.png" width="500">
 </p>
 <p align="center">
-<b>Figure 12.</b> Schematic of the Lacerta development board, showing the main functional blocks including the Caravel connection, USB-to-serial interface, flash memory, clock generator, power regulation, and display/output connectors.
+<b>Figure 6.</b> Schematic of the Lacerta development board, showing the main functional blocks including the Caravel connection, USB-to-serial interface, flash memory, clock generator, power regulation, and display/output connectors.
 </p>
 
 The PCB implementation translates this schematic into a compact development board that places the major components and user interfaces in accessible locations. The 3D view highlights the physical arrangement of the display and interface connectors, the Caravel-related devices, the USB/FTDI section, memory devices, headers, and support circuitry. This representation is useful for understanding the mechanical integration of the board and for checking connector placement, component accessibility, and assembly feasibility during the hardware-development process.
@@ -749,7 +787,7 @@ The PCB implementation translates this schematic into a compact development boar
   <img src="documentation_mkdoc/docs/img/PCB_UART.jpeg" width="500">
 </p>
 <p align="center">
-<b>Figure 13.</b> 3D view of the Lacerta PCB, illustrating the assembled component placement, external connectors, and overall physical organization of the development board.
+<b>Figure 7.</b> 3D view of the Lacerta PCB, illustrating the assembled component placement, external connectors, and overall physical organization of the development board.
 </p>
 
 The routed PCB layout shows how the electrical connections between these subsystems are realized on the board. It provides a detailed view of component placement, copper routing, and board dimensions, and it reflects the practical constraints of signal integrity, power distribution, and connector accessibility. Together, the schematic, 3D rendering, and final layout document the complete PCB-development flow for Lacerta, from circuit definition to manufacturable board implementation.
@@ -758,7 +796,7 @@ The routed PCB layout shows how the electrical connections between these subsyst
   <img src="documentation_mkdoc/docs/img/pcb_2d.png" width="500">
 </p>
 <p align="center">
-<b>Figure 14.</b> PCB layout of the Lacerta development board, showing the routed interconnections, component placement, and board geometry used to implement the final hardware platform.
+<b>Figure 8.</b> PCB layout of the Lacerta development board, showing the routed interconnections, component placement, and board geometry used to implement the final hardware platform.
 </p>
 
 ## Video 1. Quick Example of the Lacerta GUI
@@ -793,6 +831,8 @@ Lacerta is designed as a **fully open-source reference architecture**. The proje
 - [Interface design tools](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/Interface_Design_Software)
 
 ### Lacerta Interface Design Software — GUI Notes
+
+ **Lacerta Software can be found** [**here**](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/Interface_Design_Software).
 
 Important:
 - The prebuilt GUI in this repository is currently distributed as a Windows executable package and can only be run on **Windows**.

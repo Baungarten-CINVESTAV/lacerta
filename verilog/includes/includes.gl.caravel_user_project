@@ -53,6 +53,17 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 # Automatically generated with user I/O config from user_defines.v
 # by caravel/scripts/gen_gpio_defaults.py
 -v $(CARAVEL_PATH)/gl/caravel_core.v

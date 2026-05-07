@@ -1,5 +1,5 @@
 131 Lint warnings found.
-13 Yosys check errors found.
+11 Yosys check errors found.
 [PDN-0239] Core ring shape falls outside the die bounds.
 Bterm vssa2 is declared as a 'GROUND' pin. It will be ignored.
 Bterm vdda2 is declared as a 'POWER' pin. It will be ignored.
@@ -111,7 +111,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_oeb[37] is outside die area.
 [GRT-0036] Pin io_out[0] is outside die area.
 [GRT-0036] Pin io_oeb[4] is outside die area.
-[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin io_oeb[6] is outside die area.
 [GRT-0036] Pin io_oeb[7] is outside die area.
 [GRT-0036] Pin io_oeb[8] is outside die area.
@@ -542,6 +541,7 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin user_clock2 is outside die area.
 [GRT-0036] Pin user_irq[1] is outside die area.
 [GRT-0036] Pin user_irq[2] is outside die area.
+[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin wb_clk_i is outside die area.
 [GRT-0036] Pin wb_rst_i is outside die area.
 [GRT-0036] Pin wbs_ack_o is outside die area.
@@ -1749,7 +1749,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_oeb[37] is outside die area.
 [GRT-0036] Pin io_out[0] is outside die area.
 [GRT-0036] Pin io_oeb[4] is outside die area.
-[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin io_oeb[6] is outside die area.
 [GRT-0036] Pin io_oeb[7] is outside die area.
 [GRT-0036] Pin io_oeb[8] is outside die area.
@@ -2180,6 +2179,7 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin user_clock2 is outside die area.
 [GRT-0036] Pin user_irq[1] is outside die area.
 [GRT-0036] Pin user_irq[2] is outside die area.
+[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin wb_clk_i is outside die area.
 [GRT-0036] Pin wb_rst_i is outside die area.
 [GRT-0036] Pin wbs_ack_o is outside die area.
@@ -3387,7 +3387,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_oeb[37] is outside die area.
 [GRT-0036] Pin io_out[0] is outside die area.
 [GRT-0036] Pin io_oeb[4] is outside die area.
-[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin io_oeb[6] is outside die area.
 [GRT-0036] Pin io_oeb[7] is outside die area.
 [GRT-0036] Pin io_oeb[8] is outside die area.
@@ -3651,6 +3650,7 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin la_data_out[66] is outside die area.
 [GRT-0036] Pin la_data_out[67] is outside die area.
 [GRT-0036] Pin la_data_out[68] is outside die area.
+[GRT-0036] Pin la_data_out[69] is outside die area.
 [GRT-0036] message limit reached, this message will no longer print
 [GRT-0036] Pin analog_io[0] is outside die area.
 [GRT-0036] Pin analog_io[10] is outside die area.
@@ -3751,7 +3751,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_oeb[37] is outside die area.
 [GRT-0036] Pin io_out[0] is outside die area.
 [GRT-0036] Pin io_oeb[4] is outside die area.
-[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin io_oeb[6] is outside die area.
 [GRT-0036] Pin io_oeb[7] is outside die area.
 [GRT-0036] Pin io_oeb[8] is outside die area.
@@ -4182,6 +4181,7 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin user_clock2 is outside die area.
 [GRT-0036] Pin user_irq[1] is outside die area.
 [GRT-0036] Pin user_irq[2] is outside die area.
+[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin wb_clk_i is outside die area.
 [GRT-0036] Pin wb_rst_i is outside die area.
 [GRT-0036] Pin wbs_ack_o is outside die area.
@@ -5313,7 +5313,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_oeb[35] is outside die area.
 [GRT-0036] Pin io_oeb[36] is outside die area.
 [GRT-0036] Pin io_oeb[37] is outside die area.
-[GRT-0036] Pin io_out[22] is outside die area.
 [GRT-0036] Pin io_out[23] is outside die area.
 [GRT-0036] Pin io_out[24] is outside die area.
 [GRT-0036] Pin io_out[25] is outside die area.
@@ -5325,7 +5324,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_out[31] is outside die area.
 [GRT-0036] Pin io_out[32] is outside die area.
 [GRT-0036] Pin io_out[33] is outside die area.
-[GRT-0036] Pin io_out[34] is outside die area.
 [GRT-0036] Pin io_out[35] is outside die area.
 [GRT-0036] Pin io_out[36] is outside die area.
 [GRT-0036] Pin io_out[37] is outside die area.
@@ -5458,38 +5456,42 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin la_data_out[100] is outside die area.
 [GRT-0036] Pin la_data_out[10] is outside die area.
 [GRT-0036] Pin user_irq[1] is outside die area.
+[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin wb_clk_i is outside die area.
 [GRT-0036] Pin wbs_ack_o is outside die area.
 [GRT-0036] Pin wbs_adr_i[0] is outside die area.
 [GRT-0036] Pin wbs_adr_i[12] is outside die area.
-[GRT-0036] Pin wbs_adr_i[19] is outside die area.
+[GRT-0036] Pin wbs_adr_i[14] is outside die area.
+[GRT-0036] Pin wbs_adr_i[17] is outside die area.
+[GRT-0036] Pin wbs_adr_i[18] is outside die area.
 [GRT-0036] Pin wbs_adr_i[1] is outside die area.
-[GRT-0036] Pin wbs_adr_i[20] is outside die area.
-[GRT-0036] Pin wbs_adr_i[23] is outside die area.
+[GRT-0036] Pin wbs_adr_i[22] is outside die area.
+[GRT-0036] Pin wbs_adr_i[24] is outside die area.
 [GRT-0036] Pin wbs_adr_i[25] is outside die area.
 [GRT-0036] Pin wbs_adr_i[26] is outside die area.
 [GRT-0036] Pin wbs_adr_i[27] is outside die area.
 [GRT-0036] Pin wbs_adr_i[2] is outside die area.
-[GRT-0036] Pin wbs_adr_i[31] is outside die area.
 [GRT-0036] Pin wbs_adr_i[3] is outside die area.
+[GRT-0036] Pin wbs_adr_i[4] is outside die area.
 [GRT-0036] Pin wbs_adr_i[6] is outside die area.
 [GRT-0036] Pin wbs_adr_i[7] is outside die area.
-[GRT-0036] Pin wbs_dat_i[10] is outside die area.
-[GRT-0036] Pin wbs_dat_i[11] is outside die area.
 [GRT-0036] Pin wbs_dat_i[14] is outside die area.
 [GRT-0036] Pin wbs_dat_i[16] is outside die area.
-[GRT-0036] Pin wbs_dat_i[18] is outside die area.
+[GRT-0036] Pin wbs_dat_i[19] is outside die area.
 [GRT-0036] Pin wbs_dat_i[2] is outside die area.
 [GRT-0036] Pin wbs_dat_i[3] is outside die area.
-[GRT-0036] Pin wbs_dat_i[5] is outside die area.
+[GRT-0036] Pin wbs_dat_i[4] is outside die area.
+[GRT-0036] Pin wbs_dat_i[6] is outside die area.
 [GRT-0036] Pin wbs_dat_i[7] is outside die area.
 [GRT-0036] Pin wbs_dat_o[0] is outside die area.
+[GRT-0036] Pin wbs_dat_o[10] is outside die area.
+[GRT-0036] Pin wbs_dat_o[14] is outside die area.
 [GRT-0036] Pin wbs_dat_o[1] is outside die area.
 [GRT-0036] Pin wbs_dat_o[2] is outside die area.
 [GRT-0036] Pin wbs_dat_o[3] is outside die area.
-[GRT-0036] Pin wbs_dat_o[4] is outside die area.
-[GRT-0036] Pin wbs_dat_o[5] is outside die area.
 [GRT-0036] Pin wbs_dat_o[6] is outside die area.
+[GRT-0036] Pin wbs_dat_o[8] is outside die area.
+[GRT-0036] Pin io_out[34] is outside die area.
 [GRT-0036] Pin analog_io[0] is outside die area.
 [GRT-0036] Pin analog_io[10] is outside die area.
 [GRT-0036] Pin analog_io[11] is outside die area.
@@ -5589,7 +5591,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_oeb[37] is outside die area.
 [GRT-0036] Pin io_out[0] is outside die area.
 [GRT-0036] Pin io_oeb[4] is outside die area.
-[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin io_oeb[6] is outside die area.
 [GRT-0036] Pin io_oeb[7] is outside die area.
 [GRT-0036] Pin io_oeb[8] is outside die area.
@@ -5652,7 +5653,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin la_data_in[114] is outside die area.
 [GRT-0036] Pin la_data_in[115] is outside die area.
 [GRT-0036] Pin la_data_in[116] is outside die area.
-[GRT-0036] Pin la_data_in[117] is outside die area.
 [GRT-0036] message limit reached, this message will no longer print
 [GRT-0036] Pin analog_io[0] is outside die area.
 [GRT-0036] Pin analog_io[10] is outside die area.
@@ -5753,7 +5753,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_oeb[37] is outside die area.
 [GRT-0036] Pin io_out[0] is outside die area.
 [GRT-0036] Pin io_oeb[4] is outside die area.
-[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin io_oeb[6] is outside die area.
 [GRT-0036] Pin io_oeb[7] is outside die area.
 [GRT-0036] Pin io_oeb[8] is outside die area.
@@ -6184,6 +6183,7 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin user_clock2 is outside die area.
 [GRT-0036] Pin user_irq[1] is outside die area.
 [GRT-0036] Pin user_irq[2] is outside die area.
+[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin wb_clk_i is outside die area.
 [GRT-0036] Pin wb_rst_i is outside die area.
 [GRT-0036] Pin wbs_ack_o is outside die area.
@@ -7391,7 +7391,6 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin io_oeb[37] is outside die area.
 [GRT-0036] Pin io_out[0] is outside die area.
 [GRT-0036] Pin io_oeb[4] is outside die area.
-[GRT-0036] Pin io_oeb[5] is outside die area.
 [GRT-0036] Pin io_oeb[6] is outside die area.
 [GRT-0036] Pin io_oeb[7] is outside die area.
 [GRT-0036] Pin io_oeb[8] is outside die area.
@@ -7655,6 +7654,7 @@ Bterm vccd1 is declared as a 'POWER' pin. It will be ignored.
 [GRT-0036] Pin la_data_out[66] is outside die area.
 [GRT-0036] Pin la_data_out[67] is outside die area.
 [GRT-0036] Pin la_data_out[68] is outside die area.
+[GRT-0036] Pin la_data_out[69] is outside die area.
 [GRT-0036] message limit reached, this message will no longer print
 [DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer mcon
 [DRT-0349] LEF58_ENCLOSURE with no CUTCLASS is not supported. Skipping for layer mcon

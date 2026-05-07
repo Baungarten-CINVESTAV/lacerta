@@ -178,9 +178,9 @@ assign frame_end_x_ext = {6'd0, frame_end_x}; // extending to 16 bits as require
 assign frame_st_y_ext =  {6'd0, frame_st_y}; // extending to 16 bits as required by tft screen
 assign frame_end_y_ext = {6'd0, frame_end_y}; // extending to 16 bits as required by tft screen
 assign sidebar_st_x = ACTIVE_SCREEN_WIDTH;
-assign sidebar_end_x = SCREEN_WIDTH - 1;
+assign sidebar_end_x = SCREEN_WIDTH;
 assign sidebar_st_y = 0;
-assign sidebar_end_y = SCREEN_HEIGHT - 1;
+assign sidebar_end_y = SCREEN_HEIGHT;
 
 assign {rom_type, rom_data} = init_rom_rdata;
 

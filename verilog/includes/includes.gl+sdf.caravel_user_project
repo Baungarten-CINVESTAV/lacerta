@@ -50,6 +50,17 @@ $USER_PROJECT_VERILOG/gl/user_proj_example.v
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 // Automatically generated with user I/O config from user_defines.v
 // by caravel/scripts/gen_gpio_defaults.py
 $CARAVEL_PATH/gl/caravel_core.v
