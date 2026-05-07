@@ -669,6 +669,7 @@ Table 2 summarizes the post-layout timing and electrical-check results for the L
 | `max_ff_n40C_1v95`    | 0.1249               | 0.2878               | 0.0000        | 0               | 7.7814                | 15.8059              | 0.0000         | 0                | 0                  | 0                   |
 
 ## Precheck log
+ ```
 
 **Precheck logs can be found** [**here**](https://github.com/Baungarten-CINVESTAV/lacerta/tree/main/precheck_results).
 
@@ -722,7 +723,7 @@ Table 2 summarizes the post-layout timing and electrical-check results for the L
 2026-04-30 11:51:57 [INFO] OEB output directory: /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10
 2026-04-30 11:52:04 [WARNING] ERC check failed (stat=4), see /home/baungarten/Desktop/lacerta_march/precheck_results/30_APR_2026___11_20_10/logs/OEB_check.log
 
-
+ ``` 
 
 ## Lacerta PCB
  
