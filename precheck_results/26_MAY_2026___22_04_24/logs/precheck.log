@@ -1,0 +1,3 @@
+2026-05-26 22:04:24 [INFO] Extracting compressed files in: /tmp/tmpg98chx6m/repo
+2026-05-26 22:04:24 [CRITICAL] make uncompress failed and produced no gds/*.gds files (exit 2). stderr tail: gzip: mag/user_proj_example.mag already exists;	not overwritten
+make: *** [/opt/caravel/Makefile:285: mag/user_proj_example.mag] Error 2 | stdout tail: (empty)
